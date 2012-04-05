@@ -1,0 +1,42 @@
+#categories { 
+	margin-top:0px;
+	padding-top:20px;
+}
+.tag_cloud {
+	font-size:16px; 
+	line-height:26px; 
+	width:100%;
+	padding: 0 0 0 0px;
+}
+
+.tag_cloud li { 
+	display:inline; 
+	padding:5px;
+	/*white-space:nowrap;*/
+}
+
+.tag, .tag:visited {
+	text-decoration:none;
+	color:gold;
+	background:silver;
+	padding:2px;
+	
+	-webkit-border-radius:10px;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	-o-border-radius:10px;
+	
+	-webkit-transition:color 250ms, background 250ms;
+	transition:color 250ms, background 250ms;
+	-moz-transition:color 250ms, background 250ms;
+	-o-transition:color 250ms, background 250ms;
+}
+
+.tag:hover {
+	color:white;
+	background:black;
+}
+
+/*.tag:visited {
+	color:black;
+}*/

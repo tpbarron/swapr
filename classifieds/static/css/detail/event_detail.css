@@ -1,0 +1,28 @@
+#item {
+	float:left;
+	width:400px;
+	/*overflow:wrap;*/
+}
+#id_comment {
+	width:360px;
+}
+
+#map {
+	float:right;
+	width:400px;
+}
+#map_canvas {
+	height:400px;
+	
+	-moz-box-shadow: 10px 10px 5px #888;
+	-webkit-box-shadow: 10px 10px 5px #888;
+	box-shadow: 10px 10px 5px #888;
+	-o-box-shadow: 10px 10px 5px #888;
+}
+
+#directions {
+	margin-top:20px;	
+}
+#direction_form input {
+	width:400px;
+}

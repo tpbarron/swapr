@@ -1,0 +1,11 @@
+#viewer {
+	width:800px;
+	height:100%;
+	margin:auto;
+	padding:20px;
+}
+
+#add_form_container {
+	float:left;
+	padding-bottom:10px;
+}
