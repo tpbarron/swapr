@@ -1,0 +1,43 @@
+{% extends "template_detail.html" %}
+
+{% block title %}{{event.title}}{% endblock %}
+
+{% block subcss %}
+	<link type="text/css" rel="stylesheet" href="{{STATIC_URL}}css/detail/event_detail.css" />
+{% endblock %}
+
+{% block detail %}
+<div id="item">
+	<div id="detail">
+		<h2>{{event.title}}</h2>
+		{% include "snippets/detail_contact_link.html" with obj=event %}
+		<p>{{event.description}}</p>
+		<p>{{event.date}}</p>
+		<p id="detail_location">{{event.location}}</p>
+	</div>
+	
+	<div id="comments">
+		{% include "snippets/comments.html" with num_comments=event.get_num_comments comments=comments%}
+	</div>
+	<div id="comment">
+		{% include "snippets/comment_form.html" with form=form user=user%}
+	</div>
+</div>
+<div id="map">
+	<div id="map_canvas"></div>
+	<div id="directions">
+		<form id="direction_form">
+			<p id="direction_from">From</p>
+			<input type="text" value="" />
+			<p>To</p>
+			<input type="text" value="{{event.location}}" />
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+	<script type="text/javascript" src="{{STATIC_URL}}js/libs/jquery-jsonp-2.2.1.min.js"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAv9g5EcPA39fFGJMGe7vL56L8_8HNTFQQ&sensor=false"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}js/event_detail_maps.js"></script>
+{% endblock %}

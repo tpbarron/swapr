@@ -1,0 +1,39 @@
+{% extends "template_list.html" %}
+
+{% block title %}Discussions{% endblock %}
+
+{% block subcss %}
+{% endblock %}
+
+{% block list %} 
+	{% include "snippets/list_heading.html" with title=title url=url  %}
+	
+	<div id="items">
+	{% for disc in discussions.object_list %}
+		<div class="item">
+			<div class="item_left">
+				<h3 class="item_title"><a href="{{disc.id}}">{{disc.title}}</a></h3>
+	      		<p class="item_posted">{{disc.posted_by.first_name}}</p>
+			</div>
+	      	<div class="item_right">
+		      	<p class="item_description">{{disc.get_short_description}}</p>     
+		      	{% include "snippets/vote.html" with d=disc %}
+	      	</div>
+	      	<!--<p>views: {{disc.get_num_unique_views}}</p>  -->
+	    </div>
+	    <br />
+    {% endfor %}
+    </div>
+    <br />
+    
+    <div class="pagination">
+		{% include "snippets/pagination.html" with obj=discussions %}
+	</div>	
+{% endblock %}
+
+{% block javascript %}
+	<script src="{{STATIC_URL}}js/vote.js" type="text/javascript"></script>
+	{% include "snippets/search_script.html" %}
+{% endblock %}
+    
+

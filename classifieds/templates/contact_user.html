@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Contact {{usr.first_name}}{% endblock %}
+
+{% block css %}
+	<style type="text/css">
+		#viewer {
+			width:800px;
+			margin:auto;
+			margin-top:20px;
+		}
+		#id_message {
+			margin-bottom:10px;
+			width:100%;
+		}
+		#id_subject {
+			width:33%;
+			margin-bottom:10px;
+		}
+		
+		#id_message, #id_subject {
+			line-height:22px;
+			font-size:14px;
+			
+			padding:10px;
+		
+			border:2px solid silver;
+	
+			-moz-box-shadow: 0px 0px 0px #888;
+			-webkit-box-shadow: 0px 0px 0px #888;
+			box-shadow: 0px 0px 0px #888;
+			-o-box-shadow: 0px 0px 0px #888;
+			
+			-webkit-transition: -webkit-box-shadow 250ms, border 250ms;
+			-moz-transition: -moz-box-shadow 250ms, border 250ms;
+			transition: box-shadow 250ms, border 250ms;
+			-o-transition: -o-box-shadow 250ms, border 250ms;
+		}
+		#id_message:focus, #id_subject:focus {
+			-moz-box-shadow: 0px 5px 5px #888;
+			-webkit-box-shadow: 0px 5px 5px #888;
+			box-shadow: 0px 5px 5px #888;
+			-o-box-shadow: 0px 5px 5px #888;
+			
+			border:2px solid black;
+		}
+				
+	</style>
+{% endblock %}
+
+{% block content %} 
+	<div id="viewer">
+		<h2>Contact {{usr.first_name}}</h2>
+		<form action="." method="POST"> {% csrf_token %}
+			<p>Subject</p>
+			{{ subject }} <br />
+			<p>Message</p>
+			{{ message }} <br />
+			<input type="submit" value="Send" />
+		</form>
+	</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

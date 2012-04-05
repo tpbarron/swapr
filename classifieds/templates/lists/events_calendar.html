@@ -1,0 +1,28 @@
+{% extends "template_list.html" %}
+
+{% block title %}Events Calendar{% endblock %}
+
+{% block subcss %}
+	<link rel='stylesheet' type='text/css' href='{{STATIC_URL}}css/calendar/cupertino/theme.css' />
+	<link rel='stylesheet' type='text/css' href='{{STATIC_URL}}css/calendar/fullcalendar.css' />
+	<link rel='stylesheet' type='text/css' href='{{STATIC_URL}}css/calendar/fullcalendar.print.css' media='print' />	
+	<style type="text/css">
+		#calendar {
+			margin-top:25px;
+		}
+	</style>
+{% endblock %}
+
+{% block list %} 
+	{% include "snippets/list_heading.html" with title=title url=url %}
+	
+	<div id="calendar"></div>     
+
+{% endblock %}
+
+{% block javascript %}
+	<script type='text/javascript' src='{{STATIC_URL}}js/libs/jquery-ui-1.8.17.custom.min.js'></script>
+	<script type='text/javascript' src='{{STATIC_URL}}js/libs/fullcalendar.min.js'></script>
+	<script type="text/javascript" src="{{STATIC_URL}}js/event_calendar.js"></script> 
+	{% include "snippets/search_script.html" %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock %}
+
+{% block css %}
+	<link href="{{STATIC_URL}}css/detail.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block subcss %}
+{% endblock %}
+
+{% block content %} 
+	<div id="viewer">
+		{% block detail %}
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

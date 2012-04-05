@@ -1,0 +1,18 @@
+{% extends "template_detail.html" %}
+
+{% block title %}{{book.title}}{% endblock %}
+
+{% block detail %}
+<div id="detail">
+	<h2>{{book.title}}</h2>
+	{% include "snippets/detail_contact_link.html" with obj=book %}
+	<p>{{book.description}}</p>
+</div>
+
+<div id="comments">
+	{% include "snippets/comments.html" with num_comments=book.get_num_comments comments=comments %}
+</div>
+<div id="comment">
+	{% include "snippets/comment_form.html" with form=form user=user%}
+</div>
+{% endblock %}

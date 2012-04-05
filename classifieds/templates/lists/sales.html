@@ -1,0 +1,36 @@
+{% extends "template_list.html" %}
+
+{% block title %}For Sale{% endblock %}
+
+{% block subcss %}
+{% endblock %}
+
+{% block list %} 
+	{% include "snippets/list_heading.html" with title=title url=url%}
+	
+	<div id="items">
+	{% for s in sales.object_list %}
+		<div class="item">
+			<div class="item_left">
+				<h3 class="item_title"><a href="{{s.id}}">{{s.title}}</a></h3>
+	      		<p class="item_posted">{{s.posted_by.first_name}}</p>
+			</div>
+	      	<div class="item_right">
+		      	<p class="item_description">{{s.get_short_description}}</p>
+	      	</div>
+	      	<!--<p>views: {{s.get_num_unique_views}}</p>  -->
+	    </div>
+	    <br />
+    {% endfor %}
+    </div>
+    <br />
+      
+    <div class="pagination">
+		{% include "snippets/pagination.html" with obj=sales %}
+	</div>
+
+{% endblock %}
+
+{% block javascript %}
+	{% include "snippets/search_script.html" %}
+{% endblock %}

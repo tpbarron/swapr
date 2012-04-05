@@ -1,0 +1,22 @@
+{% extends "template_add.html" %}
+
+{% block title %}Add a break idea{% endblock %}
+
+{% block subcss %}
+{% endblock %}
+
+{% block add %}
+<div id="add_form_container">
+	<p id="add_heading">Add a new break idea:</p>
+	<form id="add_form" action="." method="post">{% csrf_token %}
+		<p>Title</p>
+		{{ title }}
+		<p>Description</p>
+		{{ desc }}
+		<p>Break</p>
+		{{ break }}
+		<br />
+		<input type="submit" value="Submit" />
+	</form>	
+</div>
+{% endblock %}

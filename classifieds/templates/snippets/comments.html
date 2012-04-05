@@ -1,0 +1,19 @@
+{% if num_comments > 0 %}
+	<h3 id="comment_heading">Comments:</h3>
+	{% for c in comments %}
+	<div class="comment">
+		<p class="comment_info">
+			{% if user.is_authenticated and user != c.left_by %}
+				<a href="/contact/{{c.left_by.username}}">{{c.left_by.first_name}}</a>
+			{% else %}
+				{{c.left_by.first_name}}
+			{% endif %}
+			&raquo; {{ c.date }}
+		</p> 
+		<p class="comment_text">{{ c.comment }}</p>
+	</div>
+	{% endfor %}
+	<p>Leave a comment!</p>
+{% else %}
+	<p>Be the first to comment!</p>
+{% endif %}

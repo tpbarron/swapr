@@ -1,0 +1,33 @@
+{% extends "template_add.html" %}
+
+{% block title %}Add an event{% endblock %}
+
+{% block subcss %}
+	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/jquery-ui-1.8.17.custom.css" />
+	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/add/event_add.css" />
+{% endblock %}
+
+{% block add %}
+<div id="add_form_container">
+	<p id="add_heading">Add a new event:</p>
+	<form id="add_form" action="." method="post">{% csrf_token %}
+		<p>Title</p>
+		{{ title }}
+		<p>Description</p>
+		{{ desc }}
+		<p id="map_location">Location - <b>please be specific</b></p>
+		{{ location }}
+		<p>Date</p>
+		{{ date }}
+		<br />
+		<input id="submit" type="submit" value="Submit" />
+	</form>	
+</div>
+<div id="map_canvas"></div>
+{% endblock %}
+
+{% block javascript %}
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAv9g5EcPA39fFGJMGe7vL56L8_8HNTFQQ&sensor=false"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}js/event_add_maps.js"></script>
+{% endblock %}

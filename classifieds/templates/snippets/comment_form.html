@@ -1,0 +1,10 @@
+{% if user.is_authenticated %}
+<form action="." method="post"> {% csrf_token %}
+	<!--<p id="leave_comment">Leave a comment:</p>  -->
+	{{ form }}
+	<br />
+	<input type="submit" value="Submit" />
+</form>
+   {% else %}
+   <p>Please <a href="/login/">login</a> to comment.</p>
+{% endif %} 

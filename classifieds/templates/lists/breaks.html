@@ -1,0 +1,38 @@
+{% extends "template_list.html" %}
+
+{% block title %}Breaks{% endblock %}
+
+{% block subcss %}
+	<link href="{{STATIC_URL}}css/lists/breaks.css" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+
+{% block list %}
+	{% include "snippets/list_heading.html" with title=title url=url %}
+	
+	<div id="items">
+	{% for b in breaks.object_list %}
+		<div class="item">
+			<div class="item_left">
+				<h3 class="item_title"><a href="{{b.id}}">{{b.title}}</a></h3>
+	        	<p class="item_posted">{{b.posted_by.first_name}}</p>
+			</div>
+		    <div class="item_right">
+		        <p class="item_description">{{b.get_short_description}}</p>
+		        <p class="item_break_name">{{b.get_break_name}}</p>
+	        </div>
+	        <!--<p>views: {{b.get_num_unique_views}}</p>  -->
+	    </div>
+ 	{% endfor %}
+ 	</div>
+	<br />
+	
+ 	<div class="pagination">
+		{% include "snippets/pagination.html" with obj=breaks %}
+	</div>
+ 	
+{% endblock %}
+
+{% block javascript %}
+	{% include "snippets/search_script.html" %}
+{% endblock %}

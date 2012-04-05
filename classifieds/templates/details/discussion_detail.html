@@ -1,0 +1,23 @@
+{% extends "template_detail.html" %}
+
+{% block title %}{{disc.title}}{% endblock %}
+
+{% block detail %}
+	<div id="detail">
+		<h2>{{disc.title}}</h2>
+		{% include "snippets/detail_contact_link.html" with obj=disc %}
+		<p>{{disc.description}}</p>
+	    {% include "snippets/vote.html" with d=disc %}
+	</div>
+	<div id="comments">
+		{% include "snippets/comments.html" with num_comments=disc.get_num_comments comments=comments%}
+	</div>
+	<div id="comment">
+		{% include "snippets/comment_form.html" with form=form user=user%}
+	</div>
+{% endblock %}
+
+{% block javascript %}
+	<script src="{{STATIC_URL}}js/vote.js" type="text/javascript"></script>
+{% endblock %}
+    

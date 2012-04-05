@@ -1,0 +1,90 @@
+<!doctype html>
+{% load i18n %}
+
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>CC Classifieds ~ {% block title %}{% endblock %}</title>
+    
+    <meta name="description" content="{% block meta_description %}CC Classifieds home; trade books, organize rides, discuss hot topics{% endblock %}" />
+    <meta name="author" content="Trevor Barron" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
+    
+ 	<link rel="shortcut icon" href="{{ STATIC_URL }}img/icon_cropped.jpg" />
+    <!--{# TODO: <link rel="apple-touch-icon" href="{{ STATIC_URL }}images/apple-touch-icon.png" /> #} -->
+    
+    
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+	<link href="{{STATIC_URL}}css/base.css" rel="stylesheet" type="text/css" />
+    
+    {% block css %}
+    {% endblock %}
+    
+    {% block subcss %}
+    {% endblock %}
+    
+    <script src="{{ STATIC_URL }}js/libs/modernizr-2.0.6.min.js"></script>
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+{% block body %}
+	<header>
+       	<div id="logo">
+       		<!--<img src="{{STATIC_URL}}img/logo.png" alt="logo" /> -->
+       		<h1><a href="/">CC Trader</a></h1>
+       	</div>
+        <nav>
+			<ul>
+				<li><a class="nav_link" href="/breaks/">Breaks</a></li>
+				<li><a class="nav_link" href="/sales/">For Sale</a></li>
+				<li><a class="nav_link" href="/books/">Books</a></li>
+				<li><a class="nav_link" href="/discussions/">Discussions</a></li>
+				<li><a class="nav_link" href="/events/">Events</a></li>
+				<li><a class="nav_link" href="/transportation/">Transportation</a></li>
+				{% if user.is_authenticated %}
+				<li id="status">{{user.first_name}} {{user.last_name}} - <a class="nav_link" href="/logout/">Logout</a></li>
+				{% else %}
+				<li id="status"><a class="nav_link" href="/login/">Login</a> or <a class="nav_link" href="/newuser/">create a new account</a></li>
+				{% endif %}
+			</ul>
+		</nav>
+	</header>
+       
+       <div id="main" role="main">
+       	{% block content %}
+       	{% endblock %}
+       </div>
+       
+       <footer>
+       	{% block footer %}
+		{% endblock %}
+       </footer>
+    
+    
+    {% block javascript_library %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+    {% endblock %}
+    
+    {% block javascript %}
+    {% endblock %}
+
+    <script> // Change UA-XXXXX-X to be your site's ID
+    window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
+    Modernizr.load({
+      load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
+    });
+    </script>
+    
+    <!--[if lt IE 7 ]>
+        <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+        <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+    <![endif]-->
+{% endblock %}
+</body>
+</html>

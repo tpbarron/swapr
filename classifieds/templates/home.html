@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Home{% endblock %}
+
+{% block css %}
+{% endblock %}
+
+{% block content %} 
+	<div id="viewer">
+		<div id="recent_activity">
+			{% if user.is_authenticated %}
+			<div id="books">
+				<h2>Books</h2>
+				<ul>
+					{% for b in user.books.all %}
+					<li>
+						<a href="/books/{{b.id}}/">{{ b.title }}</a>
+						{% if b.get_num_comments == 1 %}
+							{{ b.get_num_comments }} comment
+						{% else %}
+							{{ b.get_num_comments }} comments
+						{% endif %}
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			
+			<div id="events">
+				<h2>Events</h2>
+				<ul>
+					{% for b in user.events.all %}
+					<li>
+						<a href="/events/{{b.id}}/">{{ b.title }}</a>
+						{% if b.get_num_comments == 1 %}
+							{{ b.get_num_comments }} comment
+						{% else %}
+							{{ b.get_num_comments }} comments
+						{% endif %}
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			
+			<div id="products">
+				<h2>Sales</h2>
+				<ul>
+					{% for b in user.products.all %}
+					<li>
+						<a href="/products/{{b.id}}/">{{ b.title }}</a>
+						{% if b.get_num_comments == 1 %}
+							{{ b.get_num_comments }} comment
+						{% else %}
+							{{ b.get_num_comments }} comments
+						{% endif %}
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			
+			<div id="breaks">
+				<h2>Breaks</h2>
+				<ul>
+					{% for b in user.breaks.all %}
+					<li>
+						<a href="/breaks/{{b.id}}/">{{ b.title }}</a>
+						{% if b.get_num_comments == 1 %}
+							{{ b.get_num_comments }} comment
+						{% else %}
+							{{ b.get_num_comments }} comments
+						{% endif %}
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			
+			<div id="discussions">
+				<h2>Discussions</h2>
+				<ul>
+					{% for b in user.discussions.all %}
+					<li>
+						<a href="/discussions/{{b.id}}/">{{ b.title }}</a>
+						{% if b.get_num_comments == 1 %}
+							{{ b.get_num_comments }} comment
+						{% else %}
+							{{ b.get_num_comments }} comments
+						{% endif %}
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+
+			<div id="transportation">
+				<h2>Transportation</h2>
+				<ul>
+					{% for b in user.transportation.all %}
+					<li>
+						<a href="/transportation/{{b.id}}/">{{ b.title }}</a>
+						{% if b.get_num_comments == 1 %}
+							{{ b.get_num_comments }} comment
+						{% else %}
+							{{ b.get_num_comments }} comments
+						{% endif %}
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			{% endif %}
+		</div>
+		
+		<div id="recent">
+			
+			<!-- what other have done on the users items -->
+		</div>
+	</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
