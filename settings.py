@@ -1,4 +1,6 @@
 # Django settings for CC_Classifieds project.
+import os
+DIR = os.path.abspath(os.path.dirname(__file__))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -14,7 +16,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '/home/trevor/Documents/cs/workspaces/django/CC_Classifieds/sqlite.db',                      # Or path to database file if using sqlite3.
+        'NAME': os.path.join(DIR, 'sqlite.db'),                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -47,7 +49,7 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = '/home/trevor/Documents/cs/workspaces/django/CC_Classifieds/CC_Classifieds/media/'
+MEDIA_ROOT = os.path.join(DIR, '/media/')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -58,7 +60,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = '/home/trevor/Documents/cs/workspaces/django/CC_Classifieds/CC_Classifieds/static/'
+STATIC_ROOT = os.path.join(DIR, '/static/')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -71,9 +73,9 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    '/home/trevor/Documents/cs/workspaces/django/CC_Classifieds/CC_Classifieds/classifieds/static/img',
-    '/home/trevor/Documents/cs/workspaces/django/CC_Classifieds/CC_Classifieds/classifieds/static/css',
-    '/home/trevor/Documents/cs/workspaces/django/CC_Classifieds/CC_Classifieds/classifieds/static/js',
+    os.path.join(DIR, '/classifieds/static/img/'),
+    os.path.join(DIR, '/classifieds/static/css/'),
+    os.path.join(DIR, '/classifieds/static/js/'),
  
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
@@ -123,55 +125,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    'social_auth',
     'CC_Classifieds.classifieds',
 )
-
-AUTHENTICATION_BACKENDS = (
-    'social_auth.backends.twitter.TwitterBackend',
-    'social_auth.backends.facebook.FacebookBackend',
-    'social_auth.backends.google.GoogleOAuthBackend',
-    'social_auth.backends.google.GoogleOAuth2Backend',
-    'social_auth.backends.google.GoogleBackend',
-    'social_auth.backends.yahoo.YahooBackend',
-    'social_auth.backends.contrib.linkedin.LinkedinBackend',
-    'social_auth.backends.contrib.livejournal.LiveJournalBackend',
-    'social_auth.backends.contrib.orkut.OrkutBackend',
-    'social_auth.backends.contrib.foursquare.FoursquareBackend',
-    'social_auth.backends.contrib.github.GithubBackend',
-    'social_auth.backends.contrib.dropbox.DropboxBackend',
-    'social_auth.backends.contrib.flickr.FlickrBackend',
-    'social_auth.backends.OpenIDBackend',
-    'django.contrib.auth.backends.ModelBackend',
-)
-
-TWITTER_CONSUMER_KEY         = 'YLGSiYX556HNFwTqBEOfTQ'
-TWITTER_CONSUMER_SECRET      = 'DNRMc9YjeUWBEBTePruVuLiKvvqXRwPpryE3XZOlYs'
-FACEBOOK_APP_ID              = '305955002795829'
-FACEBOOK_API_SECRET          = 'c09e49ad707ef8a925b9400c0561dd6d'
-LINKEDIN_CONSUMER_KEY        = ''
-LINKEDIN_CONSUMER_SECRET     = ''
-ORKUT_CONSUMER_KEY           = ''
-ORKUT_CONSUMER_SECRET        = ''
-GOOGLE_CONSUMER_KEY          = ''
-GOOGLE_CONSUMER_SECRET       = ''
-GOOGLE_OAUTH2_CLIENT_ID      = ''
-GOOGLE_OAUTH2_CLIENT_SECRET  = ''
-FOURSQUARE_CONSUMER_KEY      = ''
-FOURSQUARE_CONSUMER_SECRET   = ''
-GITHUB_APP_ID                = ''
-GITHUB_API_SECRET            = ''
-DROPBOX_APP_ID               = ''
-DROPBOX_API_SECRET           = ''
-FLICKR_APP_ID                = ''
-FLICKR_API_SECRET            = ''
-
-TEST_FACEBOOK_USER = 'barron.trevor@gmail.com'
-TEST_FACEBOOK_PASSWORD = 'ttkCC12349'
-
-LOGIN_URL          = '/login/'
-LOGIN_REDIRECT_URL = '/'
-LOGIN_ERROR_URL    = '/login-error/'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
