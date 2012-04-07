@@ -40,6 +40,7 @@ events_urls = patterns('CC_Classifieds.classifieds.views',
     url(r'^calendar/$', 'events_calendar'),
     url(r'^data/$', 'events_json'),
     url(r'^search/$','event_search'),
+    url(r'^(?P<event_id>\d+)/qrcode/$', 'event_qrcode'),
 )
 
 transportation_urls = patterns('CC_Classifieds.classifieds.views',
