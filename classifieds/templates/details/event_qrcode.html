@@ -1,0 +1,17 @@
+{% extends "template_detail.html" %}
+
+{% block title %}{{event.title}}{% endblock %}
+
+{% block subcss %}
+{% endblock %}
+
+{% block detail %}
+<div id="item">
+	<p>Save the image below and place it on any promotional posters! Scanning it with a smart phone will direct viewers to your page!</p>
+	<img src="{{qrsrc}}" alt="{{event.title}} QR code" />
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
