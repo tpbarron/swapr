@@ -28,10 +28,23 @@
 	<div id="directions">
 		<form id="direction_form">
 			<p id="direction_from">From</p>
-			<input type="text" value="" />
-			<p>To</p>
-			<input type="text" value="{{event.location}}" />
+			<input id="direction_from_input" type="text" value="" />
+			<p id="direction_to">To</p>
+			<input id="direction_to_input" type="text" value="{{event.location}}" />
+			Mode of travel
+			<select id="travel_mode">
+				<option value="DRIVING">Driving</option>
+				<option value="WALKING">Walking</option>
+				<option value="BICYCLING">Bicycling</option>
+			</select> 
+			<br />
+			<input id="direction_submit" type="submit" value="Route" />
 		</form>
+		<div id="directions_detail">
+			<h2 id="directions_detail_heading">Directions</h2>
+			<ol id="directions_detail_list">
+			</ol>
+		</div>
 	</div>
 </div>
 {% endblock %}
