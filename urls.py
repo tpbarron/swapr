@@ -41,6 +41,7 @@ events_urls = patterns('CC_Classifieds.classifieds.views',
     url(r'^data/$', 'events_json'),
     url(r'^search/$','event_search'),
     url(r'^(?P<event_id>\d+)/qrcode/$', 'event_qrcode'),
+    url(r'^ajax/reversegeocode/$', 'event_map_reverse_geocode'),
 )
 
 transportation_urls = patterns('CC_Classifieds.classifieds.views',
