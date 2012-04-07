@@ -23,6 +23,18 @@
 #directions {
 	margin-top:20px;	
 }
-#direction_form input {
+#direction_from_input, #direction_to_input {
 	width:400px;
+	margin-bottom:10px;
+}
+#travel_mode {
+	margin-bottom:10px;
+}
+
+
+#directions_detail_heading {
+	display:none;
+}
+.direction {
+	margin-bottom:5px;
 }
