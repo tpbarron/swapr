@@ -576,7 +576,6 @@ def books(request):
                             {'books':books, 'title': 'Books', 'categories':category_options, 'url':'books', 'category':False})
 
 def book_category(request, cat):
-    print cat
     book_list = Book.objects.filter(category=cat)
     paginator = Paginator(book_list, 5)
     
@@ -659,7 +658,7 @@ def transportation_search(request):
 
 
 #qr code
-import urllib
+import urllib, json
 def event_qrcode(request, event_id):
     auth_user = request.user
     event = Event.objects.get(id=event_id)
@@ -671,4 +670,22 @@ def event_qrcode(request, event_id):
     qrurl += urllib.quote("http://127.0.0.1:8000/events/"+str(event_id)+"/")
     return TemplateResponse(request, 'details/event_qrcode.html',
                             {'qrsrc':qrurl, 'event':event})
+    
+def event_map_reverse_geocode(request):
+    if not request.is_ajax():
+        raise Http404
+    
+    lat = request.GET.get('lat', '1')
+    lng = request.GET.get('lng', '1')
+    url='http://maps.googleapis.com/maps/api/geocode/json?latlng='+str(lat)+','+str(lng)+'&sensor=false' 
+    geo_json = urllib.urlopen(url).read()
+    
+    parsed_json = json.loads(geo_json)
+    
+    if (parsed_json['status'] == "OK"):
+        formatted_address = parsed_json['results'][0]['formatted_address']
+        return HttpResponse(formatted_address)
+    
+    return HttpResponse("failure")
+    
     
