@@ -1,5 +1,5 @@
 {% if user.is_authenticated and user != obj.posted_by %}
 	<p>Posted by: <a href="/contact/{{obj.posted_by.username}}">{{obj.posted_by.first_name}}</a></p>
 {% else %}
-	<p>Posted by: {{obj.posted_by.first_name}}</p>
+	<p>Posted by: You! ~ <a href="qrcode/">Get your QR code!</a></p>
 {% endif %}
