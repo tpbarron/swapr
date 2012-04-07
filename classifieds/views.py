@@ -13,6 +13,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.core import serializers
+from django.http import Http404
 
 
 
@@ -45,7 +46,8 @@ def login(request):
                     return redirect('/')
     
     form = LoginForm()
-    return TemplateResponse(request, 'login.html', {'form':form})
+    return TemplateResponse(request, 'login.html', 
+                            {'email':form['email'], 'password':form['password']})
 
 def login_error(request):
     return TemplateResponse(request, 'login.html')
@@ -74,7 +76,9 @@ def new_user(request):
             emailConfirmation(u)
     
     form = NewUserForm()
-    return TemplateResponse(request, 'new_user.html', {'form':form})
+    return TemplateResponse(request, 'new_user.html', 
+                            {'email':form['email'], 'password':form['password'],
+                             'firstname':form['firstname'], 'lastname':form['lastname']})
 
 
 def logout(request):
@@ -109,7 +113,8 @@ def contact_user(request, uname):
         return redirect('/')
     
     form = UserContactForm()
-    return TemplateResponse(request, 'contact_user.html', {'usr':receiver, 'subject':form['subject'], 'message':form['message']})
+    return TemplateResponse(request, 'contact_user.html', 
+                            {'usr':receiver, 'subject':form['subject'], 'message':form['message']})
  
 
 #to avoid void ct increments on page reloads and post requests
@@ -650,3 +655,20 @@ def discussion_search(research):
 
 def transportation_search(request):
     pass
+
+
+
+#qr code
+import urllib
+def event_qrcode(request, event_id):
+    auth_user = request.user
+    event = Event.objects.get(id=event_id)
+    poster = event.posted_by
+    if (auth_user != poster):
+        raise Http404
+    
+    qrurl = "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl="
+    qrurl += urllib.quote("http://127.0.0.1:8000/events/"+str(event_id)+"/")
+    return TemplateResponse(request, 'details/event_qrcode.html',
+                            {'qrsrc':qrurl, 'event':event})
+    
