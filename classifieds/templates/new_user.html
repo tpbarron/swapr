@@ -4,14 +4,59 @@
 {% block title %}login{% endblock %}
 
 {% block css %}
-	<!-- <link href="{{STATIC_URL}}css/home_style.css" rel="stylesheet" type="text/css" /> -->
+	<style type="text/css">
+		#viewer {
+			width:800px;
+			margin:auto;
+			margin-top:20px;
+		}
+		#id_firstname, #id_lastname, #id_email, #id_password {
+			width:33%;
+			margin-bottom:10px;
+		}
+		
+		#id_firstname, #id_lastname, #id_email, #id_password {
+			line-height:22px;
+			font-size:14px;
+			
+			padding:10px;
+		
+			border:2px solid silver;
+	
+			-moz-box-shadow: 0px 0px 0px #888;
+			-webkit-box-shadow: 0px 0px 0px #888;
+			box-shadow: 0px 0px 0px #888;
+			-o-box-shadow: 0px 0px 0px #888;
+			
+			-webkit-transition: -webkit-box-shadow 250ms, border 250ms;
+			-moz-transition: -moz-box-shadow 250ms, border 250ms;
+			transition: box-shadow 250ms, border 250ms;
+			-o-transition: -o-box-shadow 250ms, border 250ms;
+		}
+		#id_firstname:focus, #id_lastname:focus, #id_email:focus, #id_password:focus {
+			-moz-box-shadow: 0px 5px 5px #888;
+			-webkit-box-shadow: 0px 5px 5px #888;
+			box-shadow: 0px 5px 5px #888;
+			-o-box-shadow: 0px 5px 5px #888;
+			
+			border:2px solid black;
+		}	
+	</style>
 {% endblock %}
 
 {% block content %} 
 <div id="viewer">
 	<h2>Are you ready to save some money!?!?!</h2>
 	<form id="new_user_form" action="." method="post">{% csrf_token %}
-		{{ form.as_p }}
+		<p>First name</p>
+		{{firstname}}
+		<p>Last name</p>
+		{{lastname}}
+		<p>Email</p>
+		{{email}}
+		<p>Password</p>
+		{{password}}
+		<br />
 		<input type="submit" value="Submit" />
 	</form>	
 </div>
