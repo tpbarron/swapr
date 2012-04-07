@@ -1,11 +1,14 @@
 $(document).ready(function() {
 	
-	var map, geocoder;
+	var map, geocoder, directionsDisplay, directionsService;
+		
 	initialize();
 	codeAddress();
 	geolocate();
 	
 	function initialize() {
+		directionsDisplay = new google.maps.DirectionsRenderer();
+		directionsService = new google.maps.DirectionsService();
 	    geocoder = new google.maps.Geocoder();
 		var myOptions = {
 	      center: new google.maps.LatLng(38.848973, -104.826492),
@@ -13,6 +16,7 @@ $(document).ready(function() {
 	      mapTypeId: google.maps.MapTypeId.ROADMAP
 	    };
 	    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	    directionsDisplay.setMap(map);
 	}
 	
 	function codeAddress(locText) {
@@ -54,17 +58,58 @@ $(document).ready(function() {
 	}
 	
 	function reverseGeocode(lat, lng) {
-		$.jsonp({
-			url:'http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng+'&sensor=false', 
-			callback: "callback",
-			success: reverseGeocodeSuccess
+		$.ajax({
+			url:'http://127.0.0.1:8000/events/ajax/reversegeocode?lat='+lat+'&lng='+lng,
+			success:function(data) {
+				console.log(data);
+				if (data != "failure") {
+					$("#direction_from_input").val(data);
+				} else {
+					geoError();
+				}
+			},
+			error: geoError
 		});
 	}
 	
-	function reverseGeocodeSuccess(data) {
-		console.log("hello");
-		console.log(data);
-		//results.address_components.formatted_address
+	
+	function calcRoute() {
+		$("#directions_detail_list").empty();
+		
+		var start = $("#direction_from_input").val();
+		var end = $("#direction_to_input").val();
+		var travel_mode = $("#travel_mode").val();
+		console.log(travel_mode);
+		var request = {
+			origin: start,
+			destination: end,
+			travelMode: google.maps.DirectionsTravelMode[travel_mode]	
+		};
+		directionsService.route(request, function(response, status) {
+			if (status == google.maps.DirectionsStatus.OK) {
+				directionsDisplay.setDirections(response);
+				showSteps(response);
+			}
+		});
 	}
+	
+	/* modified code from google example 
+	 * https://google-developers.appspot.com/maps/documentation/javascript/examples/directions-complex
+	 */
+	function showSteps(directionResult) {
+		var myRoute = directionResult.routes[0].legs[0];
+
+		for ( var i = 0; i < myRoute.steps.length; i++) {
+			var text = myRoute.steps[i].instructions;
+			$("#directions_detail_heading").show();
+			$("#directions_detail_list").append(
+					'<li class="direction">' + text + '</li>');
+		}
+	}
+	
+	$('#direction_submit').bind('click', function(e) {
+		e.preventDefault();
+		calcRoute();
+	});
 	
 });
