@@ -15,7 +15,7 @@ from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.core import serializers
 from django.http import Http404
 
-
+from CC_Classifieds import settings
 
 #static about view
 def about(request):
@@ -152,9 +152,9 @@ def emailPoster(request, obj, url_trail):
     post_user_email = post_user.email
     auth_user = request.user
     auth_user_name = auth_user.first_name + " " + auth_user.last_name
-    url = "127.0.0.1:8000/"+url_trail
+    url = settings.DOMAIN+"/"+url_trail
     
-    host = '127.0.0.1:8000'
+    host = settings.DOMAIN #'127.0.0.1:8000'
     subject = auth_user_name + " commented on your post!"
     to = post_user_email
     sender = "barron.trevor@gmail.com"
@@ -175,9 +175,9 @@ def emailConfirmation(user):
     user_email = user.email
     user_name = user.first_name + " " + user.last_name
     
-    confirmation_url = "127.0.0.1:8000/confirmation/" + user.username
+    confirmation_url = settings.DOMAIN+"/confirmation/" + user.username
     
-    host = '127.0.0.1:8000'
+    host = settings.DOMAIN#'127.0.0.1:8000'
     
     subject = user_name + " commented on your post!"
     to = user_email
@@ -198,7 +198,7 @@ def emailConfirmation(user):
 
     
 def emailPrivateMessage(receiver, sendr, subject, message):
-    host = '127.0.0.1:8000'
+    host = settings.DOMAIN #'127.0.0.1:8000'
     
     subject = sendr.first_name + " " + sendr.last_name + " sent you a message" 
     to = receiver.email
@@ -635,7 +635,6 @@ def transportation(request):
 
 
 
-
 # search functions
 def event_search(request):
     pass
@@ -667,7 +666,7 @@ def event_qrcode(request, event_id):
         raise Http404
     
     qrurl = "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl="
-    qrurl += urllib.quote("http://127.0.0.1:8000/events/"+str(event_id)+"/")
+    qrurl += urllib.quote("http://"+settings.DOMAIN+"/events/"+str(event_id)+"/")
     return TemplateResponse(request, 'details/event_qrcode.html',
                             {'qrsrc':qrurl, 'event':event})
     
