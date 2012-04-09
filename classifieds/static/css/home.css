@@ -1,0 +1,20 @@
+#recent_activity {
+	margin-top:20px;
+}
+
+.items ul {
+	list-style-type:none;
+}
+
+.items a {
+	color:silver;
+}
+.items a:hover {
+	color:black;
+}
+
+
+#cclogo {
+	float:right;
+	bottom: 0;
+}
