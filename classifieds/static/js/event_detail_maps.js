@@ -3,9 +3,11 @@ $(document).ready(function() {
 	var map, geocoder, directionsDisplay, directionsService;
 		
 	initialize();
-	codeAddress();
 	geolocate();
+	codeAddress();
 	
+	
+	/* initializes google map */
 	function initialize() {
 		directionsDisplay = new google.maps.DirectionsRenderer();
 		directionsService = new google.maps.DirectionsService();
@@ -19,8 +21,11 @@ $(document).ready(function() {
 	    directionsDisplay.setMap(map);
 	}
 	
+	/* sets map given address of event */
 	function codeAddress(locText) {
-	    geocoder.geocode( { 'address': $("#detail_location").text()}, function(results, status) {
+	    geocoder.geocode({ 
+	    	'address': $("#detail_location").text()
+	    }, function(results, status) {
 	        if (status == google.maps.GeocoderStatus.OK) {
 	        	map.setCenter(results[0].geometry.location);
 	        	var marker = new google.maps.Marker({
@@ -33,14 +38,14 @@ $(document).ready(function() {
 	    });
 	}
 	
+	/* locates user using native geolocation if available */
 	function geolocate() {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
 		} else {
-			error('not supported');
+			console.log('geolocation not supported');
 		}
 	}
-	
 	function geoSuccess(pos) {
 		var lat = pos.coords.latitude;
 		var lng = pos.coords.longitude;
@@ -52,11 +57,9 @@ $(document).ready(function() {
 		console.log(location);
 		reverseGeocode(lat, lng);
 	}
-	
 	function geoError() {
 		$("#direction_from").html("From - <b>please enter your location</b>");
 	}
-	
 	function reverseGeocode(lat, lng) {
 		$.ajax({
 			url:'http://127.0.0.1:8000/events/ajax/reversegeocode?lat='+lat+'&lng='+lng,
@@ -73,6 +76,11 @@ $(document).ready(function() {
 	}
 	
 	
+	$('#direction_submit').bind('click', function(e) {
+		e.preventDefault();
+		calcRoute();
+	});
+	/* called when the user decides to get directions */
 	function calcRoute() {
 		$("#directions_detail_list").empty();
 		
@@ -106,10 +114,5 @@ $(document).ready(function() {
 					'<li class="direction">' + text + '</li>');
 		}
 	}
-	
-	$('#direction_submit').bind('click', function(e) {
-		e.preventDefault();
-		calcRoute();
-	});
 	
 });
