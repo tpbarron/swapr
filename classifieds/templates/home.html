@@ -4,13 +4,14 @@
 {% block title %}Home{% endblock %}
 
 {% block css %}
+	<link href="{{STATIC_URL}}css/home.css" rel="stylesheet" type="text/css" />	
 {% endblock %}
 
 {% block content %} 
 	<div id="viewer">
 		<div id="recent_activity">
 			{% if user.is_authenticated %}
-			<div id="books">
+			<div id="books" class="items" >
 				<h2>Books</h2>
 				<ul>
 					{% for b in user.books.all %}
@@ -26,7 +27,7 @@
 				</ul>
 			</div>
 			
-			<div id="events">
+			<div id="events" class="items">
 				<h2>Events</h2>
 				<ul>
 					{% for b in user.events.all %}
@@ -42,7 +43,7 @@
 				</ul>
 			</div>
 			
-			<div id="products">
+			<div id="products" class="items">
 				<h2>Sales</h2>
 				<ul>
 					{% for b in user.products.all %}
@@ -58,7 +59,7 @@
 				</ul>
 			</div>
 			
-			<div id="breaks">
+			<div id="breaks" class="items">
 				<h2>Breaks</h2>
 				<ul>
 					{% for b in user.breaks.all %}
@@ -74,7 +75,7 @@
 				</ul>
 			</div>
 			
-			<div id="discussions">
+			<div id="discussions" class="items">
 				<h2>Discussions</h2>
 				<ul>
 					{% for b in user.discussions.all %}
@@ -90,7 +91,7 @@
 				</ul>
 			</div>
 
-			<div id="transportation">
+			<div id="transportation" class="items">
 				<h2>Transportation</h2>
 				<ul>
 					{% for b in user.transportation.all %}
@@ -112,6 +113,7 @@
 			
 			<!-- what other have done on the users items -->
 		</div>
+		<img id="cclogo" src="http://www.coloradocollege.edu/dotAsset/b141b749-8c8c-4eab-9b41-a8ecbb64ce2b.png" alt="cclogo" />
 	</div>
 {% endblock %}
 
