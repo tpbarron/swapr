@@ -107,6 +107,7 @@ class Break(Entry):
     class Meta:
         verbose_name = "Break"
         verbose_name_plural = "Breaks"
+        url = "breaks"
     
         
     
@@ -114,8 +115,9 @@ class Product(Entry):
     posted_by = models.ForeignKey(User, related_name='products')
     
     class Meta:
-        verbose_name = "Product"
-        verbose_name_plural = "Products"
+        verbose_name = "For Sale"
+        verbose_name_plural = "For Sale"
+        url = "sales"
     
         
     
@@ -140,6 +142,7 @@ class Discussion(Entry):
     class Meta:
         verbose_name = "Discussion"
         verbose_name_plural = "Discussions"
+        url = "discussions"
         
         
 
@@ -150,6 +153,7 @@ class Book(Entry):
     class Meta:
         verbose_name = "Book"
         verbose_name_plural = "Books"
+        url = "books"
     
 
 class Event(Entry):
@@ -160,6 +164,7 @@ class Event(Entry):
     class Meta:
         verbose_name = "Event"
         verbose_name_plural = "Events"
+        url = "events"
     
         
 class Transportation(Entry):
@@ -169,6 +174,7 @@ class Transportation(Entry):
     class Meta:
         verbose_name = "Ride"
         verbose_name_plural = "Rides"
+        url = "transportation"
 
 # upvote = 1
 # downvote = 0

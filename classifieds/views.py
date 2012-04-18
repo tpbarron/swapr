@@ -356,7 +356,8 @@ def product_detail(request, prod_id):
         logView(request, prod_detail)
         
     form = CommentForm()
-    return TemplateResponse(request, 'details/product_detail.html',{'product':prod_detail, 'form':form['comment'], 'comments':comments})
+    return TemplateResponse(request, 'details/product_detail.html',
+                            {'product':prod_detail, 'form':form['comment'], 'comments':comments})
 
 def transportation_detail(request, trans_id):
     trans_detail = Transportation.objects.get(id=trans_id)
@@ -379,7 +380,8 @@ def transportation_detail(request, trans_id):
         logView(request, trans_detail)
         
     form = CommentForm()
-    return TemplateResponse(request, 'details/trans_detail.html',{'trans':trans_detail, 'form':form['comment'], 'comments':comments})
+    return TemplateResponse(request, 'details/trans_detail.html',
+                            {'trans':trans_detail, 'form':form['comment'], 'comments':comments})
 
 
 
@@ -555,7 +557,7 @@ def breaks(request):
     breaks = paginate(request, paginator)
     
     return TemplateResponse(request, 'lists/breaks.html',
-                            {'breaks':breaks, 'title': 'Breaks', 'url':'breaks'})
+                            {'breaks':breaks, 'title': Break.Meta.verbose_name, 'url':Break.Meta.url})
 
 def products(request):
     product_list = Product.objects.all()
@@ -564,7 +566,7 @@ def products(request):
     products = paginate(request, paginator)
     
     return TemplateResponse(request, 'lists/sales.html',
-                            {'sales':products, 'title': 'For Sale', 'url':'sales'})
+                            {'sales':products, 'title': Product.Meta.verbose_name, 'url':Product.Meta.url})
     
 def books(request):
     book_list = Book.objects.all()
@@ -573,7 +575,8 @@ def books(request):
     books = paginate(request, paginator)
     
     return TemplateResponse(request, 'lists/books.html',
-                            {'books':books, 'title': 'Books', 'categories':category_options, 'url':'books', 'category':False})
+                            {'books':books, 'title': Book.Meta.verbose_name, 'categories':category_options, 'url':Book.Meta.url, 'category':False})
+
 
 def book_category(request, cat):
     book_list = Book.objects.filter(category=cat)
@@ -582,7 +585,7 @@ def book_category(request, cat):
     books = paginate(request, paginator)
     
     return TemplateResponse(request, 'lists/books.html',
-                            {'books':books, 'title': 'Books', 'categories':category_options, 'url':'books', 'category':True})
+                            {'books':books, 'title': Book.Meta.verbose_name, 'categories':category_options, 'url':Book.Meta.url, 'category':True})
 
 def events(request):
     event_list = Event.objects.all()
@@ -590,7 +593,7 @@ def events(request):
     
     events = paginate(request, paginator)
     
-    return TemplateResponse(request, 'lists/events.html',{'events':events, 'title': 'Events', 'url':'events'})
+    return TemplateResponse(request, 'lists/events.html',{'events':events, 'title': Book.Meta.verbose_name, 'url':Event.Meta.url})
 
 
 def events_json(request):
@@ -610,7 +613,7 @@ def events_json(request):
 
 def events_calendar(request):
     return TemplateResponse(request, 'lists/events_calendar.html', 
-                            {'title':'Events', 'url':'events'})
+                            {'title':Book.Meta.verbose_name, 'url':Event.Meta.url})
 
 def discussions(request):
     disc_list = Discussion.objects.all()
@@ -619,7 +622,7 @@ def discussions(request):
     discs = paginate(request, paginator)
     
     return TemplateResponse(request, 'lists/discussions.html',
-                            {'discussions':discs, 'title': 'Discussions', 'url':'discussions'})
+                            {'discussions':discs, 'title': Discussion.Meta.verbose_name, 'url':Discussion.Meta.url})
 
 def transportation(request):
     trans_list = Transportation.objects.all()
@@ -628,7 +631,7 @@ def transportation(request):
     trans = paginate(request, paginator)
     
     return TemplateResponse(request, 'lists/transportation.html',
-                            {'trans':trans, 'title': 'Transportation', 'url':'transportation'})
+                            {'trans':trans, 'title': Transportation.Meta.verbose_name, 'url':Transportation.Meta.url})
 
 
 
