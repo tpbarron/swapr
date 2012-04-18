@@ -2,6 +2,10 @@
 
 {% block title %}{{disc.title}}{% endblock %}
 
+{% block subcss %}
+	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/vote.css" />
+{% endblock %}
+
 {% block detail %}
 	<div id="detail">
 		<h2>{{disc.title}}</h2>
