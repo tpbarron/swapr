@@ -35,6 +35,12 @@ class Entry(models.Model):
             return self.description
         else:
             return self.description[0:80] + "..."
+        
+    class Meta:
+        verbose_name = "Entry"
+        verbose_name_plural = "Entries"
+    
+        
     
 category_options = (
     ('anthropology', 'Anthropology'),
@@ -82,6 +88,11 @@ class View(models.Model):
     entry = models.ForeignKey(Entry, related_name='views')    
     unique = models.BooleanField()
 
+    class Meta:
+        verbose_name = "View"
+        verbose_name_plural = "Views"
+    
+        
         
 class Break(Entry):
     break_name = models.CharField(max_length=100, choices=break_options)
@@ -92,10 +103,21 @@ class Break(Entry):
             if b[0] == self.break_name:
                 return b[1]
         return self.break_name
+    
+    class Meta:
+        verbose_name = "Break"
+        verbose_name_plural = "Breaks"
+    
         
     
 class Product(Entry):
     posted_by = models.ForeignKey(User, related_name='products')
+    
+    class Meta:
+        verbose_name = "Product"
+        verbose_name_plural = "Products"
+    
+        
     
     
 class Discussion(Entry):
@@ -106,39 +128,70 @@ class Discussion(Entry):
     def get_votes(self):
         return self.votes.filter(vote=1).count() - self.votes.filter(vote=0).count()
             
+    def is_vote_active(self):
+        usr = self.posted_by
+        yesterday = datetime.datetime.now() - datetime.timedelta(days=1)
+        
+        if (self.votes.filter(user=usr, time__gt=yesterday).exists()):
+            return "inactive" # if the user has voted in the last day on this discussion
+        else:
+            return "active" # if the uer has not voted in the last day
+        
+    class Meta:
+        verbose_name = "Discussion"
+        verbose_name_plural = "Discussions"
+        
+        
 
 class Book(Entry):
     posted_by = models.ForeignKey(User, related_name='books')
     category = models.CharField(max_length=25, choices=category_options)
+
+    class Meta:
+        verbose_name = "Book"
+        verbose_name_plural = "Books"
+    
 
 class Event(Entry):
     date = models.DateField()
     location = models.CharField(max_length=100)
     posted_by = models.ForeignKey(User, related_name='events')
 
-
+    class Meta:
+        verbose_name = "Event"
+        verbose_name_plural = "Events"
+    
+        
 class Transportation(Entry):
     date = models.DateField()
     posted_by = models.ForeignKey(User, related_name='transportation')
        
- 
+    class Meta:
+        verbose_name = "Ride"
+        verbose_name_plural = "Rides"
 
-
+# upvote = 1
+# downvote = 0
 class Vote(models.Model):
     discussion = models.ForeignKey(Discussion, related_name='votes')
     user = models.ForeignKey(User, related_name='votes')
     time = models.DateTimeField()
     vote = models.SmallIntegerField()
 
-
+    class Meta:
+        verbose_name = "Vote"
+        verbose_name_plural = "Votes"
+    
 
 
     
 
 ##forms 
 class LoginForm(forms.Form):
-    email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput())
+    email = forms.EmailField(
+                widget=forms.TextInput(attrs={'id' : 'form_p'}))
+    password = forms.CharField(
+                widget=forms.PasswordInput(attrs={'id' : 'form_p'}))
     
     def clean(self):
         cleaned_data = self.cleaned_data
@@ -151,21 +204,28 @@ class LoginForm(forms.Form):
         return cleaned_data
     
 class NewUserForm(LoginForm):
-    firstname = forms.CharField(max_length=30)
-    lastname = forms.CharField(max_length=30)
+    firstname = forms.CharField(max_length=30,
+                widget=forms.TextInput(attrs={'id' : 'form_p'}))
+    lastname = forms.CharField(max_length=30,
+                widget=forms.TextInput(attrs={'id' : 'form_p'}))
     
 #to contact a specific user    
 class UserContactForm(forms.Form):
-    subject = forms.CharField()
-    message = forms.CharField(widget=forms.Textarea)
+    subject = forms.CharField(
+                widget=forms.TextInput(attrs={'id' : 'form_p'}))
+    message = forms.CharField(
+                widget=forms.Textarea(attrs={'id' : 'form_textarea'}))
   
 
 class AddForm(forms.Form):
-    title = forms.CharField(max_length=100)
-    desc = forms.CharField(widget=forms.Textarea)
+    title = forms.CharField(max_length=100,
+                widget=forms.TextInput(attrs={'id' : 'form_p'}))
+    desc = forms.CharField(
+                widget=forms.Textarea(attrs={'id' : 'form_textarea'}))
     
 class BreakAddForm(AddForm):
-    break_name = forms.ChoiceField(choices=break_options)
+    break_name = forms.ChoiceField(choices=break_options,
+                widget=forms.TextInput(attrs={'id' : 'form_p'}))
 
 class ProductAddForm(AddForm):
     pass
@@ -174,11 +234,14 @@ class DiscussionAddForm(AddForm):
     pass
 
 class BookAddForm(AddForm):
-    category = forms.ChoiceField(choices=category_options)
+    category = forms.ChoiceField(choices=category_options,
+                widget=forms.Select(attrs={'id' : 'form_choice'}))
     
 class EventAddForm(AddForm):
-    date = forms.DateField()
-    location = forms.CharField(max_length=100)
+    date = forms.DateField(
+                widget=forms.TextInput(attrs={'id' : 'form_p'}))
+    location = forms.CharField(max_length=100,
+                widget=forms.TextInput(attrs={'id' : 'form_p'}))
     
 class TransportationAddForm(AddForm):
     date = forms.DateField()
