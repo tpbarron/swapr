@@ -7,19 +7,22 @@ $(document).ready(function() {
 	 * downvote = 0
 	 */
 	
-	$(".vote a").bind('click', function(e) {
+	$(".vote span").bind('click', function(e) {
 		e.preventDefault();
 		console.log(this);
-		var id = $(this).attr('id');
-		if ($(this).hasClass("up")) {
-			vote = 1;
-		} else if ($(this).hasClass("down")) {
-			vote = 0;
-		}
 		
-		updateVoteCount(vote, id);
-		sendToServer(vote, id);
-		setDisabled();
+		var id = $(this).attr('id').substring(2);
+		console.log(id);
+		if ($(this).parent().hasClass("active")) {
+			if ($(this).hasClass("up")) {
+				vote = 1;
+			} else if ($(this).hasClass("down")) {
+				vote = 0;
+			}
+			updateVoteCount(vote, id);
+			sendToServer(vote, id);
+			setDisabled($(this).parent());
+		} 
 	});
 	
 	function updateVoteCount(vote, id) {
@@ -40,8 +43,8 @@ $(document).ready(function() {
 		
 	}
 	
-	function setDisabled() {
-		
+	function setDisabled(parent) {
+		parent.removeClass("active").addClass("inactive");
 	}
 	
 	
