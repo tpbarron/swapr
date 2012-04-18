@@ -160,6 +160,12 @@ nav ul > li {
 	color:gold;
 }
 
+#viewer {
+	width:1000px;
+	margin:auto;
+	margin-top:20px;
+}
+
 /* ==|== non-semantic helper classes ======================================== */
 .ir { display: block; border: 0; text-indent: -999em; overflow: hidden; background-color: transparent; background-repeat: no-repeat; text-align: left; direction: ltr; }
 .ir br { display: none; }

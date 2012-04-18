@@ -1,3 +1,9 @@
+#add_form_container {
+	width:45%;
+	float:left;
+	padding-bottom:10px;
+}
+
 #map_canvas {
 	float:right;
 	width:400px;
