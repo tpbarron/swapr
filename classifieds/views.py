@@ -296,7 +296,8 @@ def book_detail(request, book_id):
         logView(request, book_detail)
         
     form = CommentForm()
-    return TemplateResponse(request, 'details/book_detail.html',{'book':book_detail, 'form':form['comment'], 'comments':comments})
+    return TemplateResponse(request, 'details/book_detail.html',
+                            {'book':book_detail, 'form':form['comment'], 'comments':comments})
 
 def discussion_detail(request, disc_id):
     disc_detail = Discussion.objects.get(id=disc_id)
@@ -319,7 +320,8 @@ def discussion_detail(request, disc_id):
         logView(request, disc_detail)
         
     form = CommentForm()
-    return TemplateResponse(request, 'details/discussion_detail.html',{'disc':disc_detail, 'form':form['comment'], 'comments':comments})
+    return TemplateResponse(request, 'details/discussion_detail.html',
+                            {'disc':disc_detail, 'form':form['comment'], 'comments':comments})
 
 def event_detail(request, event_id):
     event_detail = Event.objects.get(id=event_id)
@@ -342,7 +344,8 @@ def event_detail(request, event_id):
         logView(request, event_detail)
         
     form = CommentForm()
-    return TemplateResponse(request, 'details/event_detail.html',{'event':event_detail, 'form':form['comment'], 'comments':comments})
+    return TemplateResponse(request, 'details/event_detail.html',
+                            {'event':event_detail, 'form':form['comment'], 'comments':comments})
 
 def product_detail(request, prod_id):
     prod_detail = Product.objects.get(id=prod_id)
@@ -415,7 +418,7 @@ def break_add(request):
                 description = b_text,
             )
         
-            return redirect('/breaks/'+str(b.id))
+            return redirect(b.get_absolute_url())
     
     form = BreakAddForm()
     return TemplateResponse(request, 'add/break_add.html',
@@ -438,7 +441,7 @@ def book_add(request):
                 category = cat,
             )
                 
-            return redirect('/books/'+str(b.id))
+            return redirect(b.get_absolute_url())
     form = BookAddForm()
     return TemplateResponse(request, 'add/book_add.html',
                             {'title':form['title'], 'desc':form['desc'], 'category':form['category']})
@@ -460,7 +463,7 @@ def product_add(request):
                 description = p_text,
             )
             
-            return redirect('/sales/'+str(b.id))
+            return redirect(b.get_absolute_url())
     
     form = ProductAddForm()
     return TemplateResponse(request, 'add/product_add.html',
@@ -480,7 +483,7 @@ def discussion_add(request):
                 description = p_text,
             )
             
-            return redirect('/discussions/'+str(p.id))
+            return redirect(p.get_absolute_url())
     
     form = DiscussionAddForm()
     return TemplateResponse(request, 'add/discussion_add.html',
@@ -508,7 +511,7 @@ def event_add(request):
                 date = p_date
             )
             
-            return redirect('/events/'+str(p.id))
+            return redirect(p.get_absolute_url())
     form = EventAddForm()
     return TemplateResponse(request, 'add/event_add.html',
                             {'title':form['title'], 'desc':form['desc'], 'date':form['date'], 'location':form['location']})
@@ -532,8 +535,9 @@ def transportation_add(request):
                 description = p_desc,
                 date = p_date
             )
+#            p.get_absolute_url()
             
-            return redirect('/transportation/'+str(p.id))
+            return redirect(p.get_absolute_url())
     
     form = TransportationAddForm()
     return TemplateResponse(request, 'add/transportation_add.html',

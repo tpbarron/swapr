@@ -109,6 +109,9 @@ class Break(Entry):
                 return b[1]
         return self.break_name
     
+    def get_absolute_url(self):
+        return "/breaks/%i/" % self.id
+    
     class Meta:
         verbose_name = "Break"
         verbose_name_plural = "Breaks"
@@ -117,6 +120,9 @@ class Break(Entry):
     
 class Product(Entry):
     posted_by = models.ForeignKey(User, related_name='products')
+    
+    def get_absolute_url(self):
+        return "/sales/%i/" % self.id
     
     class Meta:
         verbose_name = "For Sale"
@@ -142,6 +148,9 @@ class Discussion(Entry):
         else:
             return "active" # if the uer has not voted in the last day
         
+    def get_absolute_url(self):
+        return "/discussions/%i/" % self.id
+        
     class Meta:
         verbose_name = "Discussion"
         verbose_name_plural = "Discussions"
@@ -152,6 +161,9 @@ class Book(Entry):
     posted_by = models.ForeignKey(User, related_name='books')
     category = models.CharField(max_length=25, choices=category_options)
 
+    def get_absolute_url(self):
+        return "/books/%i/" % self.id
+    
     class Meta:
         verbose_name = "Book"
         verbose_name_plural = "Books"
@@ -162,6 +174,9 @@ class Event(Entry):
     location = models.CharField(max_length=100)
     posted_by = models.ForeignKey(User, related_name='events')
 
+    def get_absolute_url(self):
+        return "/events/%i/" % self.id
+    
     class Meta:
         verbose_name = "Event"
         verbose_name_plural = "Events"
@@ -171,6 +186,9 @@ class Transportation(Entry):
     date = models.DateField()
     posted_by = models.ForeignKey(User, related_name='transportation')
        
+    def get_absolute_url(self):
+        return "/transportation/%i/" % self.id
+    
     class Meta:
         verbose_name = "Ride"
         verbose_name_plural = "Rides"
@@ -193,9 +211,9 @@ class Vote(models.Model):
 ##forms 
 class LoginForm(forms.Form):
     email = forms.EmailField(
-                widget=forms.TextInput(attrs={'id' : 'form_p'}))
+                widget=forms.TextInput(attrs={'class' : 'form_p'}))
     password = forms.CharField(
-                widget=forms.PasswordInput(attrs={'id' : 'form_p'}))
+                widget=forms.PasswordInput(attrs={'class' : 'form_p'}))
     
     def clean(self):
         cleaned_data = self.cleaned_data
@@ -209,11 +227,11 @@ class LoginForm(forms.Form):
     
 class NewUserForm(LoginForm):
     firstname = forms.CharField(max_length=30,
-                widget=forms.TextInput(attrs={'id' : 'form_p'}))
+                widget=forms.TextInput(attrs={'class' : 'form_p'}))
     lastname = forms.CharField(max_length=30,
-                widget=forms.TextInput(attrs={'id' : 'form_p'}))
+                widget=forms.TextInput(attrs={'class' : 'form_p'}))
     password_confirm = forms.CharField(
-                widget=forms.PasswordInput(attrs={'id' : 'form_p'}))
+                widget=forms.PasswordInput(attrs={'class' : 'form_p'}))
     
     def clean(self):
         cleaned_data = self.cleaned_data
