@@ -5,7 +5,7 @@ Created on Feb 3, 2012
 '''
 
 from django.contrib import admin
-from CC_Classifieds.classifieds.models import *
+from swapr.classifieds.models import *
 
 class StudentAdmin(admin.ModelAdmin):
     pass

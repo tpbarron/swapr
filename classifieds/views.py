@@ -1,21 +1,22 @@
-from CC_Classifieds.classifieds.models import User, Comment, Break, BreakComment, Entry
-from CC_Classifieds.classifieds.models import Product, Discussion, Book, View
-from CC_Classifieds.classifieds.models import Event, Transportation
-from CC_Classifieds.classifieds.models import BreakAddForm, BookComment, BookAddForm, CommentForm
-from CC_Classifieds.classifieds.models import DiscussionComment, EventComment, ProductComment, TransportationComment
-from CC_Classifieds.classifieds.models import ProductAddForm, DiscussionAddForm, EventAddForm, TransportationAddForm
-from CC_Classifieds.classifieds.models import LoginForm, NewUserForm, Vote, UserContactForm, category_options
+from swapr.classifieds.models import User, Comment, Break, BreakComment, Entry
+from swapr.classifieds.models import Product, Discussion, Book, View
+from swapr.classifieds.models import Event, Transportation, Student
+from swapr.classifieds.models import BreakAddForm, BookComment, BookAddForm, CommentForm
+from swapr.classifieds.models import DiscussionComment, EventComment, ProductComment, TransportationComment
+from swapr.classifieds.models import ProductAddForm, DiscussionAddForm, EventAddForm, TransportationAddForm
+from swapr.classifieds.models import LoginForm, NewUserForm, Vote, UserContactForm, category_options
 
-import datetime
+import datetime, random, sha
 from django.template.response import TemplateResponse, HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.core import serializers
 from django.http import Http404
+from django.core.mail import send_mail
 
-from CC_Classifieds import settings
+from swapr import settings
 
 #static about view
 def about(request):
@@ -67,17 +68,38 @@ def new_user(request):
             
             print fname + " " + lname + " " + username + " " + password
            
-            u = User.objects.create_user(username,  email, password)
+            u = User.objects.create_user(username, email, password)
             u.first_name = fname
             u.last_name = lname
             u.is_active = False
             u.save()
             
-            emailConfirmation(u)
+            salt = sha.new(str(random.random())).hexdigest()[:5]
+            activation_key = sha.new(salt+u.username).hexdigest()
+            key_expires = datetime.datetime.today() + datetime.timedelta(2)
+            
+            new_student = Student(
+                    user=u,
+                    activation_key=activation_key,
+                    key_expires=key_expires)
+            new_student.save()
+            
+            
+            confirmation_url = settings.DOMAIN+"confirmation/" + new_student.activation_key
+            email_subject = "Woo hoo!! Please confirm your account at CC Swapr!"
+            email_body = "Please visit the following url to confirm your account \n" + confirmation_url
+    
+            print (email_body)
+            send_mail(email_subject,
+                      email_body,
+                      'barron.trevor@gmail.com',
+                      [new_student.user.email])        
+            
+            return redirect("/")
     
     form = NewUserForm()
     return TemplateResponse(request, 'new_user.html', 
-                            {'email':form['email'], 'password':form['password'],
+                            {'email':form['email'], 'password':form['password'], 'password_confirm':form['password_confirm'],
                              'firstname':form['firstname'], 'lastname':form['lastname']})
 
 
@@ -85,15 +107,26 @@ def logout(request):
     auth_logout(request)
     return redirect('/')
 
-def confirm_account(request, uname):
-    print (uname)
-    user=User.objects.get(username=uname)
-    user.is_active = True
-    passwd = user.password
-    user=authenticate(username=uname, password=passwd)
-    if user is not None:
-        if user.is_active:
-            auth_login(request, user)
+def confirm_account(request, key):
+    if request.user.is_authenticated():
+        return redirect('/')
+    
+    print (key)
+    student = get_object_or_404(Student, activation_key=key)
+    
+    user_account = student.user
+    user_account.is_active = True
+    user_account.save()
+    
+    print(student.user.username + " " + student.user.password)
+    print(user_account.username + " " + user_account.password)
+    
+    #uname=user_account.username
+    #passwd=user_account.password
+    #user=authenticate(username=uname, password=passwd)
+    #if user is not None:
+    #    if user.is_active:
+    #        auth_login(request, user)
             
     return redirect('/')
    
@@ -171,31 +204,7 @@ def emailPoster(request, obj, url_trail):
     #server.sendmail(sender, [to], body)
     #server.quit()
     
-def emailConfirmation(user):
-    user_email = user.email
-    user_name = user.first_name + " " + user.last_name
     
-    confirmation_url = settings.DOMAIN+"/confirmation/" + user.username
-    
-    host = settings.DOMAIN#'127.0.0.1:8000'
-    
-    subject = user_name + " commented on your post!"
-    to = user_email
-    sender = "barron.trevor@gmail.com"
-    text = "Please visit the following url to confirm your account \n" + confirmation_url
-    body = string.join((
-            "From: %s" % sender,
-            "To: %s" % to,
-            "Subject: %s" % subject,
-            "",
-            text
-        ), "\r\n")
-    
-    print(body)
-    #server = smtplib.SMTP(host)
-    #server.sendmail(sender, [to], body)
-    #server.quit()
-
     
 def emailPrivateMessage(receiver, sendr, subject, message):
     host = settings.DOMAIN #'127.0.0.1:8000'
@@ -557,7 +566,7 @@ def breaks(request):
     breaks = paginate(request, paginator)
     
     return TemplateResponse(request, 'lists/breaks.html',
-                            {'breaks':breaks, 'title': Break.Meta.verbose_name, 'url':Break.Meta.url})
+            {'breaks':breaks, 'title': "Breaks", 'url':"breaks"})
 
 def products(request):
     product_list = Product.objects.all()
@@ -566,7 +575,8 @@ def products(request):
     products = paginate(request, paginator)
     
     return TemplateResponse(request, 'lists/sales.html',
-                            {'sales':products, 'title': Product.Meta.verbose_name, 'url':Product.Meta.url})
+            {'sales':products, 'title': "Sales", 'url':"sales"})
+    
     
 def books(request):
     book_list = Book.objects.all()
@@ -575,7 +585,7 @@ def books(request):
     books = paginate(request, paginator)
     
     return TemplateResponse(request, 'lists/books.html',
-                            {'books':books, 'title': Book.Meta.verbose_name, 'categories':category_options, 'url':Book.Meta.url, 'category':False})
+            {'books':books, 'title': "Books", 'categories':category_options, 'url':"books", 'category':False})
 
 
 def book_category(request, cat):
@@ -585,7 +595,7 @@ def book_category(request, cat):
     books = paginate(request, paginator)
     
     return TemplateResponse(request, 'lists/books.html',
-                            {'books':books, 'title': Book.Meta.verbose_name, 'categories':category_options, 'url':Book.Meta.url, 'category':True})
+            {'books':books, 'title': "Books", 'categories':category_options, 'url':"books", 'category':True})
 
 def events(request):
     event_list = Event.objects.all()
@@ -593,7 +603,8 @@ def events(request):
     
     events = paginate(request, paginator)
     
-    return TemplateResponse(request, 'lists/events.html',{'events':events, 'title': Book.Meta.verbose_name, 'url':Event.Meta.url})
+    return TemplateResponse(request, 'lists/events.html',
+            {'events':events, 'title': "Events", 'url':"events"})
 
 
 def events_json(request):
@@ -613,7 +624,7 @@ def events_json(request):
 
 def events_calendar(request):
     return TemplateResponse(request, 'lists/events_calendar.html', 
-                            {'title':Book.Meta.verbose_name, 'url':Event.Meta.url})
+            {'title':"Events", 'url':"events"})
 
 def discussions(request):
     disc_list = Discussion.objects.all()
@@ -622,7 +633,7 @@ def discussions(request):
     discs = paginate(request, paginator)
     
     return TemplateResponse(request, 'lists/discussions.html',
-                            {'discussions':discs, 'title': Discussion.Meta.verbose_name, 'url':Discussion.Meta.url})
+            {'discussions':discs, 'title': "Discussions", "url":"discussions"})
 
 def transportation(request):
     trans_list = Transportation.objects.all()
@@ -631,7 +642,7 @@ def transportation(request):
     trans = paginate(request, paginator)
     
     return TemplateResponse(request, 'lists/transportation.html',
-                            {'trans':trans, 'title': Transportation.Meta.verbose_name, 'url':Transportation.Meta.url})
+            {'trans':trans, 'title': "Transportation", 'url':"transportation"})
 
 
 

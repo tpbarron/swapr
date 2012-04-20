@@ -16,6 +16,11 @@ break_options = (
     ('8','Summer'),
 )
 
+class Student(models.Model):
+    user = models.OneToOneField(User)
+    activation_key = models.CharField(max_length=40)
+    key_expires = models.DateTimeField()
+
 
 class Entry(models.Model):
     title = models.CharField(max_length=100)
@@ -107,8 +112,7 @@ class Break(Entry):
     class Meta:
         verbose_name = "Break"
         verbose_name_plural = "Breaks"
-        url = "breaks"
-    
+        
         
     
 class Product(Entry):
@@ -117,8 +121,7 @@ class Product(Entry):
     class Meta:
         verbose_name = "For Sale"
         verbose_name_plural = "For Sale"
-        url = "sales"
-    
+        
         
     
     
@@ -142,7 +145,6 @@ class Discussion(Entry):
     class Meta:
         verbose_name = "Discussion"
         verbose_name_plural = "Discussions"
-        url = "discussions"
         
         
 
@@ -153,8 +155,7 @@ class Book(Entry):
     class Meta:
         verbose_name = "Book"
         verbose_name_plural = "Books"
-        url = "books"
-    
+        
 
 class Event(Entry):
     date = models.DateField()
@@ -164,8 +165,7 @@ class Event(Entry):
     class Meta:
         verbose_name = "Event"
         verbose_name_plural = "Events"
-        url = "events"
-    
+        
         
 class Transportation(Entry):
     date = models.DateField()
@@ -174,8 +174,8 @@ class Transportation(Entry):
     class Meta:
         verbose_name = "Ride"
         verbose_name_plural = "Rides"
-        url = "transportation"
-
+        
+        
 # upvote = 1
 # downvote = 0
 class Vote(models.Model):
@@ -188,8 +188,6 @@ class Vote(models.Model):
         verbose_name = "Vote"
         verbose_name_plural = "Votes"
     
-
-
     
 
 ##forms 
@@ -214,24 +212,40 @@ class NewUserForm(LoginForm):
                 widget=forms.TextInput(attrs={'id' : 'form_p'}))
     lastname = forms.CharField(max_length=30,
                 widget=forms.TextInput(attrs={'id' : 'form_p'}))
+    password_confirm = forms.CharField(
+                widget=forms.PasswordInput(attrs={'id' : 'form_p'}))
+    
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        email = cleaned_data.get("email")
+        if email:
+            i = email.rfind(".")
+            if (email[i:] != ".edu"):
+                raise forms.ValidationError("Must use .edu email")
+        p1 = cleaned_data.get("password")
+        p2 = cleaned_data.get("password_confirm")
+        if (p1 != p2):
+            raise forms.ValidationError("Passwords must match")
+        
+        return cleaned_data
     
 #to contact a specific user    
 class UserContactForm(forms.Form):
     subject = forms.CharField(
-                widget=forms.TextInput(attrs={'id' : 'form_p'}))
+                widget=forms.TextInput(attrs={'class' : 'form_p'}))
     message = forms.CharField(
-                widget=forms.Textarea(attrs={'id' : 'form_textarea'}))
+                widget=forms.Textarea(attrs={'class' : 'form_textarea'}))
   
 
 class AddForm(forms.Form):
     title = forms.CharField(max_length=100,
-                widget=forms.TextInput(attrs={'id' : 'form_p'}))
+                widget=forms.TextInput(attrs={'class' : 'form_p'}))
     desc = forms.CharField(
-                widget=forms.Textarea(attrs={'id' : 'form_textarea'}))
+                widget=forms.Textarea(attrs={'class' : 'form_textarea'}))
     
 class BreakAddForm(AddForm):
     break_name = forms.ChoiceField(choices=break_options,
-                widget=forms.TextInput(attrs={'id' : 'form_p'}))
+                widget=forms.TextInput(attrs={'class' : 'form_p'}))
 
 class ProductAddForm(AddForm):
     pass
@@ -241,16 +255,17 @@ class DiscussionAddForm(AddForm):
 
 class BookAddForm(AddForm):
     category = forms.ChoiceField(choices=category_options,
-                widget=forms.Select(attrs={'id' : 'form_choice'}))
+                widget=forms.Select(attrs={'class' : 'form_choice'}))
     
 class EventAddForm(AddForm):
     date = forms.DateField(
-                widget=forms.TextInput(attrs={'id' : 'form_p'}))
+                widget=forms.TextInput(attrs={'class' : 'form_p'}))
     location = forms.CharField(max_length=100,
-                widget=forms.TextInput(attrs={'id' : 'form_p'}))
+                widget=forms.TextInput(attrs={'class' : 'form_p'}))
     
 class TransportationAddForm(AddForm):
-    date = forms.DateField()
+    date = forms.DateField(
+                widget=forms.TextInput(attrs={'class' : 'form_p'}))
       
     
 #comment form
