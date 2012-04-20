@@ -12,13 +12,15 @@
 	<h2>Are you ready to save some money!?!?!</h2>
 	<form id="new_user_form" action="." method="post">{% csrf_token %}
 		<p>First name</p>
-		{{firstname}}
+		{{ firstname }}
 		<p>Last name</p>
-		{{lastname}}
+		{{ lastname }}
 		<p>Email</p>
-		{{email}}
+		{{ email }}
 		<p>Password</p>
-		{{password}}
+		{{ password }}
+		<p>Confirm Password</p>
+		{{ password_confirm }}
 		<br />
 		<input type="submit" value="Submit" />
 	</form>	

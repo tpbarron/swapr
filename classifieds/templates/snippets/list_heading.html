@@ -2,8 +2,8 @@
 	<div id="item_add_left"><h2>{{ title }}</h2></div>
 	<div id="item_add_right">
 	{% if user.is_authenticated %}
-		<a id="item_add_link" href="/{{url}}/add/">Add a new item</a>
-		<form id="search_form" method="GET" action="/{{url}}/search/">
+		<a id="item_add_link" href="/{{ url }}/add/">Add a new item</a>
+		<form id="search_form" method="GET" action="/{{ url }}/search/">
 			<input id="searchbox" name="q" type="search" value="search {{ title|lower }}" />
 		</form>
 	{% else %}

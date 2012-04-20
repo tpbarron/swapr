@@ -12,24 +12,18 @@
 	<div id="items">
 	{% for disc in discussions.object_list %}
 		<div class="item">
-			<div class="item_left">
-				<h3 class="item_title"><a href="{{disc.id}}">{{disc.title}}</a></h3>
-	      		<p class="item_posted">{{disc.posted_by.first_name}}</p>
-			</div>
-	      	<div class="item_right">
-		      	<p class="item_description">{{disc.get_short_description}}</p>     
-		      	{% include "snippets/vote.html" with d=disc %}
-	      	</div>
+			<h3 class="item_title"><a href="{{disc.id}}">{{disc.title}}</a></h3>
+	      	<p class="item_posted">{{disc.posted_by.first_name}}</p>
+			<p class="item_description">{{disc.get_short_description}}</p>     
+		    {% include "snippets/vote.html" with d=disc %}
 	      	<!--<p>views: {{disc.get_num_unique_views}}</p>  -->
 	    </div>
 	    <br />
     {% endfor %}
     </div>
-    <br />
     
-    <div class="pagination">
-		{% include "snippets/pagination.html" with obj=discussions %}
-	</div>	
+    {% include "snippets/pagination.html" with obj=discussions %}
+	
 {% endblock %}
 
 {% block javascript %}

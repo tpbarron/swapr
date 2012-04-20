@@ -1,13 +1,13 @@
-<span class="step-links">
+<div id="step_links">
     {% if obj.has_previous %}
-        <a href="?page={{ obj.previous_page_number }}">previous</a>
+        <a href="?page={{ obj.previous_page_number }}"><img src="{{ STATIC_URL }}img/prev_icon.png" alt="prev" /></a> \\
     {% endif %}
 
     <span class="current">
-        Page {{ obj.number }} of {{ obj.paginator.num_pages }}.
+        Page {{ obj.number }} of {{ obj.paginator.num_pages }}
     </span>
 
     {% if obj.has_next %}
-        <a href="?page={{ obj.next_page_number }}">next</a>
+        \\ <a href="?page={{ obj.next_page_number }}"><img src="{{ STATIC_URL }}img/next_icon.png" alt="next" /></a>
     {% endif %}
-</span>
+</div>

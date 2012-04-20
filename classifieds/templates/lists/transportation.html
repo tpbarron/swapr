@@ -11,24 +11,16 @@
 	<div id="items">
 	{% for t in trans.object_list %}
 		<div class="item">
-			<div class="item_left">
-				<h3 class="item_title"><a href="{{t.id}}">{{t.title}}</a></h3>
-	      		<p class="item_posted">{{t.posted_by.first_name}}</p>
-			</div>
-	      	<div class="item_right">
-		      	<p class="item_description">{{t.get_short_description}}</p>
-		      	<p class="item_date">{{t.date}}</p>
-	      	</div>
+			<h3 class="item_title"><a href="{{t.id}}">{{t.title}}</a></h3>
+	      	<p class="item_posted">{{t.posted_by.first_name}}</p>
+			<p class="item_description">{{t.get_short_description}}</p>
+		    <p class="item_date">{{t.date}}</p>
 	      	<!--<p>views: {{t.get_num_unique_views}}</p>  -->
 	    </div>
-	    <br />
     {% endfor %}
-	<br />
 	
-	<div class="pagination">
-		{% include "snippets/pagination.html" with obj=trans %}
-	</div>
-
+	{% include "snippets/pagination.html" with obj=trans %}
+	
 {% endblock %}
 
 {% block javascript %}

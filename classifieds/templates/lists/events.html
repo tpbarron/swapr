@@ -11,26 +11,18 @@
 	<div id="items">
 	{% for e in events.object_list %}
 		<div class="item">
-			<div class="item_left">
-				<h3 class="item_title"><a href="{{e.id}}">{{e.title}}</a></h3>
-	      		<p class="item_posted">{{e.posted_by.first_name}}</p>
-	      		<p class="item_date">{{e.date}}</p>
-		      	<p class="item_location">{{e.location}}</p>
-			</div>
-	      	<div class="item_right">
-	      		<p class="item_description">{{e.get_short_description}}</p>
-	      	</div>
+			<h3 class="item_title"><a href="{{ e.id }}">{{ e.title }}</a></h3>
+	      	<p class="item_posted">{{ e.posted_by.first_name }}</p>
+	      	<p class="item_date">{{ e.date }}</p>
+		    <p class="item_location">{{ e.location }}</p>
+			<p class="item_description">{{ e.get_short_description }}</p>
 	      	<!--<p>views: {{e.get_num_unique_views}}</p>  -->
 	    </div>
-	    <br />
     {% endfor %}
     </div>
-    <br />
-      
-    <div class="pagination">
-		{% include "snippets/pagination.html" with obj=events %}
-	</div>
-      
+    
+    {% include "snippets/pagination.html" with obj=events %}
+	  
 {% endblock %}
 
 {% block javascript %}
