@@ -8,8 +8,10 @@ TEMPLATE_DEBUG = DEBUG
 DOMAIN = 'http://127.0.0.1:8000/'
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    # ('Trevor Barron', 'barron.trevor@gmail.com'),
 )
+
+AUTH_PROFILE_MODULE = 'swapr.Student'
 
 MANAGERS = ADMINS
 
@@ -108,7 +110,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'CC_Classifieds.urls'
+ROOT_URLCONF = 'swapr.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -125,7 +127,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    'CC_Classifieds.classifieds',
+    'swapr.classifieds',
 )
 
 # A sample logging configuration. The only tangible logging
