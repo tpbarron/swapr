@@ -16,7 +16,7 @@
 				<ul>
 					{% for b in user.books.all %}
 					<li>
-						<a href="/books/{{b.id}}/">{{ b.title }}</a>
+						<a href="/books/{{ b.id }}/">{{ b.title }}</a>
 						{% if b.get_num_comments == 1 %}
 							{{ b.get_num_comments }} comment
 						{% else %}

@@ -3,7 +3,7 @@
 {% block title %}Discussions{% endblock %}
 
 {% block subcss %}
-	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/vote.css" />
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/vote.css" />
 {% endblock %}
 
 {% block list %} 
@@ -12,9 +12,9 @@
 	<div id="items">
 	{% for disc in discussions.object_list %}
 		<div class="item">
-			<h3 class="item_title"><a href="{{disc.id}}">{{disc.title}}</a></h3>
-	      	<p class="item_posted">{{disc.posted_by.first_name}}</p>
-			<p class="item_description">{{disc.get_short_description}}</p>     
+			<h3 class="item_title"><a href="{{ disc.get_absolute_url }}">{{ disc.title }}</a></h3>
+	      	<p class="item_posted">{{ disc.posted_by.first_name }}</p>
+			<p class="item_description">{{ disc.get_short_description }}</p>     
 		    {% include "snippets/vote.html" with d=disc %}
 	      	<!--<p>views: {{disc.get_num_unique_views}}</p>  -->
 	    </div>
@@ -27,7 +27,7 @@
 {% endblock %}
 
 {% block javascript %}
-	<script src="{{STATIC_URL}}js/vote.js" type="text/javascript"></script>
+	<script src="{{ STATIC_URL }}js/vote.js" type="text/javascript"></script>
 	{% include "snippets/search_script.html" %}
 {% endblock %}
     
