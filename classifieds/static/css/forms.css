@@ -43,4 +43,14 @@
 
 .form_choice {
 	margin-bottom:10px;
+	line-height:22px;
+	height:45px;
+}
+
+.form_submit {
+	line-height: 22px;
+	height: 45px;
+	width: 72px;
+	position:relative;
+	top:-1px;
 }

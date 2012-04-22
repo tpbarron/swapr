@@ -36,6 +36,8 @@
 	margin-right:10px;
 }
 #search_form {
+	position:relative;
+	top:-20px;
 	float:right;
 }
 #searchbox {
