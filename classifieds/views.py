@@ -1,4 +1,4 @@
-from swapr.classifieds.models import User, Comment, Break, BreakComment, Entry
+from swapr.classifieds.models import User, Break, BreakComment
 from swapr.classifieds.models import Product, Discussion, Book, View
 from swapr.classifieds.models import Event, Transportation, Student
 from swapr.classifieds.models import BreakAddForm, BookComment, BookAddForm, CommentForm
@@ -12,9 +12,9 @@ from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
-from django.core import serializers
 from django.http import Http404
 from django.core.mail import send_mail
+from django.db.models import Q
 
 from swapr import settings
 
@@ -655,23 +655,72 @@ def transportation(request):
 
 # search functions
 def event_search(request):
-    pass
+    try:
+        query = str(request.GET.get('q', '1'))
+    except ValueError:
+        query = ""
+    
+    if (query == ""):
+        redirect("/events/")
 
 def break_search(request):
-    pass
+    try:
+        query = str(request.GET.get('q', '1'))
+    except ValueError:
+        query = ""
+    
+    if (query == ""):
+        redirect("/breaks/")
 
-def product_search(research):
-    pass
+def product_search(request):
+    try:
+        query = str(request.GET.get('q', '1'))
+    except ValueError:
+        query = ""
+    
+    if (query == ""):
+        redirect("/sales/")
+        
+def book_search(request):
+    try:
+        query = str(request.GET.get('q', '1'))
+    except ValueError:
+        query = ""
+        
+    print query
+    
+    if (query == ""):
+        redirect("/books/")
+    else:
+        book_list = Book.objects.filter(
+            Q(title__contains=query) | Q(description__contains=query)
+        )
+        
+        paginator = Paginator(book_list, 5)        
+        books = paginate(request, paginator)
+        return TemplateResponse(request, 'lists/books.html',
+                {'books':books, 'title': "Books", 'categories':category_options, 'url':"books", 'category':True})
 
-def book_search(research):
-    pass
-
-def discussion_search(research):
-    pass
+    
+    
+    
+def discussion_search(request):
+    try:
+        query = str(request.GET.get('q', '1'))
+    except ValueError:
+        query = ""
+    
+    if (query == ""):
+        redirect("/discussions/")
 
 def transportation_search(request):
-    pass
-
+    try:
+        query = str(request.GET.get('q', '1'))
+    except ValueError:
+        query = ""
+    
+    if (query == ""):
+        redirect("/transportation/")
 
 
 #qr code
