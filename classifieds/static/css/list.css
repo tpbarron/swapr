@@ -6,10 +6,17 @@
 }
 
 #item_add {
+	display:box;
+	box-orient: horizontal;
 	margin-bottom:20px;
 }
+
+#item_add_left {
+	box-flex: 1;
+}
 #item_add_right {
-	float:right;
+	display:box;
+	box-orient:horizontal;
 }
 #item_add_right a {
 	text-decoration:none;
@@ -23,9 +30,7 @@
 #item_add_right a:hover {
 	color:gold;
 }
-#item_add_left {
-	float:left;
-}
+
 #item_add_link {
 	float:left;
 	margin-right:10px;
