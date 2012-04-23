@@ -5,10 +5,10 @@ DIR = os.path.abspath(os.path.dirname(__file__))
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-DOMAIN = 'http://127.0.0.1:8000/'
+DOMAIN = 'http://swapr.webfactional.com'
 
 ADMINS = (
-    # ('Trevor Barron', 'barron.trevor@gmail.com'),
+    ('Trevor Barron', 'barron.trevor@gmail.com'),
 )
 
 AUTH_PROFILE_MODULE = 'swapr.Student'
