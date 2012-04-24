@@ -24,14 +24,11 @@
 	margin-top:20px;	
 }
 #direction_from_input, #direction_to_input {
-	width:400px;
-	margin-bottom:10px;
+	width:390px;
 }
 #travel_mode {
 	margin-bottom:10px;
 }
-
-
 #directions_detail_heading {
 	display:none;
 }

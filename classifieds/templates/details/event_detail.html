@@ -3,7 +3,8 @@
 {% block title %} {{ event.title }} {% endblock %}
 
 {% block subcss %}
-	<link type="text/css" rel="stylesheet" href="{{STATIC_URL}}css/detail/event_detail.css" />
+	<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/detail/event_detail.css" />
+	<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/forms.css" />
 {% endblock %}
 
 {% block detail %}
@@ -32,18 +33,17 @@
 			<p id="direction_to">To</p>
 			<input id="direction_to_input" class="form_p" type="text" value="{{ event.location }}" />
 			Mode of travel
-			<select id="travel_mode">
+			<select id="travel_mode" class="form_choice">
 				<option value="DRIVING">Driving</option>
 				<option value="WALKING">Walking</option>
 				<option value="BICYCLING">Bicycling</option>
 			</select> 
 			<br />
-			<input id="direction_submit" type="submit" value="Route" />
+			<input id="direction_submit" class="form_submit" type="submit" value="Route" />
 		</form>
 		<div id="directions_detail">
 			<h2 id="directions_detail_heading">Directions</h2>
-			<ol id="directions_detail_list">
-			</ol>
+			<ol id="directions_detail_list"></ol>
 		</div>
 	</div>
 </div>
