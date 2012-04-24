@@ -13,9 +13,9 @@
 	<a id="item_add_link" href="/{{ url }}/add/">Add a new item</a>
 	{% else %}
 	<a id="item_add_login" href="/login/">Please login to add a item</a>
+	{% endif %}
 	<form id="search_form" method="GET" action="/{{ url }}/search/">
 		<input id="searchbox" class="form_p" name="q" type="search" value="Search {{ title|lower }}" />
 		<input class="form_submit" type="submit" value="Search" />
 	</form>
-	{% endif %}
 </div>
