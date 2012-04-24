@@ -6,18 +6,9 @@
 }
 
 #item_add {
-	display:box;
-	box-orient: horizontal;
 	margin-bottom:20px;
 }
 
-#item_add_left {
-	box-flex: 1;
-}
-#item_add_right {
-	display:box;
-	box-orient:horizontal;
-}
 #item_add_right a {
 	text-decoration:none;
 	color:silver;
@@ -45,12 +36,11 @@
 }
 
 
-
 #items {
 	position:relative;
 	width:100%;
-	top:40px;
-	margin-bottom:20px;
+	top:30px;
+	margin-bottom:50px;
 }
 
 .item {
