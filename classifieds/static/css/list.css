@@ -9,7 +9,7 @@
 	margin-bottom:20px;
 }
 
-#item_add_right a {
+#item_add a {
 	text-decoration:none;
 	color:silver;
 	
@@ -18,7 +18,7 @@
 	transition: color 250ms;
 	-o-transition: color 250ms;
 }
-#item_add_right a:hover {
+#item_add a:hover {
 	color:gold;
 }
 
