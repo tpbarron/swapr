@@ -119,6 +119,9 @@ header {
 	color:silver;
 }
 
+#beta {
+	color:red;
+}
 /*navigation*/
 nav {
 	/*float:right;*/
