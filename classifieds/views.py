@@ -628,7 +628,7 @@ def events_json(request):
 
 def events_calendar(request):
     return TemplateResponse(request, 'lists/events_calendar.html', 
-            {'title':"Events", 'url':"events"})
+            {'title':"Events Calendar", 'url':"events"})
 
 def discussions(request):
     disc_list = Discussion.objects.all()
@@ -650,9 +650,6 @@ def transportation(request):
 
 
 
-
-
-
 # search functions
 def event_search(request):
     try:
@@ -662,6 +659,7 @@ def event_search(request):
     
     if (query == ""):
         redirect("/events/")
+        
 
 def break_search(request):
     try:
@@ -687,9 +685,8 @@ def book_search(request):
     except ValueError:
         query = ""
         
-    print query
-    
     if (query == ""):
+        print("empty query")
         redirect("/books/")
     else:
         book_list = Book.objects.filter(
