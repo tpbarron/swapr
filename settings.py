@@ -11,6 +11,9 @@ ADMINS = (
     ('Trevor Barron', 'barron.trevor@gmail.com'),
 )
 
+HOST = 'localhost'
+PORT = '25'
+
 AUTH_PROFILE_MODULE = 'swapr.Student'
 
 MANAGERS = ADMINS
