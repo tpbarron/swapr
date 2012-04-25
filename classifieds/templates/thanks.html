@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Thank you{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/thanks.css" />
+{% endblock %}
+
+{% block content %} 
+	<div id="viewer">
+		<h2>Thank you!</h2>
+		<p>Thanks for creating an account at CC Swapr! Please check you email for a confirmation link.
+		Click it and you'll be ready to go! Then come back and swap some
+		<a href="/books/">books</a>, <a href="/discussions/">ideas</a>, <a href="/transportation/">rides</a>, 
+		or anything else you can think of.
+		</p>
+		
+		<img id="cclogo" src="http://www.coloradocollege.edu/dotAsset/b141b749-8c8c-4eab-9b41-a8ecbb64ce2b.png" alt="cclogo" />
+	</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

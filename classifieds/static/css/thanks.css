@@ -1,0 +1,23 @@
+#cclogo {
+	float:right;
+	bottom: 0;
+}
+
+
+#viewer h2 {
+	font-size:28px;
+}
+#viewer p {
+	font-size:24px;
+}
+#viewer a {
+	color:gold;
+	-webkit-transition: color 250ms;
+	transition:color 250ms;
+	-moz-transition: color 250ms;
+	-o-transition: color 250ms;
+}
+
+#viewer a:hover {
+	color:silver;
+}
