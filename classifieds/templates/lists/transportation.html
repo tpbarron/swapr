@@ -11,7 +11,7 @@
 	<div id="items">
 	{% for t in trans.object_list %}
 		<div class="item">
-			<h3 class="item_title"><a href="{{ t.get_absolute_url }}">{{ t.title }}</a></h3>
+			<h3 class="item_title"><a href="/{{ t.get_absolute_url }}">{{ t.title }}</a></h3>
 	      	<p class="item_posted">{{ t.posted_by.first_name }}</p>
 			<p class="item_description">{{ t.get_short_description }}</p>
 		    <p class="item_date">{{ t.date }}</p>

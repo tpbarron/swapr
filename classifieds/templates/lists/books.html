@@ -20,7 +20,7 @@
 	<div id="items">
 	{% for b in books.object_list %}
 		<div class="item">
-			<h3 class="item_title"><a href="{{ b.get_absolute_url }}">{{ b.title }}</a></h3>
+			<h3 class="item_title"><a href="/{{ b.get_absolute_url }}">{{ b.title }}</a></h3>
 	      	<p class="item_posted">{{ b.posted_by.first_name }}</p>
 			<p class="item_description">{{ b.get_short_description }}</p>
 	      	<!--<p>views: {{b.get_num_unique_views}}</p>  -->

@@ -12,7 +12,7 @@
 	<div id="items">
 	{% for disc in discussions.object_list %}
 		<div class="item">
-			<h3 class="item_title"><a href="{{ disc.get_absolute_url }}">{{ disc.title }}</a></h3>
+			<h3 class="item_title"><a href="/{{ disc.get_absolute_url }}">{{ disc.title }}</a></h3>
 	      	<p class="item_posted">{{ disc.posted_by.first_name }}</p>
 			<p class="item_description">{{ disc.get_short_description }}</p>     
 		    {% include "snippets/vote.html" with d=disc %}

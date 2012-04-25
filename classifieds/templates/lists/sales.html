@@ -11,7 +11,7 @@
 	<div id="items">
 	{% for s in sales.object_list %}
 		<div class="item">
-			<h3 class="item_title"><a href="{{ s.get_absolute_url }}">{{ s.title }}</a></h3>
+			<h3 class="item_title"><a href="/{{ s.get_absolute_url }}">{{ s.title }}</a></h3>
 	      	<p class="item_posted">{{ s.posted_by.first_name }}</p>
 			<p class="item_description">{{ s.get_short_description }}</p>
 	      	<!--<p>views: {{s.get_num_unique_views}}</p>  -->
