@@ -110,7 +110,7 @@ class Break(Entry):
         return self.break_name
     
     def get_absolute_url(self):
-        return "/breaks/%i/" % self.id
+        return "breaks/%i/" % self.id
     
     class Meta:
         verbose_name = "Break"
@@ -122,7 +122,7 @@ class Product(Entry):
     posted_by = models.ForeignKey(User, related_name='products')
     
     def get_absolute_url(self):
-        return "/sales/%i/" % self.id
+        return "sales/%i/" % self.id
     
     class Meta:
         verbose_name = "For Sale"
@@ -149,7 +149,7 @@ class Discussion(Entry):
             return "active" # if the uer has not voted in the last day
         
     def get_absolute_url(self):
-        return "/discussions/%i/" % self.id
+        return "discussions/%i/" % self.id
         
     class Meta:
         verbose_name = "Discussion"
@@ -162,7 +162,7 @@ class Book(Entry):
     category = models.CharField(max_length=25, choices=category_options)
 
     def get_absolute_url(self):
-        return "/books/%i/" % self.id
+        return "books/%i/" % self.id
     
     class Meta:
         verbose_name = "Book"
@@ -175,7 +175,7 @@ class Event(Entry):
     posted_by = models.ForeignKey(User, related_name='events')
 
     def get_absolute_url(self):
-        return "/events/%i/" % self.id
+        return "events/%i/" % self.id
     
     class Meta:
         verbose_name = "Event"
@@ -187,7 +187,7 @@ class Transportation(Entry):
     posted_by = models.ForeignKey(User, related_name='transportation')
        
     def get_absolute_url(self):
-        return "/transportation/%i/" % self.id
+        return "transportation/%i/" % self.id
     
     class Meta:
         verbose_name = "Ride"
