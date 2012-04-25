@@ -6,7 +6,7 @@ from swapr.classifieds.models import DiscussionComment, EventComment, ProductCom
 from swapr.classifieds.models import ProductAddForm, DiscussionAddForm, EventAddForm, TransportationAddForm
 from swapr.classifieds.models import LoginForm, NewUserForm, Vote, UserContactForm, category_options
 
-import datetime, random, sha
+import datetime, random, sha, string
 from django.template.response import TemplateResponse, HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth import authenticate
@@ -23,12 +23,10 @@ def about(request):
     return TemplateResponse(request, 'about.html')
 
 def home(request):
-    #if (request.user.is_authenticated()):
-        return TemplateResponse(request, 'home.html')
-    #else:
-    #    return redirect('/login/')
+    return TemplateResponse(request, 'home.html')
 
 def login(request):
+    form = LoginForm()
     if (request.method == 'POST'):
         form = LoginForm(request.POST)
         if (form.is_valid()):
@@ -45,8 +43,7 @@ def login(request):
                 if user.is_active:
                     auth_login(request, user)
                     return redirect('/')
-    
-    form = LoginForm()
+                
     return TemplateResponse(request, 'login.html', 
                             {'email':form['email'], 'password':form['password']})
 
@@ -55,6 +52,7 @@ def login_error(request):
 
 
 def new_user(request):
+    form = NewUserForm()
     if (request.method == 'POST'):
         form = NewUserForm(request.POST)
         if (form.is_valid()):
@@ -86,18 +84,22 @@ def new_user(request):
             
             
             confirmation_url = settings.DOMAIN+"confirmation/" + new_student.activation_key
-            email_subject = "Woo hoo!! Please confirm your account at CC Swapr!"
-            email_body = "Please visit the following url to confirm your account \n" + confirmation_url
+            email_subject = "Woo hoo!! Confirm your account at CC Swapr!"
+            email_body = "Hello " + new_student.user.first_name + ", \n\n"
+            email_body += "Please visit the following URL to confirm your account: \n"
+            email_body += confirmation_url + "\n\n"
+            email_body += "Have a suggestion? Let us know at "+settings.DOMAIN+"feedback/. \n\n"
+            email_body += "Thanks,\nThe CC Swapr Team (AKA Trevor and Stanley :D )"
     
             print (email_body)
             send_mail(email_subject,
                       email_body,
-                      'barron.trevor@gmail.com',
-                      [new_student.user.email])        
+                      settings.DEFAULT_FROM_EMAIL,
+                      [new_student.user.email], 
+                      fail_silently=True)        
             
-            return redirect("/")
+            return redirect("/thanks/")
     
-    form = NewUserForm()
     return TemplateResponse(request, 'new_user.html', 
                             {'email':form['email'], 'password':form['password'], 'password_confirm':form['password_confirm'],
                              'firstname':form['firstname'], 'lastname':form['lastname']})
@@ -129,11 +131,16 @@ def confirm_account(request, key):
     #        auth_login(request, user)
             
     return redirect('/')
+
+
+def thanks(request):
+    return TemplateResponse(request, 'thanks.html')
    
 
 def contact_user(request, uname):
+    form = UserContactForm()
+    
     receiver = User.objects.get(username=uname)
-    sender = request.user
     
     if request.method == 'POST':
         form = UserContactForm(request.POST)
@@ -141,18 +148,25 @@ def contact_user(request, uname):
             data = form.clean()
             subject = data['subject']
             message = data['message']
-            emailPrivateMessage(receiver, sender, subject, message)
+            
+            print (message)
+             
+            send_mail(subject,
+                      message,
+                      settings.DEFAULT_FROM_EMAIL,
+                      [receiver.email],
+                      fail_silently=True)
         
-        return redirect('/')
+            return TemplateResponse(request, 'contact_user.html', 
+                            {'usr':receiver, 'subject':form['subject'], 'message':form['message'], 'submitted':True})
     
-    form = UserContactForm()
     return TemplateResponse(request, 'contact_user.html', 
-                            {'usr':receiver, 'subject':form['subject'], 'message':form['message']})
+                            {'usr':receiver, 'subject':form['subject'], 'message':form['message'], 'submitted':False})
  
 
 #to avoid void ct increments on page reloads and post requests
 #store valid view if they haven't visited the page in the last day
-def logView(request, item):
+def log_view(request, item):
     if not request.user.is_anonymous:
         usr = request.user
         print "trying to query"
@@ -177,54 +191,36 @@ def logView(request, item):
             view.save()
     #else not logged in
     
-import smtplib
-import string
-
-def emailPoster(request, obj, url_trail): 
+    
+def email_poster(request, obj): 
     post_user = obj.posted_by
     post_user_email = post_user.email
     auth_user = request.user
-    auth_user_name = auth_user.first_name + " " + auth_user.last_name
-    url = settings.DOMAIN+"/"+url_trail
+    auth_user_name = auth_user.get_full_name()
+    url = settings.DOMAIN+obj.get_absolute_url()
     
-    host = settings.DOMAIN #'127.0.0.1:8000'
     subject = auth_user_name + " commented on your post!"
-    to = post_user_email
-    sender = "barron.trevor@gmail.com"
-    text = "Please visit the following url to respond:\n" + url
-    body = string.join((
-            "From: %s" % sender,
-            "To: %s" % to,
-            "Subject: %s" % subject,
-            "",
-            text
-            ), "\r\n")
-    print(body)
-    #server = smtplib.SMTP(host)
-    #server.sendmail(sender, [to], body)
-    #server.quit()
+    receiver = post_user_email
+    message = "Please visit the following url to respond:\n" + url
+    print(message)
+    
+    send_mail(subject,
+              message,
+              settings.DEFAULT_FROM_EMAIL,
+              [receiver])
     
     
     
-def emailPrivateMessage(receiver, sendr, subject, message):
-    host = settings.DOMAIN #'127.0.0.1:8000'
-    
-    subject = sendr.first_name + " " + sendr.last_name + " sent you a message" 
+def email_private_message(receiver, sendr, subject, message):
+    subject = sendr.get_full_name() + " sent you a message on CC Swapr" 
     to = receiver.email
-    sender = sendr.email
-    text = "See your message below"
-    body = string.join((
-            "From: %s" % sender,
-            "To: %s" % to,
-            "Subject: %s" % subject,
-            "",
-            text
-        ), "\r\n")
-    
-    print(body)
-    #server = smtplib.SMTP(host)
-    #server.sendmail(sender, [to], body)
-    #server.quit()
+    text = "See your message below: \n\n " + message
+        
+    print(message)
+    send_mail(subject,
+              text,
+              settings.DEFAULT_FROM_EMAIL,
+              [to])
     
     
 #upvote = 1
@@ -246,11 +242,11 @@ def vote(request, v, disc_id):
     
    
    
-   
-   
     
 #details
 def break_detail(request, break_id):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
     break_detail = Break.objects.get(id=break_id)
     comments = break_detail.comments.all()
     if request.method == 'POST':
@@ -267,14 +263,17 @@ def break_detail(request, break_id):
                 left_by=c_left_by,
                 left_on=c_left_on)
             c.save()
+            email_poster(request, break_detail)
     else:
-        logView(request, break_detail)
+        log_view(request, break_detail)
         
     form = CommentForm()
     return TemplateResponse(request, 'details/break_detail.html',{'break':break_detail, 'form':form['comment'], 'comments':comments})
 
 
 def book_detail(request, book_id):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
     book_detail = Book.objects.get(id=book_id)
     comments = book_detail.comments.all()
     if request.method == 'POST':
@@ -291,15 +290,17 @@ def book_detail(request, book_id):
                 left_by=c_left_by,
                 left_on=c_left_on)
             c.save()
-            emailPoster(request, book_detail, "books/"+book_id)
+            email_poster(request, book_detail)
     else:
-        logView(request, book_detail)
+        log_view(request, book_detail)
         
     form = CommentForm()
     return TemplateResponse(request, 'details/book_detail.html',
                             {'book':book_detail, 'form':form['comment'], 'comments':comments})
 
 def discussion_detail(request, disc_id):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
     disc_detail = Discussion.objects.get(id=disc_id)
     comments = disc_detail.comments.all()
     if request.method == 'POST':
@@ -316,14 +317,17 @@ def discussion_detail(request, disc_id):
                 left_by=c_left_by,
                 left_on=c_left_on)
             c.save()
+            email_poster(request, disc_detail)
     else:
-        logView(request, disc_detail)
+        log_view(request, disc_detail)
         
     form = CommentForm()
     return TemplateResponse(request, 'details/discussion_detail.html',
                             {'disc':disc_detail, 'form':form['comment'], 'comments':comments})
 
 def event_detail(request, event_id):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
     event_detail = Event.objects.get(id=event_id)
     comments = event_detail.comments.all()
     if request.method == 'POST':
@@ -340,14 +344,18 @@ def event_detail(request, event_id):
                 left_by=c_left_by,
                 left_on=c_left_on)
             c.save()
+            #email user with original post to notify
+            email_poster(request, event_detail)
     else:
-        logView(request, event_detail)
+        log_view(request, event_detail)
         
     form = CommentForm()
     return TemplateResponse(request, 'details/event_detail.html',
                             {'event':event_detail, 'form':form['comment'], 'comments':comments})
 
 def product_detail(request, prod_id):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
     prod_detail = Product.objects.get(id=prod_id)
     comments = prod_detail.comments.all()
     if request.method == 'POST':
@@ -364,14 +372,17 @@ def product_detail(request, prod_id):
                 left_by=c_left_by,
                 left_on=c_left_on)
             c.save()
+            email_poster(request, prod_detail)
     else:
-        logView(request, prod_detail)
+        log_view(request, prod_detail)
         
     form = CommentForm()
     return TemplateResponse(request, 'details/product_detail.html',
                             {'product':prod_detail, 'form':form['comment'], 'comments':comments})
 
 def transportation_detail(request, trans_id):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
     trans_detail = Transportation.objects.get(id=trans_id)
     comments = trans_detail.comments.all()
     if request.method == 'POST':
@@ -388,8 +399,9 @@ def transportation_detail(request, trans_id):
                 left_by=c_left_by,
                 left_on=c_left_on)
             c.save()
+            email_poster(request, trans_detail)
     else:
-        logView(request, trans_detail)
+        log_view(request, trans_detail)
         
     form = CommentForm()
     return TemplateResponse(request, 'details/trans_detail.html',
@@ -398,11 +410,11 @@ def transportation_detail(request, trans_id):
 
 
 
-
-
-
 #additions
 def break_add(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    form = BreakAddForm()
     if request.method == 'POST':
         form = BreakAddForm(request.POST)
         if (form.is_valid()):
@@ -420,12 +432,14 @@ def break_add(request):
         
             return redirect(b.get_absolute_url())
     
-    form = BreakAddForm()
     return TemplateResponse(request, 'add/break_add.html',
                             {'title':form['title'], 'desc':form['desc'], 'break':form['break_name']})
 
 
 def book_add(request):
+    if not request.user.is_authenticated():
+        return redirect('/login/')
+    form = BookAddForm()
     if request.method == 'POST':
         form = BookAddForm(request.POST)
         if (form.is_valid()):
@@ -442,13 +456,14 @@ def book_add(request):
             )
                 
             return redirect(b.get_absolute_url())
-    form = BookAddForm()
+    
     return TemplateResponse(request, 'add/book_add.html',
                             {'title':form['title'], 'desc':form['desc'], 'category':form['category']})
 
 def product_add(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
+    form = ProductAddForm()
     if request.method == 'POST':
         #student = currently authenticated student
         form = ProductAddForm(request.POST)
@@ -465,11 +480,11 @@ def product_add(request):
             
             return redirect(b.get_absolute_url())
     
-    form = ProductAddForm()
     return TemplateResponse(request, 'add/product_add.html',
                             {'title':form['title'], 'desc':form['desc']})
 
 def discussion_add(request):
+    form = DiscussionAddForm()
     if request.method == 'POST':
         form = DiscussionAddForm(request.POST)
         if (form.is_valid()):
@@ -485,7 +500,6 @@ def discussion_add(request):
             
             return redirect(p.get_absolute_url())
     
-    form = DiscussionAddForm()
     return TemplateResponse(request, 'add/discussion_add.html',
                             {'title':form['title'], 'desc':form['desc']})
 
@@ -493,8 +507,8 @@ def discussion_add(request):
 def event_add(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
+    form = EventAddForm()
     if request.method == 'POST':
-        #student = currently authenticated student
         form = EventAddForm(request.POST)
         if (form.is_valid()):
             data = form.clean()
@@ -512,13 +526,13 @@ def event_add(request):
             )
             
             return redirect(p.get_absolute_url())
-    form = EventAddForm()
     return TemplateResponse(request, 'add/event_add.html',
                             {'title':form['title'], 'desc':form['desc'], 'date':form['date'], 'location':form['location']})
 
 def transportation_add(request):
     if not request.user.is_authenticated():
         return redirect('/login/')
+    form = TransportationAddForm()
     if request.method == 'POST':
         #student = currently authenticated student
         form = TransportationAddForm(request.POST)
@@ -539,7 +553,6 @@ def transportation_add(request):
             
             return redirect(p.get_absolute_url())
     
-    form = TransportationAddForm()
     return TemplateResponse(request, 'add/transportation_add.html',
                             {'title':form['title'], 'desc':form['desc'], 'date':form['date']})
 
