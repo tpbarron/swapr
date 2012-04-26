@@ -430,7 +430,7 @@ def break_add(request):
                 description = b_text,
             )
         
-            return redirect(b.get_absolute_url())
+            return redirect("/"+b.get_absolute_url())
     
     return TemplateResponse(request, 'add/break_add.html',
                             {'title':form['title'], 'desc':form['desc'], 'break':form['break_name']})
@@ -455,7 +455,7 @@ def book_add(request):
                 category = cat,
             )
                 
-            return redirect(b.get_absolute_url())
+            return redirect("/"+b.get_absolute_url())
     
     return TemplateResponse(request, 'add/book_add.html',
                             {'title':form['title'], 'desc':form['desc'], 'category':form['category']})
@@ -478,7 +478,7 @@ def product_add(request):
                 description = p_text,
             )
             
-            return redirect(b.get_absolute_url())
+            return redirect("/"+b.get_absolute_url())
     
     return TemplateResponse(request, 'add/product_add.html',
                             {'title':form['title'], 'desc':form['desc']})
@@ -498,7 +498,7 @@ def discussion_add(request):
                 description = p_text,
             )
             
-            return redirect(p.get_absolute_url())
+            return redirect("/"+p.get_absolute_url())
     
     return TemplateResponse(request, 'add/discussion_add.html',
                             {'title':form['title'], 'desc':form['desc']})
@@ -525,7 +525,7 @@ def event_add(request):
                 date = p_date
             )
             
-            return redirect(p.get_absolute_url())
+            return redirect("/"+p.get_absolute_url())
     return TemplateResponse(request, 'add/event_add.html',
                             {'title':form['title'], 'desc':form['desc'], 'date':form['date'], 'location':form['location']})
 
@@ -551,7 +551,7 @@ def transportation_add(request):
             )
 #            p.get_absolute_url()
             
-            return redirect(p.get_absolute_url())
+            return redirect("/"+p.get_absolute_url())
     
     return TemplateResponse(request, 'add/transportation_add.html',
                             {'title':form['title'], 'desc':form['desc'], 'date':form['date']})
