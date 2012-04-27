@@ -1,10 +1,4 @@
-from swapr.classifieds.models import User, Break, BreakComment
-from swapr.classifieds.models import Product, Discussion, Book, View
-from swapr.classifieds.models import Event, Transportation, Student
-from swapr.classifieds.models import BreakAddForm, BookComment, BookAddForm, CommentForm
-from swapr.classifieds.models import DiscussionComment, EventComment, ProductComment, TransportationComment
-from swapr.classifieds.models import ProductAddForm, DiscussionAddForm, EventAddForm, TransportationAddForm
-from swapr.classifieds.models import LoginForm, NewUserForm, FeedbackForm, Vote, UserContactForm, category_options
+from swapr.classifieds.models import *
 
 import datetime, random, sha, string
 from django.template.response import TemplateResponse, HttpResponse
@@ -136,6 +130,7 @@ def confirm_account(request, key):
 def thanks(request):
     return TemplateResponse(request, 'thanks.html')
    
+
 def feedback(request):
     form = FeedbackForm();
     if request.method == 'POST':
@@ -144,10 +139,17 @@ def feedback(request):
             data = form.clean()
             message = data['message']
             print (message)
-
-            return TemplateResponse(request, 'feedback.html', {'message': form['message'], 'submitted':True})
+            f = Feedback(
+                    student=Student.objects.get(user=request.user),
+                    message=message
+                )
+            f.save() 
+            
+            return TemplateResponse(request, 'feedback.html', 
+                                    {'message': form['message'], 'submitted':True})
     
-    return TemplateResponse(request, 'feedback.html', {'message': form['message'], 'submitted':False})
+    return TemplateResponse(request, 'feedback.html', 
+                            {'message': form['message'], 'submitted':False})
     
 
 def contact_user(request, uname):
@@ -167,6 +169,14 @@ def contact_user(request, uname):
                       settings.DEFAULT_FROM_EMAIL,
                       [receiver.email],
                       fail_silently=True)
+            
+            m = PrivateMessage(
+                    student=Student.objects.get(user=request.user),
+                    subject=subject,
+                    message=message
+                    )
+            m.save()
+            
         
             return TemplateResponse(request, 'contact_user.html', 
                             {'usr':receiver, 'subject':form['subject'], 'message':form['message'], 'submitted':True})
@@ -177,13 +187,13 @@ def contact_user(request, uname):
 
 #to avoid void ct increments on page reloads and post requests
 #store valid view if they haven't visited the page in the last day
+#stores view either way but leaves unique=False if soon
 def log_view(request, item):
-    if not request.user.is_anonymous:
+    if request.user.is_authenticated:
         usr = request.user
-        print "trying to query"
         yesterday = datetime.datetime.now() - datetime.timedelta(days=1)
         if item.views.filter(user=usr, time__gt=yesterday, unique=True).exists():
-            print "view exists"
+            #print "view exists"
             view = View(
                 user = usr,
                 time = datetime.datetime.now(),
@@ -192,7 +202,7 @@ def log_view(request, item):
             )
             view.save()
         else:
-            print "view does not exist"
+            #print "view does not exist"
             view = View(
                 user = usr,
                 time = datetime.datetime.now(),
@@ -200,7 +210,6 @@ def log_view(request, item):
                 unique = True
             )
             view.save()
-    #else not logged in
     
     
 def email_poster(request, obj): 

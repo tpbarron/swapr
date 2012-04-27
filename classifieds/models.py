@@ -205,6 +205,16 @@ class Vote(models.Model):
     class Meta:
         verbose_name = "Vote"
         verbose_name_plural = "Votes"
+        
+
+class Feedback(models.Model):
+    student = models.ForeignKey(Student, related_name='feedback')
+    message = models.TextField()
+    
+class PrivateMessage(models.Model):
+    student = models.ForeignKey(Student, related_name='private_message')
+    subject = models.CharField(max_length=100)
+    message = models.TextField()
     
     
 
