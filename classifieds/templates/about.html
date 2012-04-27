@@ -1,14 +1,28 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}Home{% endblock %}
+{% block title %}About{% endblock %}
 
 {% block css %}
+	<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/about.css" />
 {% endblock %}
 
 {% block content %} 
-	<div>
+	<div id="viewer">
+		<h2>What's CC Swapr?</h2>
+		<p>During 5th block of this year, I was in a class called Database Systems. While working on 
+		my project one night Stanley Carson suggested that I build a Craigslist-like website for Colorado
+		College where students could <a href="/books/">trade books</a>, <a href="/sales/">sell miscellaneous things</a>, 
+		organize <a href="/breaks/">block break trips</a> and <a href="/transportation/">rides</a>, 
+		<a href="/events/">publicize events</a>, or just <a href="/discussions/">discuss hot topics</a>.</p>
 		
+		<p>So that's what I did. And two hours later I had a simple prototype of the site and now it's ready
+		to go!</p>
+		
+		<p>Remember, I'm not perfect, and neither is the site. So if you see something that could
+		be better <a href="/feedback/">let me know</a> and I'll work on it.
+		
+		<img id="cclogo" src="http://www.coloradocollege.edu/dotAsset/b141b749-8c8c-4eab-9b41-a8ecbb64ce2b.png" alt="cclogo" />
 	</div>
 {% endblock %}
 
