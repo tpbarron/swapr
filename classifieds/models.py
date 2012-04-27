@@ -209,6 +209,10 @@ class Vote(models.Model):
     
 
 ##forms 
+class FeedbackForm(forms.Form):
+    message = forms.CharField(
+                widget=forms.Textarea(attrs={'class' : 'form_textarea'}))
+    
 class LoginForm(forms.Form):
     email = forms.EmailField(
                 widget=forms.TextInput(attrs={'class' : 'form_p'}))
