@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Suggest an improvement{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/forms.css" />
+{% endblock %}
+
+{% block content %} 
+	<div id="viewer">
+		{% if not submitted %}
+		<h2>Suggest an improvement or just let me know what you think!</h2>
+		<form action="." method="POST"> {% csrf_token %}
+			{{ message }} <br />
+			<input type="submit" class="form_submit" value="Send" />
+		</form>
+		{% else %}
+		<h2>Thank you! Your message to {{ usr.get_full_name }} has been sent.</h2>
+		{% endif %}
+	</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

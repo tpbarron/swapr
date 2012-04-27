@@ -4,7 +4,7 @@ from swapr.classifieds.models import Event, Transportation, Student
 from swapr.classifieds.models import BreakAddForm, BookComment, BookAddForm, CommentForm
 from swapr.classifieds.models import DiscussionComment, EventComment, ProductComment, TransportationComment
 from swapr.classifieds.models import ProductAddForm, DiscussionAddForm, EventAddForm, TransportationAddForm
-from swapr.classifieds.models import LoginForm, NewUserForm, Vote, UserContactForm, category_options
+from swapr.classifieds.models import LoginForm, NewUserForm, FeedbackForm, Vote, UserContactForm, category_options
 
 import datetime, random, sha, string
 from django.template.response import TemplateResponse, HttpResponse
@@ -136,12 +136,23 @@ def confirm_account(request, key):
 def thanks(request):
     return TemplateResponse(request, 'thanks.html')
    
+def feedback(request):
+    form = FeedbackForm();
+    if request.method == 'POST':
+        form = FeedbackForm(request.POST)
+        if (form.is_valid()):
+            data = form.clean()
+            message = data['message']
+            print (message)
+
+            return TemplateResponse(request, 'feedback.html', {'message': form['message'], 'submitted':True})
+    
+    return TemplateResponse(request, 'feedback.html', {'message': form['message'], 'submitted':False})
+    
 
 def contact_user(request, uname):
     form = UserContactForm()
-    
     receiver = User.objects.get(username=uname)
-    
     if request.method == 'POST':
         form = UserContactForm(request.POST)
         if (form.is_valid()):
@@ -549,8 +560,7 @@ def transportation_add(request):
                 description = p_desc,
                 date = p_date
             )
-#            p.get_absolute_url()
-            
+
             return redirect("/"+p.get_absolute_url())
     
     return TemplateResponse(request, 'add/transportation_add.html',
