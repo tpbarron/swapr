@@ -4,6 +4,18 @@
 	margin-top:20px;
 }
 
+.field {
+}
+
+.errorlist {
+	list-style-type:none;	
+	padding:0px;
+	margin:0px;
+}
+.errorlist li {
+	color:red;	
+}
+
 .form_textarea {
 	margin-bottom:10px;
 	width:100%;

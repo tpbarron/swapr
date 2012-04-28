@@ -241,7 +241,7 @@ class LoginForm(forms.Form):
             i = email.rfind("@")
             if (email[i:] != "@coloradocollege.edu"):
                 #raise forms.ValidationError("Please use your ColoradoCollege.edu email address")
-                msg = u"Please use your ColoradoCollege.edu email address"
+                msg = u"Please use your ColoradoCollege.edu email address."
                 self._errors["email"] = self.error_class([msg])
         
         return cleaned_data
@@ -251,30 +251,41 @@ class LoginForm(forms.Form):
         self._errors["password"] = self.error_class([msg])
         
     def password_error(self):
-        msg = u"Your password is incorrect"
+        msg = u"Your password is incorrect."
         self._errors["password"] = self.error_class([msg])
         
     
     
 class NewUserForm(LoginForm):
     firstname = forms.CharField(max_length=30,
+                label="First name",
                 widget=forms.TextInput(attrs={'class' : 'form_p'}))
     lastname = forms.CharField(max_length=30,
+                label="Last name",
                 widget=forms.TextInput(attrs={'class' : 'form_p'}))
     password_confirm = forms.CharField(
+                label="Confirm password",
                 widget=forms.PasswordInput(attrs={'class' : 'form_p'}))
     
+    def user_exists_error(self):
+        msg = u"An account with this email has already been created."
+        self._errors["email"] = self.error_class([msg])
+        
     def clean(self):
         cleaned_data = self.cleaned_data
         email = cleaned_data.get("email")
         if email:
             i = email.rfind("@")
             if (email[i:] != "@coloradocollege.edu"):
-                raise forms.ValidationError("Please use your ColoradoCollege.edu email")
+                msg = u"Please use your ColoradoCollege.edu email address."
+                self._errors["email"] = self.error_class([msg])
+                #raise forms.ValidationError("Please use your ColoradoCollege.edu email")
         p1 = cleaned_data.get("password")
         p2 = cleaned_data.get("password_confirm")
         if (p1 != p2):
-            raise forms.ValidationError("Your passwords must match")
+            msg = u"Your passwords must match."
+            self._errors["password"] = self.error_class([msg])
+            #raise forms.ValidationError("Your passwords must match")
         
         return cleaned_data
     

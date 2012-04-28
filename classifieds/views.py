@@ -55,51 +55,52 @@ def new_user(request):
         if (form.is_valid()):
             data = form.clean()
             email = data['email']
-            i = email.rfind("@")
-            username = email[0:i]
+            
+            username = form.get_user_name(email)
             password = data['password']
             fname = data['firstname']
             lname = data['lastname']
             
             print fname + " " + lname + " " + username + " " + password
            
-            u = User.objects.create_user(username, email, password)
-            u.first_name = fname
-            u.last_name = lname
-            u.is_active = False
-            u.save()
-            
-            salt = sha.new(str(random.random())).hexdigest()[:5]
-            activation_key = sha.new(salt+u.username).hexdigest()
-            key_expires = datetime.datetime.today() + datetime.timedelta(2)
-            
-            new_student = Student(
-                    user=u,
-                    activation_key=activation_key,
-                    key_expires=key_expires)
-            new_student.save()
-            
-            
-            confirmation_url = settings.DOMAIN+"confirmation/" + new_student.activation_key
-            email_subject = "Woo hoo!! Confirm your account at CC Swapr!"
-            email_body = "Hello " + new_student.user.first_name + ", \n\n"
-            email_body += "Please visit the following URL to confirm your account: \n"
-            email_body += confirmation_url + "\n\n"
-            email_body += "Have a suggestion? Let us know at "+settings.DOMAIN+"feedback/. \n\n"
-            email_body += "Thanks,\nThe CC Swapr Team (AKA Trevor and Stanley :D )"
+            if not User.objects.filter(username=username).exists():
+                u = User.objects.create_user(username, email, password)
+                u.first_name = fname
+                u.last_name = lname
+                u.is_active = False
+                u.save()
+                
+                salt = sha.new(str(random.random())).hexdigest()[:5]
+                activation_key = sha.new(salt+u.username).hexdigest()
+                key_expires = datetime.datetime.today() + datetime.timedelta(2)
+                
+                new_student = Student(
+                        user=u,
+                        activation_key=activation_key,
+                        key_expires=key_expires)
+                new_student.save()
+                
+                
+                confirmation_url = settings.DOMAIN+"confirmation/" + new_student.activation_key
+                email_subject = "Woo hoo!! Confirm your account at CC Swapr!"
+                email_body = "Hello " + new_student.user.first_name + ", \n\n"
+                email_body += "Please visit the following URL to confirm your account: \n"
+                email_body += confirmation_url + "\n\n"
+                email_body += "Have a suggestion? Let us know at "+settings.DOMAIN+"feedback/. \n\n"
+                email_body += "Thanks,\nThe CC Swapr Team (AKA Trevor and Stanley :D )"
+        
+                print (email_body)
+                send_mail(email_subject,
+                          email_body,
+                          settings.DEFAULT_FROM_EMAIL,
+                          [new_student.user.email], 
+                          fail_silently=True)        
+                
+                return redirect("/thanks/")
+            else:
+                form.user_exists_error()
     
-            print (email_body)
-            send_mail(email_subject,
-                      email_body,
-                      settings.DEFAULT_FROM_EMAIL,
-                      [new_student.user.email], 
-                      fail_silently=True)        
-            
-            return redirect("/thanks/")
-    
-    return TemplateResponse(request, 'new_user.html', 
-                            {'email':form['email'], 'password':form['password'], 'password_confirm':form['password_confirm'],
-                             'firstname':form['firstname'], 'lastname':form['lastname']})
+    return TemplateResponse(request, 'new_user.html', {'form':form})
 
 
 def logout(request):

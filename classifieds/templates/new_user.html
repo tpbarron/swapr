@@ -11,17 +11,31 @@
 <div id="viewer">
 	<h2>Are you ready to save some money!?!?!</h2>
 	<form id="new_user_form" action="." method="post">{% csrf_token %}
-		<p>First name</p>
-		{{ firstname }}
-		<p>Last name</p>
-		{{ lastname }}
-		<p>Email</p>
-		{{ email }}
-		<p>Password</p>
-		{{ password }}
-		<p>Confirm Password</p>
-		{{ password_confirm }}
-		<br />
+		<div class="field">
+			{{ form.firstname.label }} <br />
+			{{ form.firstname.errors }}
+			{{ form.firstname }}
+		</div>
+		<div class="field">
+			{{ form.lastname.label }} <br />
+			{{ form.lastname.errors }}
+			{{ form.lastname }}
+		</div>
+		<div class="field">
+			{{ form.email.label }} <br />
+			{{ form.email.errors }}
+			{{ form.email }}
+		</div>
+		<div class="field">
+			{{ form.password.label }} <br />
+			{{ form.password.errors }}
+			{{ form.password }}
+		</div>
+		<div class="field">
+			{{ form.password_confirm.label }} <br />
+			{{ form.password_confirm.errors }}
+			{{ form.password_confirm }}
+		</div>
 		<input type="submit" class="form_submit" value="Submit" />
 	</form>	
 </div>

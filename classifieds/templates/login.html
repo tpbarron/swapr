@@ -11,11 +11,13 @@
 	<div id="viewer">
 		<h2>Login</h2>
 		<form id="login_form" action="." method="post">{% csrf_token %}
-			<p>Email {{ form.email.errors }}</p>
-			{{ form.email }}
-			<p>Password {{ form.password.errors }}</p>
-			{{ form.password }}
-			<br />
+			{% for field in form %}
+				<div class="field">
+					{{ field.label }} <br />
+					{{ field.errors }}
+					{{ field }}
+				</div>
+			{% endfor %}
 			<input type="submit" class="form_submit" value="Submit" />
 		</form>	
 	</div>
