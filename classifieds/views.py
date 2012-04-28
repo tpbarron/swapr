@@ -9,6 +9,7 @@ from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.http import Http404
 from django.core.mail import send_mail
 from django.db.models import Q
+from django.forms import ValidationError
 
 from swapr import settings
 
@@ -26,20 +27,22 @@ def login(request):
         if (form.is_valid()):
             data = form.clean()
             email = data['email']
-            i = email.rfind("@")
-            username = email[0:i]
+            username = form.get_user_name(email)
             password = data['password']
             
-            print username + " " + password
-            
             user = authenticate(username=username, password=password)
+            
             if user is not None:
                 if user.is_active:
                     auth_login(request, user)
                     return redirect('/')
-                
-    return TemplateResponse(request, 'login.html', 
-                            {'email':form['email'], 'password':form['password']})
+                else:
+                    form.confirm_error()
+            else:
+                form.password_error()
+                        
+    return TemplateResponse(request, 'login.html', {'form':form})
+        #{'email':form['email'], 'password':form['password']})
 
 def login_error(request):
     return TemplateResponse(request, 'login.html')
@@ -110,6 +113,11 @@ def confirm_account(request, key):
     print (key)
     student = get_object_or_404(Student, activation_key=key)
     
+    #current_time = datetime.datetime.now()
+    #if (current_time < student.key_expires):
+    #for now I'm not going to worry about a time limit
+    #because then I'd have to deal with people registering twice
+    
     user_account = student.user
     user_account.is_active = True
     user_account.save()
@@ -117,12 +125,12 @@ def confirm_account(request, key):
     print(student.user.username + " " + student.user.password)
     print(user_account.username + " " + user_account.password)
     
-    #uname=user_account.username
-    #passwd=user_account.password
-    #user=authenticate(username=uname, password=passwd)
-    #if user is not None:
-    #    if user.is_active:
-    #        auth_login(request, user)
+    uname=user_account.username
+    passwd=user_account.password
+    user=authenticate(username=uname, password=passwd)
+    if user is not None:
+        if user.is_active:
+            auth_login(request, user)
             
     return redirect('/')
 
@@ -153,6 +161,8 @@ def feedback(request):
     
 
 def contact_user(request, uname):
+    if (not request.user.is_authenticated()):
+        raise Http404
     form = UserContactForm()
     receiver = User.objects.get(username=uname)
     if request.method == 'POST':
