@@ -36,7 +36,7 @@
 	<header>
        	<div id="logo">
        		<h1><a href="/">CC Swapr</a><span id="beta"><sup><i>Beta</i></sup></span></h1>
-       	</div>
+		</div>
         <nav>
 			<ul>
 				<li><a class="nav_link" href="/breaks/">Breaks</a></li>
@@ -54,16 +54,15 @@
 		</nav>
 	</header>
        
-       <div id="main" role="main">
-       	{% block content %}
-       	{% endblock %}
-       </div>
+    <div id="main" role="main">
+    	{% block content %}
+    	{% endblock %}
+    </div>
        
-       <footer>
-       	{% block footer %}
+    <footer>
+     	{% block footer %}
 		{% endblock %}
-       </footer>
-    
+    </footer>
     
     {% block javascript_library %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>

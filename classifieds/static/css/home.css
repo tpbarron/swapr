@@ -1,4 +1,4 @@
-#recent_activity {
+/*#recent_activity {
 	margin-top:20px;
 }
 
@@ -11,10 +11,31 @@
 }
 .items a:hover {
 	color:black;
-}
+}*/
 
 
 #cclogo {
 	float:right;
 	bottom: 0;
+}
+
+
+#viewer h2 {
+	font-size:28px;
+	margin-bottom:20px;
+}
+#viewer p {
+	font-size:24px;
+	margin-bottom:20px;
+}
+#viewer a {
+	color:gold;
+	-webkit-transition: color 250ms;
+	transition:color 250ms;
+	-moz-transition: color 250ms;
+	-o-transition: color 250ms;
+}
+
+#viewer a:hover {
+	color:silver;
 }
