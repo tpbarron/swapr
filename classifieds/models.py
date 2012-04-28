@@ -239,7 +239,7 @@ class LoginForm(forms.Form):
         email = cleaned_data.get("email")
         if email:
             i = email.rfind("@")
-            if (email[i:] != "@coloradocollege.edu"):
+            if (email[i:].lower() != "@coloradocollege.edu"):
                 #raise forms.ValidationError("Please use your ColoradoCollege.edu email address")
                 msg = u"Please use your ColoradoCollege.edu email address."
                 self._errors["email"] = self.error_class([msg])
@@ -276,7 +276,7 @@ class NewUserForm(LoginForm):
         email = cleaned_data.get("email")
         if email:
             i = email.rfind("@")
-            if (email[i:] != "@coloradocollege.edu"):
+            if (email[i:].lower() != "@coloradocollege.edu"):
                 msg = u"Please use your ColoradoCollege.edu email address."
                 self._errors["email"] = self.error_class([msg])
                 #raise forms.ValidationError("Please use your ColoradoCollege.edu email")
