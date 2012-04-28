@@ -4,17 +4,17 @@
 {% block title %}Login{% endblock %}
 
 {% block css %}
-	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/forms.css" />
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/forms.css" />
 {% endblock %}
 
 {% block content %} 
 	<div id="viewer">
 		<h2>Login</h2>
 		<form id="login_form" action="." method="post">{% csrf_token %}
-			<p>Email</p>
-			{{email}}
-			<p>Password</p>
-			{{password}}
+			<p>Email {{ form.email.errors }}</p>
+			{{ form.email }}
+			<p>Password {{ form.password.errors }}</p>
+			{{ form.password }}
 			<br />
 			<input type="submit" class="form_submit" value="Submit" />
 		</form>	
