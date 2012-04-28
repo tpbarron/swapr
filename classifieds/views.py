@@ -736,9 +736,6 @@ def book_search(request):
         return TemplateResponse(request, 'lists/books.html',
                 {'books':books, 'title': "Books", 'categories':category_options, 'url':"books", 'category':True})
 
-    
-    
-    
 def discussion_search(request):
     try:
         query = str(request.GET.get('q', '1'))
