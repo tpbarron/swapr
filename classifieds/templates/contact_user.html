@@ -12,10 +12,13 @@
 		{% if not submitted %}
 		<h2>Contact {{ usr.first_name }}</h2>
 		<form action="." method="POST"> {% csrf_token %}
-			<p>Subject</p>
-			{{ subject }} <br />
-			<p>Message</p>
-			{{ message }} <br />
+			{% for field in form %}
+				<div class="field">
+					{{ field.label }} <br />
+					{{ field.errors }}
+					{{ field }}
+				</div>
+			{% endfor %}
 			<input type="submit" class="form_submit" value="Send" />
 		</form>
 		{% else %}
