@@ -44,10 +44,10 @@
 	-o-transition: -o-box-shadow 250ms, border 250ms;
 }
 .form_p:focus, .form_textarea:focus {
-	-moz-box-shadow: 0px 5px 5px #888;
-	-webkit-box-shadow: 0px 5px 5px #888;
-	box-shadow: 0px 5px 5px #888;
-	-o-box-shadow: 0px 5px 5px #888;
+	-moz-box-shadow: 2px 5px 5px #888;
+	-webkit-box-shadow: 2px 5px 5px #888;
+	box-shadow: 2px 5px 5px #888;
+	-o-box-shadow: 2px 5px 5px #888;
 	
 	border:2px solid black;
 }
@@ -64,5 +64,24 @@
 	height: 45px;
 	width: 72px;
 	position:relative;
-	top:-1px;
+	
+	border:2px solid silver;
+	
+	-moz-box-shadow: 0px 0px 0px #888;
+	-webkit-box-shadow: 0px 0px 0px #888;
+	box-shadow: 0px 0px 0px #888;
+	-o-box-shadow: 0px 0px 0px #888;
+	
+	-webkit-transition: -webkit-box-shadow 250ms, border 250ms;
+	-moz-transition: -moz-box-shadow 250ms, border 250ms;
+	transition: box-shadow 250ms, border 250ms;
+	-o-transition: -o-box-shadow 250ms, border 250ms;
+}
+.form_submit:hover {
+	-moz-box-shadow: 2px 5px 5px #888;
+	-webkit-box-shadow: 2px 5px 5px #888;
+	box-shadow: 2px 5px 5px #888;
+	-o-box-shadow: 2px 5px 5px #888;
+	
+	border:2px solid black;
 }
