@@ -61,9 +61,10 @@
 
 .form_submit {
 	line-height: 22px;
-	height: 45px;
+	height: 46px;
 	width: 72px;
 	position:relative;
+	top:-1px; /*something is just a little bit off!*/
 	
 	border:2px solid silver;
 	
