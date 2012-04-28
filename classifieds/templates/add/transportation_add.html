@@ -3,30 +3,31 @@
 {% block title %}Add a transportation request{% endblock %}
 
 {% block subcss %}
-	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/jquery-ui-1.8.17.custom.css" />
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jqueryui/jquery-ui-1.8.19.custom.css" />
 {% endblock %}
 
 {% block add %}
 <div id="add_form_container">
 	<p id="add_heading">Add a new request:</p>
 	<form id="add_form" action="." method="post">{% csrf_token %}
-		<p>Title</p>
-		{{ title }}
-		<p>Description</p>
-		{{ desc }}
-		<p>Date</p>
-		{{ date }}
-		<br />
+		{% for field in form %}
+			<div class="field">
+				{{ field.label }} <br />
+				{{ field.errors }}
+				{{ field }}
+			</div>
+		{% endfor %}
 		<input class="form_submit" type="submit" value="Submit" />
 	</form>	
 </div>
 {% endblock %}
 
 {% block javascript %}
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js" type="text/javascript"></script>
+	<script>window.jQuery.ui || document.write('<script src="/static/js/libs/jquery-ui-1.8.19.custom.min.js"><\/script>')</script>
 	<script>
 	$(function() {
-		$( "#id_date" ).datepicker({
+		$("#id_date").datepicker({
 			showOtherMonths: true,
 			selectOtherMonths: true
 		});

@@ -9,13 +9,13 @@
 <div id="add_form_container">
 	<p id="add_heading">Add a new book:</p>
 	<form id="add_form" action="." method="post">{% csrf_token %}
-		<p>Title</p>
-		{{ title }}
-		<p>Description</p>
-		{{ desc }}
-		<p>Category</p>
-		{{ category }}
-		<br />
+		{% for field in form %}
+			<div class="field">
+				{{ field.label }} <br />
+				{{ field.errors }}
+				{{ field }}
+			</div>
+		{% endfor %}
 		<input class="form_submit" type="submit" value="Submit" />
 	</form>	
 </div>

@@ -299,13 +299,16 @@ class UserContactForm(forms.Form):
 
 class AddForm(forms.Form):
     title = forms.CharField(max_length=100,
+                label='Title',
                 widget=forms.TextInput(attrs={'class' : 'form_p'}))
     desc = forms.CharField(
+                label='Description',
                 widget=forms.Textarea(attrs={'class' : 'form_textarea'}))
     
 class BreakAddForm(AddForm):
     break_name = forms.ChoiceField(choices=break_options,
-                widget=forms.TextInput(attrs={'class' : 'form_p'}))
+                label='Break',
+                widget=forms.Select(attrs={'class' : 'form_p'}))
 
 class ProductAddForm(AddForm):
     pass
@@ -315,7 +318,8 @@ class DiscussionAddForm(AddForm):
 
 class BookAddForm(AddForm):
     category = forms.ChoiceField(choices=category_options,
-                widget=forms.Select(attrs={'class' : 'form_choice'}))
+                label='Category',
+                widget=forms.Select(attrs={'class' : 'form_p'}))
     
 class EventAddForm(AddForm):
     date = forms.DateField(

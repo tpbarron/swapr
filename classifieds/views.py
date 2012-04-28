@@ -189,11 +189,9 @@ def contact_user(request, uname):
             m.save()
             
         
-            return TemplateResponse(request, 'contact_user.html', 
-                            {'usr':receiver, 'subject':form['subject'], 'message':form['message'], 'submitted':True})
+            return TemplateResponse(request, 'contact_user.html', {'form':form, 'submitted':True}) 
     
-    return TemplateResponse(request, 'contact_user.html', 
-                            {'usr':receiver, 'subject':form['subject'], 'message':form['message'], 'submitted':False})
+    return TemplateResponse(request, 'contact_user.html', {'form':form, 'submitted':False})
  
 
 #to avoid void ct increments on page reloads and post requests
@@ -463,8 +461,7 @@ def break_add(request):
         
             return redirect("/"+b.get_absolute_url())
     
-    return TemplateResponse(request, 'add/break_add.html',
-                            {'title':form['title'], 'desc':form['desc'], 'break':form['break_name']})
+    return TemplateResponse(request, 'add/break_add.html', {'form':form})
 
 
 def book_add(request):
@@ -488,8 +485,8 @@ def book_add(request):
                 
             return redirect("/"+b.get_absolute_url())
     
-    return TemplateResponse(request, 'add/book_add.html',
-                            {'title':form['title'], 'desc':form['desc'], 'category':form['category']})
+    return TemplateResponse(request, 'add/book_add.html', {'form':form})
+
 
 def product_add(request):
     if not request.user.is_authenticated():
@@ -511,8 +508,8 @@ def product_add(request):
             
             return redirect("/"+b.get_absolute_url())
     
-    return TemplateResponse(request, 'add/product_add.html',
-                            {'title':form['title'], 'desc':form['desc']})
+    return TemplateResponse(request, 'add/product_add.html', {'form': form})
+#                            {'title':form['title'], 'desc':form['desc']})
 
 def discussion_add(request):
     form = DiscussionAddForm()
@@ -531,8 +528,7 @@ def discussion_add(request):
             
             return redirect("/"+p.get_absolute_url())
     
-    return TemplateResponse(request, 'add/discussion_add.html',
-                            {'title':form['title'], 'desc':form['desc']})
+    return TemplateResponse(request, 'add/discussion_add.html', {'form':form})
 
 
 def event_add(request):
@@ -583,8 +579,7 @@ def transportation_add(request):
 
             return redirect("/"+p.get_absolute_url())
     
-    return TemplateResponse(request, 'add/transportation_add.html',
-                            {'title':form['title'], 'desc':form['desc'], 'date':form['date']})
+    return TemplateResponse(request, 'add/transportation_add.html', {'form':form})
 
 
 
