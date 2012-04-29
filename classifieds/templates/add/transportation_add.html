@@ -12,7 +12,7 @@
 	<form id="add_form" action="." method="post">{% csrf_token %}
 		{% for field in form %}
 			<div class="field">
-				{{ field.label }} <br />
+				{{ field.label_tag }}<br />
 				{{ field.errors }}
 				{{ field }}
 			</div>
