@@ -32,10 +32,10 @@ $(document).ready(function() {
 	        		map: map,
 	        		position: results[0].geometry.location
 	        	});
-	        	$("#map_location").html("Location - <b>Thank you! Is the marker on the map correct?</b>");
+	        	$("label[for='id_location']").html("Location // <b>Thanks! Is the marker on the map correct?</b>");
 	        } else {
 	        	//alert("Geocode was not successful for the following reason: " + status);
-	        	$("#map_location").html("Location - <b>Please enter a more specific address</b>");
+	        	$("label[for='id_location']").html("Location // <b>Please enter a more specific address.</b>");
 	        }
 	    });
 	}
