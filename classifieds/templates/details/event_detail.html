@@ -4,7 +4,6 @@
 
 {% block subcss %}
 	<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/detail/event_detail.css" />
-	<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/forms.css" />
 {% endblock %}
 
 {% block detail %}
@@ -33,7 +32,7 @@
 			<p id="direction_to">To</p>
 			<input id="direction_to_input" class="form_p" type="text" value="{{ event.location }}" />
 			Mode of travel
-			<select id="travel_mode" class="form_choice">
+			<select id="travel_mode" class="form_choice" >
 				<option value="DRIVING">Driving</option>
 				<option value="WALKING">Walking</option>
 				<option value="BICYCLING">Bicycling</option>
