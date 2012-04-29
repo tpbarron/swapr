@@ -553,8 +553,8 @@ def event_add(request):
             )
             
             return redirect("/"+p.get_absolute_url())
-    return TemplateResponse(request, 'add/event_add.html',
-                            {'title':form['title'], 'desc':form['desc'], 'date':form['date'], 'location':form['location']})
+    return TemplateResponse(request, 'add/event_add.html', {'form':form})
+#                            {'title':form['title'], 'desc':form['desc'], 'date':form['date'], 'location':form['location']})
 
 def transportation_add(request):
     if not request.user.is_authenticated():

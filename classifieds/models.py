@@ -321,11 +321,30 @@ class BookAddForm(AddForm):
                 label='Category',
                 widget=forms.Select(attrs={'class' : 'form_p'}))
     
+#import re
 class EventAddForm(AddForm):
     date = forms.DateField(
+                label='Date',
                 widget=forms.TextInput(attrs={'class' : 'form_p'}))
     location = forms.CharField(max_length=100,
+                label='Location',
                 widget=forms.TextInput(attrs={'class' : 'form_p'}))
+    
+#    def clean(self):
+#        cleaned_data = self.cleaned_data
+#        date = cleaned_data.get("date")
+#        if date: #should be format mm/dd/yyyy
+#            print (date)
+#            rg = re.compile(r"""\d{4}     #year
+#                                \-        #hyphen
+#                                \d{2}     #month
+#                                \-        #hyphen
+#                                \d{2}$    #day""", re.X)
+#            if re.match(rg, date) != None:
+#                msg = u"The date must be in mm/dd/yyyy format."
+#                self._errors["date"] = self.error_class([msg])
+#               
+#        return cleaned_data
     
 class TransportationAddForm(AddForm):
     date = forms.DateField(
