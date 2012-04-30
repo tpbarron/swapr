@@ -9,7 +9,6 @@ from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.http import Http404
 from django.core.mail import send_mail
 from django.db.models import Q
-from django.forms import ValidationError
 
 from swapr import settings
 

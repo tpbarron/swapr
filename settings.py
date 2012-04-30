@@ -5,7 +5,7 @@ DIR = os.path.abspath(os.path.dirname(__file__))
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-DOMAIN = 'http://swapr.webfactional.com/'
+DOMAIN = 'http://swapr.cc/'
 
 ADMINS = (
     ('Trevor Barron', 'barron.trevor@gmail.com'),
