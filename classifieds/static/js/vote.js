@@ -14,6 +14,7 @@ $(document).ready(function() {
 		var id = $(this).attr('id').substring(2);
 		console.log(id);
 		if ($(this).parent().hasClass("active")) {
+			var vote;
 			if ($(this).hasClass("up")) {
 				vote = 1;
 			} else if ($(this).hasClass("down")) {
@@ -37,7 +38,7 @@ $(document).ready(function() {
 	
 	
 	function sendToServer(vote, id) {
-		$.get('/vote/'+vote+'/'+id, function(data) {
+		$.get('/vote/'+vote+'/'+id+'/', function(data) {
 			console.log(data);
 		});
 		
