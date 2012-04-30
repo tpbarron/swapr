@@ -31,6 +31,9 @@ class TransportationAdmin(admin.ModelAdmin):
 class EventAdmin(admin.ModelAdmin):
     pass
 
+class RefAdmin(admin.ModelAdmin):
+    pass
+
 #admin.site.register(User, StudentAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Book, BookAdmin)
@@ -39,5 +42,6 @@ admin.site.register(Discussion, DiscussionAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Transportation, TransportationAdmin)
 admin.site.register(Event, EventAdmin)
+admin.site.register(Ref, RefAdmin)
 
 

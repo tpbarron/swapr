@@ -17,7 +17,34 @@ def about(request):
     return TemplateResponse(request, 'about.html')
 
 def home(request):
+    try:
+        ref = str(request.GET.get('ref', '1'))
+    except ValueError:
+        ref = "null"    
+        
+    print ref
+        
+    if ref != "qr0":
+        print (ref)
+        ref = "null"
+        
+    referrer=request.META.get('HTTP_REFERER')
+    if not referrer:
+        referrer = ""
+    ua=request.META.get('HTTP_USER_AGENT')
+    if not ua:
+        ua = ""
+    
+    r = Ref(
+            time=datetime.datetime.now(),
+            useragent=ua,
+            referrer=referrer,
+            mref=ref
+    )
+    r.save()
+    
     return TemplateResponse(request, 'home.html')
+
 
 def login(request):
     form = LoginForm()

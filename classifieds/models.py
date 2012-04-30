@@ -97,7 +97,23 @@ class View(models.Model):
         verbose_name = "View"
         verbose_name_plural = "Views"
     
+ref_options = (
+    ('qr0', 'Launch QR Code'),
+    ('null', 'Default no referrer')
+)
         
+class Ref(models.Model):
+    time = models.DateTimeField()
+    useragent = models.CharField(max_length=1000, blank=True)
+    referrer = models.CharField(max_length=1000, blank=True)
+    mref = models.CharField(max_length=10, choices=ref_options)
+    
+    def __str__(self):
+        return str(self.time)
+    
+    class Meta:
+        verbose_name = "Referer"
+        verbose_name_plural = "Referers"
         
 class Break(Entry):
     break_name = models.CharField(max_length=100, choices=break_options)
