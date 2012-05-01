@@ -93,10 +93,12 @@ header {
 	margin:auto;
 	padding: 5px;
 	
-	-moz-box-shadow: 0px 5px 5px #888;
-	-webkit-box-shadow: 0px 5px 5px #888;
-	box-shadow: 0px 5px 5px #888;
-	-o-box-shadow: 0px 5px 5px #888;
+	background:black;
+	
+	-moz-box-shadow: 5px 5px 5px #888;
+	-webkit-box-shadow: 5px 5px 5px #888;
+	box-shadow: 5px 5px 5px #888;
+	-o-box-shadow: 5px 5px 5px #888;
 }
 *html header { 
 	position: absolute;
@@ -108,7 +110,8 @@ header {
 }*/
 #logo a {
 	font-size:36px;
-	color:black;
+	color:white;
+	/*color:black;*/
 	text-decoration:none;
 	-webkit-transition: color 250ms;
 	transition:color 250ms;
