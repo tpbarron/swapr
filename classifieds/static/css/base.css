@@ -93,7 +93,7 @@ header {
 	margin:auto;
 	padding: 5px;
 	
-	background:black;
+	/*background:black;*/
 	
 	-moz-box-shadow: 5px 5px 5px #888;
 	-webkit-box-shadow: 5px 5px 5px #888;
@@ -127,7 +127,6 @@ header {
 }
 /*navigation*/
 nav {
-	/*float:right;*/
 	padding-top:5px;
 }
 nav ul {
