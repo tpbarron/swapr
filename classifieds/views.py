@@ -12,25 +12,15 @@ from django.db.models import Q
 
 from swapr import settings
 
-#static about view
-def about(request):
-    return TemplateResponse(request, 'about.html')
-
-def home(request):
+def analytic(request):
     try:
         ref = str(request.GET.get('ref', '1'))
     except ValueError:
         ref = "null"    
         
-    print ref
-        
     if ref != "qr0":
-        print (ref)
         ref = "null"
         
-    referrer=request.META.get('HTTP_REFERER')
-    if not referrer:
-        referrer = ""
     ua=request.META.get('HTTP_USER_AGENT')
     if not ua:
         ua = ""
@@ -38,11 +28,17 @@ def home(request):
     r = Ref(
             time=datetime.datetime.now(),
             useragent=ua,
-            referrer=referrer,
             mref=ref
     )
     r.save()
     
+
+#static about view
+def about(request):
+    return TemplateResponse(request, 'about.html')
+
+def home(request):
+    analytic(request)
     return TemplateResponse(request, 'home.html')
 
 
@@ -723,7 +719,17 @@ def event_search(request):
     
     if (query == ""):
         redirect("/events/")
+    else:
+        events_list = Event.objects.filter(
+           Q(title__contains=query) | 
+           Q(description__contains=query)
+        )
+        paginator = Paginator(events_list, 5)        
+        events = paginate(request, paginator)
         
+        return TemplateResponse(request, 'lists/events.html',
+                {'events':events, 'title': "Events", 'url':"events"})
+ 
 
 def break_search(request):
     try:
@@ -733,6 +739,19 @@ def break_search(request):
     
     if (query == ""):
         redirect("/breaks/")
+    else:
+        break_list = Break.objects.filter(
+            Q(title__contains=query) | 
+            Q(description__contains=query) | 
+            Q(break_name__contains=query)
+        )
+        
+        paginator = Paginator(break_list, 5)        
+        breaks = paginate(request, paginator)
+        
+        return TemplateResponse(request, 'lists/breaks.html',
+                {'breaks':breaks, 'title': "Breaks", 'url':"breaks"})
+
 
 def product_search(request):
     try:
@@ -742,6 +761,18 @@ def product_search(request):
     
     if (query == ""):
         redirect("/sales/")
+    else:
+        product_list = Product.objects.filter(
+            Q(title__contains=query) | 
+            Q(description__contains=query)
+        )
+        
+        paginator = Paginator(product_list, 5)        
+        sales = paginate(request, paginator)
+        
+        return TemplateResponse(request, 'lists/sales.html',
+                {'sales':sales, 'title': "Sales", 'url':"sales"})
+
         
 def book_search(request):
     try:
@@ -770,6 +801,16 @@ def discussion_search(request):
     
     if (query == ""):
         redirect("/discussions/")
+    else:
+        disc_list = Discussion.objects.filter(
+            Q(title__contains=query) | Q(description__contains=query)
+        )
+        
+        paginator = Paginator(disc_list, 5)        
+        discs = paginate(request, paginator)
+        return TemplateResponse(request, 'lists/discussions.html',
+                {'discussions':discs, 'title': "Discussions", 'url':"discussions"})
+
 
 def transportation_search(request):
     try:
@@ -779,6 +820,16 @@ def transportation_search(request):
     
     if (query == ""):
         redirect("/transportation/")
+    else:
+        trans_list = Transportation.objects.filter(
+            Q(title__contains=query) | Q(description__contains=query)
+        )
+        
+        paginator = Paginator(trans_list, 5)        
+        trans = paginate(request, paginator)
+        return TemplateResponse(request, 'lists/transportation.html',
+                {'trans':trans, 'title': "Transportation", 'url':"transportation"})
+
 
 
 #qr code
