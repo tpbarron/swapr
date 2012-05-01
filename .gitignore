@@ -1,0 +1,3 @@
+/classifieds/\*.pyc
+/settings.pyc
+sqlite.db
