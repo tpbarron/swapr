@@ -1,3 +1,8 @@
-/classifieds/\*.pyc
-/settings.pyc
+#ignore all compiled python
+*.pyc
+
+#ignore local db
 sqlite.db
+
+#ignore any temp files
+*.*~
