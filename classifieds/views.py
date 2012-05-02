@@ -666,7 +666,7 @@ def products(request):
     products = paginate(request, paginator)
     
     return TemplateResponse(request, 'lists/sales.html',
-            {'sales':products, 'title': "Sales", 'url':"sales"})
+            {'sales':products, 'title': "For Sale / Wanted", 'url':"sales"})
     
     
 def books(request):
@@ -759,7 +759,7 @@ def transportation(request):
     trans = paginate(request, paginator)
     
     return TemplateResponse(request, 'lists/transportation.html',
-            {'trans':trans, 'title': "Transportation", 'url':"transportation"})
+            {'trans':trans, 'title': "Rides", 'url':"transportation"})
 
 
 

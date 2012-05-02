@@ -50,7 +50,7 @@ class Entry(models.Model):
         verbose_name = "Entry"
         verbose_name_plural = "Entries"
     
-        
+    
     
 category_options = (
     ('anthropology', 'Anthropology'),
