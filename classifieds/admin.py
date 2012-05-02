@@ -37,6 +37,7 @@ class RefAdmin(admin.ModelAdmin):
 class FeedbackAdmin(admin.ModelAdmin):
     pass
 
+
 #admin.site.register(User, StudentAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Book, BookAdmin)
@@ -47,5 +48,6 @@ admin.site.register(Transportation, TransportationAdmin)
 admin.site.register(Event, EventAdmin)
 admin.site.register(Ref, RefAdmin)
 admin.site.register(Feedback, FeedbackAdmin)
+admin.site.register(Student, StudentAdmin)
 
 

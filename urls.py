@@ -72,7 +72,7 @@ urlpatterns = patterns('swapr.classifieds.views',
     url(r'^sales/', include(sales_urls)),
     url(r'^books/', include(books_urls)),
     url(r'^discussions/', include(discussions_urls)),
-    url(r'^transportation/', include(transportation_urls)),
+    url(r'^rides/', include(transportation_urls)),
     url(r'^events/', include(events_urls)),
     
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

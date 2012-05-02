@@ -193,7 +193,7 @@ def contact_user(request, uname):
         if (form.is_valid()):
             data = form.clean()
             subject = data['subject']
-            message = data['message']
+            message = request.user.get_full_name() + " sent you this message on CC Swapr: \n" + data['message']
             
             print (message)
              
@@ -204,7 +204,7 @@ def contact_user(request, uname):
                       fail_silently=True)
             
             m = PrivateMessage(
-                    student=Student.objects.get(user=request.user),
+                    student=Student.objects.get(user=User.objects.get(username=uname)),
                     subject=subject,
                     message=message
                     )
@@ -759,7 +759,7 @@ def transportation(request):
     trans = paginate(request, paginator)
     
     return TemplateResponse(request, 'lists/transportation.html',
-            {'trans':trans, 'title': "Rides", 'url':"transportation"})
+            {'trans':trans, 'title': "Rides", 'url':"rides"})
 
 
 

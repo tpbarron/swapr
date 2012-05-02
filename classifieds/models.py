@@ -206,7 +206,7 @@ class Transportation(Entry):
     posted_by = models.ForeignKey(User, related_name='transportation')
        
     def get_absolute_url(self):
-        return "transportation/%i/" % self.id
+        return "rides/%i/" % self.id
     
     class Meta:
         verbose_name = "Ride"
