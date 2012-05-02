@@ -1,9 +1,17 @@
 {% if user.is_authenticated %}
 	{% if user == obj.posted_by %}
-		<p>Posted by: You!
+		{% if obj.is_active %}
+			<p>Posted by: You! // <a href="/completed/{{ obj.get_absolute_url }}">Mark as completed!</a></p>
+		{% else %}
+			<p>Posted by: You! // This listing is no longer active!</p>
+		{% endif %}
 	{% else %}
 		<p>Posted by: <a href="/contact/{{ obj.posted_by.username }}">{{ obj.posted_by.first_name }}</a></p>
 	{% endif %}
 {% else %}
-	<p>Posted by: {{ obj.posted_by.first_name }}</p>
+	{% if obj.published == True %}
+		<p>Posted by: {{ obj.posted_by.first_name }}</p>
+	{% else %}
+		<p>Posted by: {{ obj.posted_by.first_name }} // This listing is no longer active!</p>
+	{% endif %}
 {% endif %}
