@@ -40,13 +40,13 @@
         <nav>
 			<ul>
 				<li><a class="nav_link" href="/breaks/">Breaks</a></li>
-				<li><a class="nav_link" href="/sales/">For Sale</a></li>
+				<li><a class="nav_link" href="/sales/">For Sale / Wanted</a></li>
 				<li><a class="nav_link" href="/books/">Books</a></li>
 				<li><a class="nav_link" href="/discussions/">Discussions</a></li>
 				<li><a class="nav_link" href="/events/">Events</a></li>
-				<li><a class="nav_link" href="/transportation/">Transportation</a></li>
+				<li><a class="nav_link" href="/transportation/">Rides</a></li>
 				{% if user.is_authenticated %}
-				<li id="status">{{user.first_name}} {{user.last_name}} - <a class="nav_link" href="/logout/">Logout</a></li>
+				<li id="status">{{ user.get_full_name }} - <a class="nav_link" href="/logout/">Logout</a></li>
 				{% else %}
 				<li id="status"><a class="nav_link" href="/login/">Login</a> or <a class="nav_link" href="/newuser/">create a new account</a></li>
 				{% endif %}
