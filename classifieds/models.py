@@ -20,6 +20,9 @@ class Student(models.Model):
     user = models.OneToOneField(User)
     activation_key = models.CharField(max_length=40)
     key_expires = models.DateTimeField()
+    
+    def __str__(self):
+        return self.user.get_full_name()
 
 
 class Entry(models.Model):

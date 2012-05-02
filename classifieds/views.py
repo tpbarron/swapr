@@ -203,12 +203,12 @@ def contact_user(request, uname):
                       [receiver.email],
                       fail_silently=True)
             
-            m = PrivateMessage(
-                    student=Student.objects.get(user=User.objects.get(username=uname)),
-                    subject=subject,
-                    message=message
-                    )
-            m.save()
+            #m = PrivateMessage(
+            #        student=Student.objects.get(user=User.objects.get(username=uname)),
+            #        subject=subject,
+            #        message=message
+            #        )
+            #m.save()
             
         
             return TemplateResponse(request, 'contact_user.html', {'form':form, 'submitted':True}) 
