@@ -37,8 +37,8 @@ class Entry(models.Model):
     def get_num_unique_views(self):
         return self.views.filter(unique=True).count()
     
-    def is_expired(self):
-        return datetime.datetime.now() < self.expiration
+    def is_active(self):
+        return datetime.datetime.now() < self.expiration and self.published == True
     
     def get_short_description(self):
         if (len(self.description) < 80):

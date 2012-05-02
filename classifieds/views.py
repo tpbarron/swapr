@@ -291,8 +291,27 @@ def vote(request, v, disc_id):
     
     return HttpResponse("success")
     
-   
-   
+
+def item_completed(request, item_type, item_id):
+    if (item_type == "breaks"):
+        item = Break.objects.get(id=item_id)
+    elif (item_type == "books"):
+        item = Book.objects.get(id=item_id)
+    elif (item_type == "discussions"):
+        item = Discussion.objects.get(id=item_id)
+    elif (item_type == "events"):
+        item = Event.objects.get(id=item_id)
+    elif (item_type == "sales"):
+        item = Product.objects.get(id=item_id)
+    elif (item_type == "transportation"):
+        item = Transportation.objects.get(id=item_id)
+    else:
+        return redirect("/")
+        
+    item.published = False;
+    item.save()
+    
+    return redirect("/"+item.get_absolute_url())
     
 #details
 def break_detail(request, break_id):
