@@ -25,6 +25,8 @@ class Student(models.Model):
 class Entry(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    expiration = models.DateTimeField(default=datetime.datetime.now() + datetime.timedelta(days=30))
+    published = models.BooleanField(default=True)
     
     def __str__(self):
         return self.title
@@ -34,6 +36,9 @@ class Entry(models.Model):
     
     def get_num_unique_views(self):
         return self.views.filter(unique=True).count()
+    
+    def is_expired(self):
+        return datetime.datetime.now() < self.expiration
     
     def get_short_description(self):
         if (len(self.description) < 80):

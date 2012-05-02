@@ -624,7 +624,11 @@ def paginate(request, paginator):
     return objs
 
 def breaks(request):
-    break_list = Break.objects.all()
+    break_list = Break.objects.filter(
+                                expiration__gte=datetime.datetime.now()
+                             ).filter(
+                                published=True
+                             )
     paginator = Paginator(break_list, 5)
     
     breaks = paginate(request, paginator)
@@ -633,7 +637,11 @@ def breaks(request):
             {'breaks':breaks, 'title': "Breaks", 'url':"breaks"})
 
 def products(request):
-    product_list = Product.objects.all()
+    product_list = Product.objects.filter(
+                                expiration__gte=datetime.datetime.now()
+                             ).filter(
+                                published=True
+                             )
     paginator = Paginator(product_list, 5)
     
     products = paginate(request, paginator)
@@ -643,7 +651,11 @@ def products(request):
     
     
 def books(request):
-    book_list = Book.objects.all()
+    book_list = Book.objects.filter(
+                                expiration__gte=datetime.datetime.now()
+                             ).filter(
+                                published=True
+                             )
     paginator = Paginator(book_list, 5)
     
     books = paginate(request, paginator)
@@ -653,7 +665,13 @@ def books(request):
 
 
 def book_category(request, cat):
-    book_list = Book.objects.filter(category=cat)
+    book_list = Book.objects.filter(
+                                expiration__gte=datetime.datetime.now()
+                             ).filter(
+                                published=True
+                             ).filter(
+                                category=cat
+                             )
     paginator = Paginator(book_list, 5)
     
     books = paginate(request, paginator)
@@ -662,7 +680,11 @@ def book_category(request, cat):
             {'books':books, 'title': "Books", 'categories':category_options, 'url':"books", 'category':True})
 
 def events(request):
-    event_list = Event.objects.all()
+    event_list = Event.objects.filter(
+                                expiration__gte=datetime.datetime.now()
+                             ).filter(
+                                published=True
+                             )
     paginator = Paginator(event_list, 5)
     
     events = paginate(request, paginator)
@@ -672,7 +694,11 @@ def events(request):
 
 
 def events_json(request):
-    events = Event.objects.all()
+    events = Event.objects.filter(
+                                expiration__gte=datetime.datetime.now()
+                             ).filter(
+                                published=True
+                             )
     json = "["
     for i in range(len(events)):
         e = events[i]
@@ -691,7 +717,11 @@ def events_calendar(request):
             {'title':"Events Calendar", 'url':"events"})
 
 def discussions(request):
-    disc_list = Discussion.objects.all()
+    disc_list = Discussion.objects.filter(
+                                expiration__gte=datetime.datetime.now()
+                             ).filter(
+                                published=True
+                             )
     paginator = Paginator(disc_list, 5)
     
     discs = paginate(request, paginator)
@@ -700,7 +730,11 @@ def discussions(request):
             {'discussions':discs, 'title': "Discussions", "url":"discussions"})
 
 def transportation(request):
-    trans_list = Transportation.objects.all()
+    trans_list = Transportation.objects.filter(
+                                expiration__gte=datetime.datetime.now()
+                             ).filter(
+                                published=True
+                             )
     paginator = Paginator(trans_list, 5)
     
     trans = paginate(request, paginator)
