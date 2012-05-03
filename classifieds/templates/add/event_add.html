@@ -4,7 +4,8 @@
 
 {% block subcss %}
 	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jqueryui/jquery-ui-1.8.19.custom.css" />
-	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/add/event_add.css" />
+	<link href="{{ STATIC_URL }}css/add/event_add_desktop.css" media="screen and (min-width: 600px)" rel="stylesheet" type="text/css" />
+	<link href="{{ STATIC_URL }}css/add/event_add_mobile.css" media="screen and (max-width: 559px)" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block add %}
@@ -18,10 +19,10 @@
 				{{ field }}
 			</div>
 		{% endfor %}
+		<div id="map_canvas"></div>
 		<input id="submit" class="form_submit" type="submit" value="Submit" />
 	</form>	
 </div>
-<div id="map_canvas"></div>
 {% endblock %}
 
 {% block javascript %}

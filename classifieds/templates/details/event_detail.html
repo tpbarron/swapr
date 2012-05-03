@@ -3,7 +3,8 @@
 {% block title %} {{ event.title }} {% endblock %}
 
 {% block subcss %}
-	<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/detail/event_detail.css" />
+	<link href="{{ STATIC_URL }}css/detail/event_detail_desktop.css" media="screen and (min-width: 600px)" rel="stylesheet" type="text/css" />
+	<link href="{{ STATIC_URL }}css/detail/event_detail_mobile.css" media="screen and (max-width: 559px)" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block detail %}
@@ -14,13 +15,6 @@
 		<p>{{ event.description }}</p>
 		<p>{{ event.date }}</p>
 		<p id="detail_location">{{ event.location }}</p>
-	</div>
-	
-	<div id="comments">
-		{% include "snippets/comments.html" with num_comments=event.get_num_comments comments=comments %}
-	</div>
-	<div id="comment">
-		{% include "snippets/comment_form.html" with form=form user=user %}
 	</div>
 </div>
 <div id="map">
@@ -44,6 +38,14 @@
 			<h2 id="directions_detail_heading">Directions</h2>
 			<ol id="directions_detail_list"></ol>
 		</div>
+	</div>
+</div>
+<div id="comment_container">
+	<div id="comments">
+		{% include "snippets/comments.html" with num_comments=event.get_num_comments comments=comments %}
+	</div>
+	<div id="comment">
+		{% include "snippets/comment_form.html" with form=form user=user %}
 	</div>
 </div>
 {% endblock %}
