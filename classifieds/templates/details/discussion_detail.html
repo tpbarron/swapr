@@ -1,6 +1,8 @@
 {% extends "template_detail.html" %}
 
-{% block title %}{{disc.title}}{% endblock %}
+{% block meta_description %}{{ disc.title }}{% endblock %}
+
+{% block title %}{{ disc.title }}{% endblock %}
 
 {% block subcss %}
 	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/vote.css" />
