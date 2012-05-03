@@ -140,6 +140,7 @@ def confirm_account(request, key):
     #if (current_time < student.key_expires):
     #for now I'm not going to worry about a time limit
     #because then I'd have to deal with people registering twice
+    #i guess I could just delete the current reference
     
     user_account = student.user
     user_account.is_active = True
