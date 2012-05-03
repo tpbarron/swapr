@@ -670,7 +670,7 @@ def products(request):
     products = paginate(request, paginator)
     
     return TemplateResponse(request, 'lists/sales.html',
-            {'sales':products, 'title': "For Sale / Wanted", 'url':"sales"})
+            {'sales':products, 'title': "For Sale & Wanted", 'url':"sales"})
     
     
 def books(request):
