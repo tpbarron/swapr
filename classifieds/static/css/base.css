@@ -105,6 +105,9 @@ header {
 	top: expression(eval(document.compatMode &&document.compatMode=='CSS1Compat') ?documentElement.scrollTop : document.body.scrollTop);
 }
 
+a {
+	text-decoration:none;
+}
 /*#logo {
 	float:left;
 }*/

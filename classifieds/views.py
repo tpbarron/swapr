@@ -212,9 +212,9 @@ def contact_user(request, uname):
             #m.save()
             
         
-            return TemplateResponse(request, 'contact_user.html', {'form':form, 'submitted':True}) 
+            return TemplateResponse(request, 'contact_user.html', {'form':form,'usr':receiver, 'submitted':True}) 
     
-    return TemplateResponse(request, 'contact_user.html', {'form':form, 'submitted':False})
+    return TemplateResponse(request, 'contact_user.html', {'form':form, 'usr':receiver, 'submitted':False})
  
 
 #to avoid void ct increments on page reloads and post requests
@@ -251,7 +251,7 @@ def email_poster(request, obj):
     auth_user_name = auth_user.get_full_name()
     url = settings.DOMAIN+obj.get_absolute_url()
     
-    subject = auth_user_name + " commented on your post!"
+    subject = "CC Swapr: " + auth_user_name + " commented on your post!"
     receiver = post_user_email
     message = "Please visit the following url to respond:\n" + url
     print(message)

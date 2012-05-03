@@ -4,14 +4,16 @@
 {% block title %}Uh Oh{% endblock %}
 
 {% block css %}
+	<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/404.css" />
 {% endblock %}
 
 {% block content %} 
 	<div id="viewer">
 		<h1>Uh Oh... something went wrong!</h1>
 		<p>I'm not sure what you were looking for. If you think we did something wrong
-			let us know <a href="/suggest/">here</a>. Otherwise why don't you head <a href="/">home</a>?
+			let us know <a href="/feedback/">here</a>.  Otherwise why don't you head <a href="/">home</a>?
 		</p>
+		<img id="cclogo" src="http://www.coloradocollege.edu/dotAsset/b141b749-8c8c-4eab-9b41-a8ecbb64ce2b.png" alt="cclogo" />
 	</div>
 {% endblock %}
 
