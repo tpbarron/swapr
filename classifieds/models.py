@@ -330,7 +330,7 @@ class AddForm(forms.Form):
 class BreakAddForm(AddForm):
     break_name = forms.ChoiceField(choices=break_options,
                 label='Break',
-                widget=forms.Select(attrs={'class' : 'form_p'}))
+                widget=forms.Select(attrs={'class' : 'form_choice'}))
 
 class ProductAddForm(AddForm):
     pass
@@ -341,7 +341,7 @@ class DiscussionAddForm(AddForm):
 class BookAddForm(AddForm):
     category = forms.ChoiceField(choices=category_options,
                 label='Category',
-                widget=forms.Select(attrs={'class' : 'form_p'}))
+                widget=forms.Select(attrs={'class' : 'form_choice'}))
     
 #import re
 class EventAddForm(AddForm):
