@@ -1,6 +1,6 @@
 #ignore all compiled python
 *.pyc
-
+../*.pyc
 #ignore local db
 sqlite.db
 
