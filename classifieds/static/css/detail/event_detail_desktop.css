@@ -1,0 +1,45 @@
+#item {
+	float:left;
+	width:400px;
+	/*overflow:wrap;*/
+}
+
+#comment_container {
+	float:left;
+	width:400px;
+}
+
+/* comment form */
+#id_comment {
+	width:360px;
+}
+
+#map {
+	float:right;
+	top:0px;
+	width:400px;
+}
+#map_canvas {
+	height:400px;
+	
+	-moz-box-shadow: 10px 10px 5px #888;
+	-webkit-box-shadow: 10px 10px 5px #888;
+	box-shadow: 10px 10px 5px #888;
+	-o-box-shadow: 10px 10px 5px #888;
+}
+
+#directions {
+	margin-top:20px;	
+}
+#direction_from_input, #direction_to_input {
+	width:380px;
+}
+#travel_mode {
+	margin-bottom:10px;
+}
+#directions_detail_heading {
+	display:none;
+}
+.direction {
+	margin-bottom:5px;
+}

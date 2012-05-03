@@ -18,11 +18,12 @@
 }
 
 .form_textarea {
-	width:80%;
+	width:95%;
 	margin-bottom:10px;
 }
 .form_p {
-	width:80%;
+	width:95%;
+	margin:auto;
 	margin-bottom:10px;
 }
 
@@ -54,11 +55,16 @@
 }
 
 
-/* .form_choice {
+.form_choice {
+	margin:auto;
 	margin-bottom:10px;
 	line-height:22px;
-	height:45px;
-} */
+	font-size:14px;
+	
+	padding:5px;
+
+	border:2px solid silver;
+}
 
 .form_submit {
 	line-height: 22px;

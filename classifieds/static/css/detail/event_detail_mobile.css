@@ -1,0 +1,33 @@
+#item {
+	width:100%;
+}
+/* comment form */
+#id_comment {
+	width:95%;
+}
+
+#map {
+	float:top;
+	width:95%;
+	padding:10px;
+}
+#map_canvas {
+	height:250px;
+	-moz-box-shadow: 10px 10px 5px #888;
+	-webkit-box-shadow: 10px 10px 5px #888;
+	box-shadow: 10px 10px 5px #888;
+	-o-box-shadow: 10px 10px 5px #888;
+}
+
+#directions {
+	margin-top:20px;	
+}
+#travel_mode {
+	margin-bottom:10px;
+}
+#directions_detail_heading {
+	display:none;
+}
+.direction {
+	margin-bottom:5px;
+}
