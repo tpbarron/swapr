@@ -109,7 +109,7 @@ def new_user(request):
                 email_body += "Please visit the following URL to confirm your account: \n"
                 email_body += confirmation_url + "\n\n"
                 email_body += "Have a suggestion? Let us know at "+settings.DOMAIN+"feedback/. \n\n"
-                email_body += "Thanks,\nThe CC Swapr Team (AKA Trevor and Stanley :D )"
+                email_body += "Thanks,\nThe CC Swapr Team (Trevor and Stanley :D )"
         
                 print (email_body)
                 send_mail(email_subject,
@@ -194,8 +194,9 @@ def contact_user(request, uname):
         if (form.is_valid()):
             data = form.clean()
             subject = data['subject']
-            message = request.user.get_full_name() + " sent you this message on CC Swapr: \n" + data['message']
-            
+            message = request.user.get_full_name() + " sent you this message on CC Swapr: \n" + data['message'] + "\n\n"
+            message += "Have a suggestion? Let us know at "+settings.DOMAIN+"feedback/. \n\n"
+            message += "Thanks,\nThe CC Swapr Team (Trevor and Stanley)"
             print (message)
              
             send_mail(subject,
@@ -253,7 +254,9 @@ def email_poster(request, obj):
     
     subject = "CC Swapr: " + auth_user_name + " commented on your post!"
     receiver = post_user_email
-    message = "Please visit the following url to respond:\n" + url
+    message = "Please visit the following url to respond:\n" + url + "\n\n"
+    message += "Have a suggestion? Let us know at "+settings.DOMAIN+"feedback/. \n\n"
+    message += "Thanks,\nThe CC Swapr Team (Trevor and Stanley)"
     print(message)
     
     send_mail(subject,
@@ -304,7 +307,7 @@ def item_completed(request, item_type, item_id):
         item = Event.objects.get(id=item_id)
     elif (item_type == "sales"):
         item = Product.objects.get(id=item_id)
-    elif (item_type == "transportation"):
+    elif (item_type == "rides"):
         item = Transportation.objects.get(id=item_id)
     else:
         return redirect("/")
