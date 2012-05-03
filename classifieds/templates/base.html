@@ -20,7 +20,9 @@
     
     
     <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Ubuntu' />
-	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/base.css" />
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/base.css" />
+    <link rel="stylesheet" type="text/css" media="screen and (min-width: 600px)" href="{{ STATIC_URL }}css/main_desktop.css" />
+    <link rel="stylesheet" type="text/css" media="screen and (max-width: 599px)" href="{{ STATIC_URL }}css/main_mobile.css" />
     
     {% block css %}
     {% endblock %}
