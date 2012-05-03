@@ -1,0 +1,79 @@
+#item_add {
+	margin-bottom:20px;
+}
+
+#item_add a {
+	text-decoration:none;
+	color:silver;
+	
+	-webkit-transition: color 250ms;
+	-moz-transition: color 250ms;
+	transition: color 250ms;
+	-o-transition: color 250ms;
+}
+#item_add a:hover {
+	color:gold;
+}
+
+#item_add_link {
+}
+#search_form {
+	margin-top:20px;
+}
+#searchbox {
+	color:black;
+}
+
+
+#items {
+	width:100%;
+	margin:auto;
+	margin-bottom:30px;
+}
+
+.item {
+	padding-bottom:10px;
+	padding-top:10px;
+	padding-left:10px;
+	margin-bottom:20px;
+	
+	border-top:2px solid silver;
+	border-left:2px solid silver;
+
+	-moz-box-shadow: 0px 0px 0px #888;
+	-webkit-box-shadow: 0px 0px 0px #888;
+	box-shadow: 0px 0px 0px #888;
+	-o-box-shadow: 0px 0px 0px #888;
+	
+	-webkit-transition:-webkit-box-shadow 250ms, border-top 250ms, border-left 250ms;
+	-moz-transition:-moz-box-shadow 250ms, border-top 250ms, border-left 250ms;
+	transition:box-shadow 250ms, border-top 250ms, border-left 250ms;
+	-o-transition:-o-box-shadow 250ms, border-top 250ms, border-left 250ms;
+}
+
+.item:hover {
+	border-top:2px solid gold;
+	border-left:2px solid gold;
+	-moz-box-shadow: 10px 10px 5px #888;
+	-webkit-box-shadow: 10px 10px 5px #888;
+	box-shadow: 10px 10px 5px #888;
+	-o-box-shadow: 10px 10px 5px #888;
+}
+
+.item_title a, .item_posted a {
+	position:relative;
+	text-decoration:none;
+	color:silver;
+	
+	-webkit-transition: color 250ms;
+	-moz-transition: color 250ms;
+	transition: color 250ms;
+	-o-transition: color 250ms;
+}
+.item_title a:hover, .item_posted a:hover {
+	color:gold;
+}
+
+.item_posted, .item_description {
+	font-size:14px;
+}

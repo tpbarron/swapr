@@ -1,0 +1,18 @@
+/* ==|== primary styles =====================================================
+   Author: Trevor Barron
+   ========================================================================== */
+body {
+	width:1000px;
+}
+
+/*navigation*/
+
+nav ul > li {
+	display:inline;
+	padding-right:30px
+}
+#viewer {
+	width:1000px;
+	margin:auto;
+	margin-top:20px;
+}
