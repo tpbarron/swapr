@@ -12,6 +12,10 @@
 	margin-bottom:20px;
 	font-size:14px;
 }
+/* the listing */
+#detail p {
+	margin-bottom:10px;
+}
 
 #viewer a {
 	font-size:14px;
