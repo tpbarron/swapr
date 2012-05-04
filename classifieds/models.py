@@ -49,7 +49,7 @@ class Entry(models.Model):
         if (len(self.description) < 80):
             return self.description
         else:
-            return self.description[0:80] + "..."
+            return self.description[0:100] + "..."
         
     def get_urlized_description(self):
         return urlize(self.description, nofollow=True)
@@ -57,7 +57,7 @@ class Entry(models.Model):
     class Meta:
         verbose_name = "Entry"
         verbose_name_plural = "Entries"
-    
+   	#ordering = ['-expiration']
     
     
 category_options = (
