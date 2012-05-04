@@ -1,14 +1,14 @@
 {% extends "template_detail.html" %}
 
-{% block meta_description %}{{book.title}}{% endblock %}
+{% block meta_description %}{{ book.title }}{% endblock %}
 
-{% block title %}{{book.title}}{% endblock %}
+{% block title %}{{ book.title }}{% endblock %}
 
 {% block detail %}
 <div id="detail">
-	<h2>{{book.title}}</h2>
+	<h2>{{ book.title }}</h2>
 	{% include "snippets/detail_contact_link.html" with obj=book %}
-	<p>{{book.description}}</p>
+	<p>{{ book.description|urlize }}</p>
 </div>
 
 <div id="comments">

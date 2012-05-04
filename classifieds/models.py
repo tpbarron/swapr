@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django import forms
 import datetime
+from django.utils.html import urlize, escape
+
 
  
 
@@ -48,6 +50,9 @@ class Entry(models.Model):
             return self.description
         else:
             return self.description[0:80] + "..."
+        
+    def get_urlized_description(self):
+        return urlize(self.description, nofollow=True)
         
     class Meta:
         verbose_name = "Entry"

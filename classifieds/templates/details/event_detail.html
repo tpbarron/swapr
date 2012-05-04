@@ -14,7 +14,7 @@
 	<div id="detail">
 		<h2>{{ event.title }}</h2>
 		{% include "snippets/detail_contact_link_event.html" with obj=event %}
-		<p>{{ event.description }}</p>
+		<p>{{ event.description|urlize }}</p>
 		<p>{{ event.date }}</p>
 		<p id="detail_location">{{ event.location }}</p>
 	</div>

@@ -8,7 +8,7 @@
 <div id="detail">
 	<h2>{{ trans.title }}</h2>
 	{% include "snippets/detail_contact_link.html" with obj=trans %}
-	<p>{{ trans.description }}</p>
+	<p>{{ trans.description|urlize }}</p>
 	<p>{{ trans.date }}</p>
 </div>
 

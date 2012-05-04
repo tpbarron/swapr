@@ -8,13 +8,13 @@
 <div id="detail">
 	<h2>{{break.title}}</h2>
 	{% include "snippets/detail_contact_link.html" with obj=break %}
-	<p>{{break.get_break_name}} &raquo; {{break.description}}</p>
+	<p>{{ break.get_break_name }} &raquo; {{ break.description|urlize }}</p>
 </div>
 
 <div id="comments">
-	{% include "snippets/comments.html" with num_comments=break.get_num_comments comments=comments%}
+	{% include "snippets/comments.html" with num_comments=break.get_num_comments comments=comments %}
 </div>
 <div id="comment">
-	{% include "snippets/comment_form.html" with form=form user=user%}
+	{% include "snippets/comment_form.html" with form=form user=user %}
 </div>
 {% endblock %}
