@@ -150,7 +150,7 @@ class Product(Entry):
         verbose_name = "For Sale"
         verbose_name_plural = "For Sale"
         
-        
+      
     
     
 class Discussion(Entry):
@@ -230,7 +230,7 @@ class Vote(models.Model):
         
 
 class Feedback(models.Model):
-    student = models.ForeignKey(Student, related_name='feedback')
+    student = models.ForeignKey(Student, null=True, related_name='feedback')
     message = models.TextField()
     
 class PrivateMessage(models.Model):

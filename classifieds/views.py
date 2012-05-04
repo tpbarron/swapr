@@ -168,16 +168,17 @@ def feedback(request):
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
         if (form.is_valid()):
-            data = form.clean()
-            message = data['message']
-            print (message)
-            f = Feedback(
-                    student=Student.objects.get(user=request.user),
-                    message=message
-                )
-            f.save() 
+		data = form.clean()
+		message = data['message']
+		print (message)
+		subject = "Feedback"
+		receiver = "barron.trevor@gmail.com"
+		send_mail(subject, message,
+			settings.DEFAULT_FROM_EMAIL,
+			[receiver],
+			fail_silently=True)
             
-            return TemplateResponse(request, 'feedback.html', 
+		return TemplateResponse(request, 'feedback.html', 
                                     {'message': form['message'], 'submitted':True})
     
     return TemplateResponse(request, 'feedback.html', 

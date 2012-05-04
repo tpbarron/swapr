@@ -2,7 +2,7 @@
 import os
 DIR = os.path.abspath(os.path.dirname(__file__))
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 DOMAIN = 'http://swapr.cc/'
@@ -15,7 +15,8 @@ EMAIL_HOST = 'smtp.webfaction.com'
 EMAIL_PORT = 25
 EMAIL_HOST_PASSWORD = 'ccswapr2012'
 EMAIL_HOST_USER = 'swapr'
-DEFAULT_FROM_EMAIL = 'trevor@swapr.webfactional.com'
+DEFAULT_FROM_EMAIL = 'trevor.barron@coloradocollege.edu'
+#DEFAULT_FROM_EMAIL = 'trevor@swapr.webfactional.com'
 SERVER_EMAIL = 'trevor@swapr.webfactional.com'
 
 AUTH_PROFILE_MODULE = 'swapr.Student'
