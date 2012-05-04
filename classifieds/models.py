@@ -274,7 +274,7 @@ class LoginForm(forms.Form):
         return cleaned_data
     
     def confirm_error(self):
-        msg = u"Did you confirm your account?"
+        msg = u"Did you confirm your account? Check your email for a confirmation link."
         self._errors["password"] = self.error_class([msg])
         
     def password_error(self):
