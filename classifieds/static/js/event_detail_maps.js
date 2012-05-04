@@ -62,7 +62,7 @@ $(document).ready(function() {
 	}
 	function reverseGeocode(lat, lng) {
 		$.ajax({
-			url:'http://swapr.webfactional.com/events/ajax/reversegeocode?lat='+lat+'&lng='+lng,
+			url:'/events/ajax/reversegeocode?lat='+lat+'&lng='+lng,
 			success:function(data) {
 				console.log(data);
 				if (data != "failure") {
