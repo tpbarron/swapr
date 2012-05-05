@@ -27,7 +27,7 @@ class Command(BaseCommand):
             email_body += "Have a suggestion? Let us know at "+settings.DOMAIN+"feedback/. \n\n"
             email_body += "Thanks,\nThe CC Swapr Team (Trevor and Stanley :D )"
     
-            print (email_subject + " " + email_body)
+            self.stdout.write(email_subject + " " + email_body)
             #send_mail(email_subject,
             #          email_body,
             #          settings.DEFAULT_FROM_EMAIL,
