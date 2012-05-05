@@ -13,7 +13,7 @@ from swapr import settings
 
 class Command(BaseCommand):
     args = '<none>'
-    help = 'sends an email to any Students who have not activated their account'
+    help = 'sends an email to any students who have not activated their account'
     
     def handle(self, *args, **options):
         users = User.objects.filter(is_active=False)
@@ -22,12 +22,13 @@ class Command(BaseCommand):
             confirmation_url = settings.DOMAIN+"confirmation/" + student.activation_key
             email_subject = "Woo hoo!! Confirm your account at CC Swapr!"
             email_body = "Hello " + student.user.first_name + ", \n\n"
+            email_body += "I'm sorry if you are receiving this email a second time. Some of my emails went to spam. "
             email_body += "Please visit the following URL to confirm your account: \n"
             email_body += confirmation_url + "\n\n"
             email_body += "Have a suggestion? Let us know at "+settings.DOMAIN+"feedback/. \n\n"
             email_body += "Thanks,\nThe CC Swapr Team (Trevor and Stanley :D )"
     
-            self.stdout.write(email_subject + " " + email_body)
+            self.stdout.write(email_subject + " " + email_body + "\n")
             #send_mail(email_subject,
             #          email_body,
             #          settings.DEFAULT_FROM_EMAIL,
