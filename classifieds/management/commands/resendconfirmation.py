@@ -23,14 +23,14 @@ class Command(BaseCommand):
             
             confirmation_url = settings.DOMAIN+"confirmation/" + student.activation_key +"/"
             feedback_url = settings.DOMAIN+"feedback/"
-            #self.stdout.write(u.get_full_name() + " " + student.activation_key + " " + confirmation_url +"\n")          
+            self.stdout.write(u.get_full_name() + " " + student.activation_key + " " + confirmation_url +"\n")          
             email_subject = "Woo hoo!! Confirm your account at CC Swapr!"
             
             template_dict = dict(name=u.first_name, 
                                  confirm=confirmation_url, 
                                  feedback=feedback_url)
             email_body = Template("""
-Hello $name,
+Hi $name,
                 
 I'm sorry if you are receiving this email for a second time. It seems that
 some of my previous emails were categorized as spam. If you have already
@@ -44,17 +44,8 @@ Have a suggestion? Let us know at $feedback.
 Thanks,
 The CC Swapr Team (Trevor and Stanley :D )""").safe_substitute(template_dict)
                         
-            #email_body = "Hello " + student.user.first_name + ", \n\n"
-            #email_body += "I'm sorry if you are receiving this email a second time. Some of my emails went to spam. "
-            #email_body += "Please visit the following URL to confirm your account: \n"
-            #email_body += confirmation_url + "\n\n"
-            #email_body += "Have a suggestion? Let us know at "+settings.DOMAIN+"feedback/. \n\n"
-            #email_body += "Thanks,\nThe CC Swapr Team (Trevor and Stanley :D )"
-    
-            self.stdout.write(email_subject + "\n " + email_body + "\n")
-            #send_mail(email_subject,
-            #          email_body,
-            #          settings.DEFAULT_FROM_EMAIL,
-            #          [student.user.email], 
-            #          fail_silently=True)  
-            
+            send_mail(email_subject,
+                      email_body,
+                      settings.DEFAULT_FROM_EMAIL,
+                      [student.user.email], 
+                      fail_silently=True)  
