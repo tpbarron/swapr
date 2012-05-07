@@ -67,6 +67,7 @@ urlpatterns = patterns('swapr.classifieds.views',
     url(r'^vote/(?P<v>\d+)/(?P<disc_id>\d+)/$', 'vote'),
     url(r'^contact/(?P<uname>[^/]+)/$', 'contact_user'),
     url(r'^completed/(?P<item_type>[^/]+)/(?P<item_id>\d+)/$', 'item_completed'),
+    url(r'^delete_comment/(?P<item_type>[^/]+)/(?P<item_id>\d+)/(?P<comment_id>\d+)/$', 'delete_comment'),
     
     url(r'^breaks/', include(breaks_urls)),
     url(r'^sales/', include(sales_urls)),

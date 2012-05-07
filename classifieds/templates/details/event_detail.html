@@ -44,7 +44,7 @@
 </div>
 <div id="comment_container">
 	<div id="comments">
-		{% include "snippets/comments.html" with num_comments=event.get_num_comments comments=comments %}
+		{% include "snippets/comments.html" with obj=event comments=comments %}
 	</div>
 	<div id="comment">
 		{% include "snippets/comment_form.html" with form=form user=user %}

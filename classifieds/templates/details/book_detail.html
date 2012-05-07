@@ -12,7 +12,7 @@
 </div>
 
 <div id="comments">
-	{% include "snippets/comments.html" with num_comments=book.get_num_comments comments=comments %}
+	{% include "snippets/comments.html" with obj=book comments=comments %}
 </div>
 <div id="comment">
 	{% include "snippets/comment_form.html" with form=form user=user%}

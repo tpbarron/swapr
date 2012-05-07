@@ -3,8 +3,13 @@
 	{% for c in comments %}
 	<div class="comment">
 		<p class="comment_info">
-			{% if user.is_authenticated and user != c.left_by %}
-				<a href="/contact/{{c.left_by.username}}">{{c.left_by.first_name}}</a>
+			{% if user.is_authenticated %}
+				{% if user != c.left_by %}
+					<a href="/contact/{{ c.left_by.username }}">{{ c.left_by.first_name }}</a>
+				{% else %} <!-- user is poster -->
+					<a href="/contact/{{ c.left_by.username }}">{{ c.left_by.first_name }}</a> // 
+					<a href="/delete_comment/{{ obj.get_absolute_url }}{{ c.id }}/">Delete this comment</a>
+				{% endif %}	
 			{% else %}
 				{{c.left_by.first_name}}
 			{% endif %}

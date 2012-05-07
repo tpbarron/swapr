@@ -13,7 +13,7 @@
 </div>
 
 <div id="comments">
-	{% include "snippets/comments.html" with num_comments=trans.get_num_comments comments=comments%}
+	{% include "snippets/comments.html" with obj=trans comments=comments%}
 </div>
 <div id="comment">
 	{% include "snippets/comment_form.html" with form=form user=user%}

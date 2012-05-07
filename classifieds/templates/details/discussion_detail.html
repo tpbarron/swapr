@@ -16,7 +16,7 @@
 	    {% include "snippets/vote.html" with d=disc %}
 	</div>
 	<div id="comments">
-		{% include "snippets/comments.html" with num_comments=disc.get_num_comments comments=comments%}
+		{% include "snippets/comments.html" with obj=disc comments=comments%}
 	</div>
 	<div id="comment">
 		{% include "snippets/comment_form.html" with form=form user=user%}
