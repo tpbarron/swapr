@@ -311,10 +311,33 @@ def item_completed(request, item_type, item_id):
     elif (item_type == "rides"):
         item = Transportation.objects.get(id=item_id)
     else:
-        return redirect("/")
+        raise Http404
         
     item.published = False;
     item.save()
+    
+    return redirect("/"+item.get_absolute_url())
+    
+    
+def delete_comment(request, item_type, item_id, comment_id):
+    if (item_type == "breaks"):
+        item = Break.objects.get(id=item_id)
+    elif (item_type == "books"):
+        item = Book.objects.get(id=item_id)
+    elif (item_type == "discussions"):
+        item = Discussion.objects.get(id=item_id)
+    elif (item_type == "events"):
+        item = Event.objects.get(id=item_id)
+    elif (item_type == "sales"):
+        item = Product.objects.get(id=item_id)
+    elif (item_type == "rides"):
+        item = Transportation.objects.get(id=item_id)
+    else:
+        raise Http404
+    
+    comment = Comment.objects.get(id=comment_id)
+    comment.published=False
+    comment.save()
     
     return redirect("/"+item.get_absolute_url())
     
@@ -323,7 +346,7 @@ def break_detail(request, break_id):
     if not request.user.is_authenticated():
         return redirect('/login/')
     break_detail = Break.objects.get(id=break_id)
-    comments = break_detail.comments.all()
+    comments = break_detail.comments.filter(published=True)
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if (form.is_valid()):
@@ -653,7 +676,7 @@ def breaks(request):
                              ).filter(
                                 published=True
                              )
-    paginator = Paginator(break_list, 5)
+    paginator = Paginator(break_list, 10)
     
     breaks = paginate(request, paginator)
     
@@ -680,7 +703,7 @@ def books(request):
                              ).filter(
                                 published=True
                              )
-    paginator = Paginator(book_list, 5)
+    paginator = Paginator(book_list, 10)
     
     books = paginate(request, paginator)
     
@@ -696,7 +719,7 @@ def book_category(request, cat):
                              ).filter(
                                 category=cat
                              )
-    paginator = Paginator(book_list, 5)
+    paginator = Paginator(book_list, 10)
     
     books = paginate(request, paginator)
     
@@ -709,7 +732,7 @@ def events(request):
                              ).filter(
                                 published=True
                              )
-    paginator = Paginator(event_list, 5)
+    paginator = Paginator(event_list, 10)
     
     events = paginate(request, paginator)
     
@@ -746,7 +769,7 @@ def discussions(request):
                              ).filter(
                                 published=True
                              )
-    paginator = Paginator(disc_list, 5)
+    paginator = Paginator(disc_list, 10)
     
     discs = paginate(request, paginator)
     
@@ -759,7 +782,7 @@ def transportation(request):
                              ).filter(
                                 published=True
                              )
-    paginator = Paginator(trans_list, 5)
+    paginator = Paginator(trans_list, 10)
     
     trans = paginate(request, paginator)
     
@@ -782,7 +805,7 @@ def event_search(request):
            Q(title__contains=query) | 
            Q(description__contains=query)
         )
-        paginator = Paginator(events_list, 5)        
+        paginator = Paginator(events_list, 10)        
         events = paginate(request, paginator)
         
         return TemplateResponse(request, 'lists/events.html',
@@ -804,7 +827,7 @@ def break_search(request):
             Q(break_name__contains=query)
         )
         
-        paginator = Paginator(break_list, 5)        
+        paginator = Paginator(break_list, 10)        
         breaks = paginate(request, paginator)
         
         return TemplateResponse(request, 'lists/breaks.html',
@@ -825,7 +848,7 @@ def product_search(request):
             Q(description__contains=query)
         )
         
-        paginator = Paginator(product_list, 5)        
+        paginator = Paginator(product_list, 10)        
         sales = paginate(request, paginator)
         
         return TemplateResponse(request, 'lists/sales.html',
@@ -846,7 +869,7 @@ def book_search(request):
             Q(title__contains=query) | Q(description__contains=query)
         )
         
-        paginator = Paginator(book_list, 5)        
+        paginator = Paginator(book_list, 10)        
         books = paginate(request, paginator)
         return TemplateResponse(request, 'lists/books.html',
                 {'books':books, 'title': "Books", 'categories':category_options, 'url':"books", 'category':True})
@@ -864,7 +887,7 @@ def discussion_search(request):
             Q(title__contains=query) | Q(description__contains=query)
         )
         
-        paginator = Paginator(disc_list, 5)        
+        paginator = Paginator(disc_list, 10)        
         discs = paginate(request, paginator)
         return TemplateResponse(request, 'lists/discussions.html',
                 {'discussions':discs, 'title': "Discussions", 'url':"discussions"})
@@ -883,7 +906,7 @@ def transportation_search(request):
             Q(title__contains=query) | Q(description__contains=query)
         )
         
-        paginator = Paginator(trans_list, 5)        
+        paginator = Paginator(trans_list, 10)        
         trans = paginate(request, paginator)
         return TemplateResponse(request, 'lists/transportation.html',
                 {'trans':trans, 'title': "Transportation", 'url':"transportation"})

@@ -32,6 +32,7 @@ class Entry(models.Model):
     description = models.TextField()
     expiration = models.DateTimeField(default=datetime.datetime.now() + datetime.timedelta(days=30))
     published = models.BooleanField(default=True)
+    date_added = models.DateTimeField(default=datetime.datetime.now(), blank=True)
     
     def __str__(self):
         return self.title
@@ -46,7 +47,7 @@ class Entry(models.Model):
         return datetime.datetime.now() < self.expiration and self.published == True
     
     def get_short_description(self):
-        if (len(self.description) < 80):
+        if (len(self.description) < 100):
             return self.description
         else:
             return self.description[0:100] + "..."
@@ -57,7 +58,7 @@ class Entry(models.Model):
     class Meta:
         verbose_name = "Entry"
         verbose_name_plural = "Entries"
-   	#ordering = ['-expiration']
+        #ordering = ['-expiration']
     
     
 category_options = (
@@ -387,10 +388,14 @@ class Comment(models.Model):
     comment = models.TextField()
     left_by = models.ForeignKey(User)
     date = models.DateField(default=datetime.datetime.now())
+    published = models.BooleanField(default=True)
     
     def __str__(self):
         return "Comment: " + str(self.pk)
-
+    
+    def is_active(self):
+        return self.published == True
+    
 
 class BreakComment(Comment):
     left_on = models.ForeignKey(Break, related_name="comments")
