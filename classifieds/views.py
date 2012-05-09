@@ -374,7 +374,7 @@ def book_detail(request, book_id):
     if not request.user.is_authenticated():
         return redirect('/login/')
     book_detail = Book.objects.get(id=book_id)
-    comments = book_detail.comments.all()
+    comments = book_detail.filter(published=True)
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if (form.is_valid()):
@@ -401,7 +401,7 @@ def discussion_detail(request, disc_id):
     if not request.user.is_authenticated():
         return redirect('/login/')
     disc_detail = Discussion.objects.get(id=disc_id)
-    comments = disc_detail.comments.all()
+    comments = disc_detail.comments.filter(published=True)
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if (form.is_valid()):
@@ -428,7 +428,7 @@ def event_detail(request, event_id):
     if not request.user.is_authenticated():
         return redirect('/login/')
     event_detail = Event.objects.get(id=event_id)
-    comments = event_detail.comments.all()
+    comments = event_detail.comments.filter(published=True)
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if (form.is_valid()):
@@ -486,7 +486,7 @@ def transportation_detail(request, trans_id):
     if not request.user.is_authenticated():
         return redirect('/login/')
     trans_detail = Transportation.objects.get(id=trans_id)
-    comments = trans_detail.comments.all()
+    comments = trans_detail.comments.filter(published=True)
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if (form.is_valid()):
