@@ -1,4 +1,4 @@
-{% if num_comments > 0 %}
+{% if obj.get_num_comments > 0 %}
 	<h3 id="comment_heading">Comments:</h3>
 	{% for c in comments %}
 	<div class="comment">

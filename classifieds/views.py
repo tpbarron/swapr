@@ -366,7 +366,8 @@ def break_detail(request, break_id):
         log_view(request, break_detail)
         
     form = CommentForm()
-    return TemplateResponse(request, 'details/break_detail.html',{'break':break_detail, 'form':form['comment'], 'comments':comments})
+    return TemplateResponse(request, 'details/break_detail.html',
+                            {'break':break_detail, 'form':form['comment'], 'comments':comments})
 
 
 def book_detail(request, book_id):
@@ -455,10 +456,11 @@ def product_detail(request, prod_id):
     if not request.user.is_authenticated():
         return redirect('/login/')
     prod_detail = Product.objects.get(id=prod_id)
-    comments = prod_detail.comments.all()
+    comments = prod_detail.comments.filter(published=True)
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if (form.is_valid()):
+            print ("valid comment")
             data = form.clean()
             c_comment = data['comment']
             c_date = datetime.datetime.now()
@@ -471,6 +473,8 @@ def product_detail(request, prod_id):
                 left_on=c_left_on)
             c.save()
             email_poster(request, prod_detail)
+        else:
+            print ("invalid comment")
     else:
         log_view(request, prod_detail)
         
