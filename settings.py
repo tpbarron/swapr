@@ -2,7 +2,7 @@
 import os
 DIR = os.path.abspath(os.path.dirname(__file__))
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 DOMAIN = 'http://swapr.cc/'
@@ -83,14 +83,15 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    os.path.join(DIR, '/classifieds/static/img/'),
-    os.path.join(DIR, '/classifieds/static/css/'),
-    os.path.join(DIR, '/classifieds/static/js/'),
+    DIR + '/classifieds/static/img/',
+    DIR + '/classifieds/static/css/',
+    DIR + '/classifieds/static/js/',
  
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
+
 
 # List of finder classes that know how to find static files in
 # various locations.
