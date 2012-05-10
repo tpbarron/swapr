@@ -15,9 +15,9 @@
 
 
 #cclogo {
-	float:right;
+	float:left;
 	bottom: 0;
-	max-width:100%;
+	max-width:200px;
 }
 
 
