@@ -374,7 +374,7 @@ def book_detail(request, book_id):
     if not request.user.is_authenticated():
         return redirect('/login/')
     book_detail = Book.objects.get(id=book_id)
-    comments = book_detail.filter(published=True)
+    comments = book_detail.comments.filter(published=True)
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if (form.is_valid()):
