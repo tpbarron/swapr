@@ -345,7 +345,10 @@ def delete_comment(request, item_type, item_id, comment_id):
 def break_detail(request, break_id):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    break_detail = Break.objects.get(id=break_id)
+    try:
+        break_detail = Break.objects.get(id=break_id)
+    except Break.DoesNotExist:
+        raise Http404
     comments = break_detail.comments.filter(published=True)
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -373,7 +376,10 @@ def break_detail(request, break_id):
 def book_detail(request, book_id):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    book_detail = Book.objects.get(id=book_id)
+    try:
+        book_detail = Book.objects.get(id=book_id)
+    except Book.DoesNotExist:
+        raise Http404
     comments = book_detail.comments.filter(published=True)
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -400,7 +406,10 @@ def book_detail(request, book_id):
 def discussion_detail(request, disc_id):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    disc_detail = Discussion.objects.get(id=disc_id)
+    try:
+        disc_detail = Discussion.objects.get(id=disc_id)
+    except Discussion.DoesNotExist:
+        raise Http404
     comments = disc_detail.comments.filter(published=True)
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -427,7 +436,10 @@ def discussion_detail(request, disc_id):
 def event_detail(request, event_id):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    event_detail = Event.objects.get(id=event_id)
+    try:
+        event_detail = Event.objects.get(id=event_id)
+    except Event.DoesNotExist:
+        raise Http404
     comments = event_detail.comments.filter(published=True)
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -455,7 +467,10 @@ def event_detail(request, event_id):
 def product_detail(request, prod_id):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    prod_detail = Product.objects.get(id=prod_id)
+    try:
+        prod_detail = Product.objects.get(id=prod_id)
+    except Product.DoesNotExist:
+        raise Http404
     comments = prod_detail.comments.filter(published=True)
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -485,7 +500,10 @@ def product_detail(request, prod_id):
 def transportation_detail(request, trans_id):
     if not request.user.is_authenticated():
         return redirect('/login/')
-    trans_detail = Transportation.objects.get(id=trans_id)
+    try:
+        trans_detail = Transportation.objects.get(id=trans_id)
+    except Transportation.DoesNotExist:
+        raise Http404
     comments = trans_detail.comments.filter(published=True)
     if request.method == 'POST':
         form = CommentForm(request.POST)
