@@ -8,7 +8,7 @@
 <div id="detail">
 	<h2>{{break.title}}</h2>
 	{% include "snippets/detail_contact_link.html" with obj=break %}
-	<p>{{ break.get_break_name }} &raquo; {{ break.description|urlize }}</p>
+	<p>{{ break.get_break_name }} &raquo; {{ break.description|urlize|linebreaks }}</p>
 </div>
 
 <div id="comments">

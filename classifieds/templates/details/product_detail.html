@@ -8,7 +8,7 @@
 <div id="detail">
 	<h2>{{ product.title }}</h2>
 	{% include "snippets/detail_contact_link.html" with obj=product %}
-	<p>{{ product.description|urlize }}</p>
+	<p>{{ product.description|urlize|linebreaks }}</p>
 </div>
 
 <div id="comments">
