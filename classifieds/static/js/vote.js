@@ -38,7 +38,7 @@ $(document).ready(function() {
 	
 	
 	function sendToServer(vote, id) {
-		$.get('/vote/'+vote+'/'+id+'/', function(data) {
+		$.get('/suggestions/vote/'+vote+'/'+id+'/', function(data) {
 			console.log(data);
 		});
 		

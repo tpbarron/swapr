@@ -31,6 +31,7 @@ discussions_urls = patterns('swapr.classifieds.views',
     url(r'^(?P<disc_id>\d+)/$', 'discussion_detail'),
     url(r'^add/$', 'discussion_add'),
     url(r'^search/$','discussion_search'),
+    url(r'^vote/(?P<v>\d+)/(?P<disc_id>\d+)/$', 'vote'),
 )
 
 events_urls = patterns('swapr.classifieds.views',
@@ -51,6 +52,11 @@ transportation_urls = patterns('swapr.classifieds.views',
     url(r'^search/$','transportation_search'),
 )
 
+settings_urls = patterns('swapr.classifieds.views',
+    url(r'^$', 'user_settings'),
+    url(r'^edit$', 'edit_user_settings'),
+)
+
 
 urlpatterns = patterns('swapr.classifieds.views',
     url(r'^$', 'home', name='home'),
@@ -60,11 +66,12 @@ urlpatterns = patterns('swapr.classifieds.views',
     url(r'^login-error/$', 'login_error'),
     url(r'^logout/$', 'logout'),
     url(r'^newuser/$', 'new_user'),
+    url(r'^passwordreset_email/$', 'password_reset_email'),
+    url(r'^passwordreset_password/(?P<key>[^/]+)/$', 'password_reset_password'),
     
     url(r'^thanks/$', 'thanks'),
     url(r'^feedback/$', 'feedback'),
     url(r'^confirmation/(?P<key>[^/]+)/$', 'confirm_account'),
-    url(r'^vote/(?P<v>\d+)/(?P<disc_id>\d+)/$', 'vote'),
     url(r'^contact/(?P<uname>[^/]+)/$', 'contact_user'),
     url(r'^completed/(?P<item_type>[^/]+)/(?P<item_id>\d+)/$', 'item_completed'),
     url(r'^delete_comment/(?P<item_type>[^/]+)/(?P<item_id>\d+)/(?P<comment_id>\d+)/$', 'delete_comment'),
@@ -72,9 +79,10 @@ urlpatterns = patterns('swapr.classifieds.views',
     url(r'^breaks/', include(breaks_urls)),
     url(r'^sales/', include(sales_urls)),
     url(r'^books/', include(books_urls)),
-    url(r'^discussions/', include(discussions_urls)),
+    url(r'^suggestions/', include(discussions_urls)),
     url(r'^rides/', include(transportation_urls)),
     url(r'^events/', include(events_urls)),
+    url(r'^settings/', include(settings_urls)),
     
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),

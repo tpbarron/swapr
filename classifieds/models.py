@@ -21,11 +21,25 @@ break_options = (
 class Student(models.Model):
     user = models.OneToOneField(User)
     activation_key = models.CharField(max_length=40)
+    reset_key = models.CharField(max_length=40, blank=True)
     key_expires = models.DateTimeField()
+    notify_on_comment = models.BooleanField(default=False)
     
     def __str__(self):
         return self.user.get_full_name()
+    
+    def get_comment_checked(self):
+        if self.studentsettings.notify_on_comment == True:
+            return 'checked="yes"'
 
+    def get_phone_checked(self):
+        if self.studentsettings.show_phone_number == True:
+            return 'checked="yes"'
+    
+    def get_email_checked(self):
+        if self.studentsettings.show_email == True:
+            return 'checked="yes"'
+                
 
 class Entry(models.Model):
     title = models.CharField(max_length=100)
@@ -177,7 +191,7 @@ class Discussion(Entry):
             return "active" # if the uer has not voted in the last day
         
     def get_absolute_url(self):
-        return "discussions/%i/" % self.id
+        return "suggestions/%i/" % self.id
         
     class Meta:
         verbose_name = "Discussion"
@@ -325,6 +339,36 @@ class UserContactForm(forms.Form):
                 widget=forms.Textarea(attrs={'class' : 'form_textarea'}))
   
 
+class PasswordResetEmailForm(forms.Form):
+    email = forms.EmailField(
+                label='Email',
+                widget=forms.TextInput(attrs={'class' : 'form_p'}))
+    
+    def user_exists_error(self):
+        msg = u"An account with this email does not exist."
+        self._errors["email"] = self.error_class([msg])
+        
+    
+class PasswordResetPasswordForm(forms.Form):
+    password = forms.CharField(
+                label='Password',
+                widget=forms.PasswordInput(attrs={'class' : 'form_p'}))
+    password_confirm = forms.CharField(
+                label='Confirm Password',
+                widget=forms.PasswordInput(attrs={'class' : 'form_p'}))
+         
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        p1 = cleaned_data.get("password")
+        p2 = cleaned_data.get("password_confirm")
+        if (p1 != p2):
+            msg = u"Your passwords must match."
+            self._errors["password"] = self.error_class([msg])
+        
+        return cleaned_data
+
+
+    
 class AddForm(forms.Form):
     title = forms.CharField(max_length=100,
                 label='Title',

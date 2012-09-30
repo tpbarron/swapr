@@ -3,7 +3,7 @@
 	margin-bottom:10px;
 }
 .vote span{
-	background:url('http://demo.tutorialzine.com/2010/08/ajax-suggest-vote-jquery-php-mysql/img/vote_arrows.png') no-repeat;
+	background:url('http://127.0.0.1:8000/static/img/vote_arrows.png') no-repeat;
 	float:left;
 	height:26px;
 	margin-right:4px;

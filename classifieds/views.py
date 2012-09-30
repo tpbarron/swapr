@@ -11,26 +11,6 @@ from django.core.mail import send_mail
 from django.db.models import Q
 
 from swapr import settings
-
-def analytic(request):
-    try:
-        ref = str(request.GET.get('ref', '1'))
-    except ValueError:
-        ref = "null"    
-        
-    if ref != "qr0":
-        ref = "null"
-        
-    ua=request.META.get('HTTP_USER_AGENT')
-    if not ua:
-        ua = ""
-    
-    r = Ref(
-            time=datetime.datetime.now(),
-            useragent=ua,
-            mref=ref
-    )
-    r.save()
     
 
 #static about view
@@ -38,7 +18,6 @@ def about(request):
     return TemplateResponse(request, 'about.html')
 
 def home(request):
-    analytic(request)
     return TemplateResponse(request, 'home.html')
 
 
@@ -99,9 +78,9 @@ def new_user(request):
                 new_student = Student(
                         user=u,
                         activation_key=activation_key,
-                        key_expires=key_expires)
+                        key_expires=key_expires
+                )
                 new_student.save()
-                
                 
                 confirmation_url = settings.DOMAIN+"confirmation/" + new_student.activation_key
                 email_subject = "Woo hoo!! Confirm your account at CC Swapr!"
@@ -158,6 +137,83 @@ def confirm_account(request, key):
             
     return redirect('/')
 
+
+def password_reset_email(request):
+    form = PasswordResetEmailForm()
+    if (request.method == 'POST'):
+        form = PasswordResetEmailForm(request.POST)
+        if (form.is_valid()):
+            data = form.clean()
+            email = data['email']
+            
+            if not User.objects.filter(email=email).exists():
+                form.user_exists_error()
+            else:
+                u = User.objects.get(email=email)
+                print u.get_full_name() + ": " + email
+
+                salt = sha.new(str(random.random())).hexdigest()[:5]
+                reset_key = sha.new(salt+u.username).hexdigest()
+                
+                student = u.student
+                #Student.objects.get(user=u)
+                student.reset_key = reset_key
+                student.save()
+                
+                reset_url = settings.DOMAIN+"passwordreset_password/" + student.reset_key
+                email_subject = "CC Swapr password reset!"
+                email_body = "Hello " + u.first_name + ", \n\n"
+                email_body += "Please visit the following URL to reset the password for your account: \n"
+                email_body += reset_url + "\n\n"
+                email_body += "Have a suggestion? Let us know at "+settings.DOMAIN+"feedback/. \n\n"
+                email_body += "Thanks,\nThe CC Swapr Team (Trevor and Stanley :D )"
+        
+                print (email_body)
+                send_mail(email_subject,
+                          email_body,
+                          settings.DEFAULT_FROM_EMAIL,
+                          [email], 
+                          fail_silently=True)        
+                
+                text = "An email has been sent to " + email + " so that you can reset your password"
+                return TemplateResponse(request, 'password_reset_email.html', {'form':form, 'text':text})
+            
+    
+    return TemplateResponse(request, 'password_reset_email.html', {'form':form, 'text':""})
+    
+
+def password_reset_password(request, key):
+    form = PasswordResetPasswordForm()
+    if not Student.objects.filter(reset_key=key).exists():
+        raise Http404
+    
+    user = Student.objects.get(reset_key=key).user
+    
+    if (request.method == 'POST'):
+        form = PasswordResetPasswordForm(request.POST)
+        if (form.is_valid()):
+            data = form.clean()
+            p1 = data['password']
+            
+            if Student.objects.filter(reset_key=key).exists():
+                student = Student.objects.get(reset_key=key)
+                user = student.user
+                user.set_password(p1)
+                user.save()
+                text = "Thank you, " + user.first_name + ", your password has been reset."
+            else:
+                text = "Sorry, " + user.first_name + ", the reset key is invalid. We could not reset your password."
+            
+            return TemplateResponse(request, 'password_reset_password.html', {'form':form, 'text':text})
+    
+    return TemplateResponse(request, 'password_reset_password.html', {'user':user, 'form':form, 'text':""})
+    
+    
+def user_settings(request):
+    return TemplateResponse(request, 'settings/settings.html')
+
+def edit_user_settings(request):
+    pass
 
 def thanks(request):
     return TemplateResponse(request, 'thanks.html')
@@ -796,7 +852,7 @@ def discussions(request):
     discs = paginate(request, paginator)
     
     return TemplateResponse(request, 'lists/discussions.html',
-            {'discussions':discs, 'title': "Discussions", "url":"discussions"})
+            {'discussions':discs, 'title': "Suggestions", "url":"suggestions"})
 
 def transportation(request):
     trans_list = Transportation.objects.filter(
