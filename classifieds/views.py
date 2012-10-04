@@ -270,7 +270,6 @@ def contact_user(request, uname):
             m.save()
             
         
-            return TemplateResponse(request, 'contact_user.html', {'form':form,'usr':receiver, 'submitted':True}) 
     
     return TemplateResponse(request, 'contact_user.html', {'form':form, 'usr':receiver, 'submitted':False})
  
@@ -358,7 +357,7 @@ def item_completed(request, item_type, item_id):
         item = Break.objects.get(id=item_id)
     elif (item_type == "books"):
         item = Book.objects.get(id=item_id)
-    elif (item_type == "discussions"):
+    elif (item_type == "suggestions"):
         item = Discussion.objects.get(id=item_id)
     elif (item_type == "events"):
         item = Event.objects.get(id=item_id)
