@@ -29,17 +29,6 @@ class Student(models.Model):
     def __str__(self):
         return self.user.get_full_name()
     
-#    def get_comment_checked(self):
-#        if self.studentsettings.notify_on_comment == True:
-#            return 'checked="yes"'
-#
-#    def get_phone_checked(self):
-#        if self.studentsettings.show_phone_number == True:
-#            return 'checked="yes"'
-#    
-#    def get_email_checked(self):
-#        if self.studentsettings.show_email == True:
-#            return 'checked="yes"'
                 
 
 class Entry(models.Model):
