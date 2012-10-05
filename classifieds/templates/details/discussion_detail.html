@@ -11,7 +11,7 @@
 {% block detail %}
 	<div id="detail">
 		<h2>{{disc.title}}</h2>
-		{% include "snippets/detail_contact_link.html" with obj=disc %}
+		{% include "snippets/detail_contact_link_settings.html" with obj=disc %}
 		<p>{{ disc.description|urlize|linebreaks }}</p>
 	    {% include "snippets/vote.html" with d=disc %}
 	</div>
