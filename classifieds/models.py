@@ -24,21 +24,22 @@ class Student(models.Model):
     reset_key = models.CharField(max_length=40, blank=True)
     key_expires = models.DateTimeField()
     notify_on_comment = models.BooleanField(default=False)
+    major = models.CharField(max_length=40, blank=True)
     
     def __str__(self):
         return self.user.get_full_name()
     
-    def get_comment_checked(self):
-        if self.studentsettings.notify_on_comment == True:
-            return 'checked="yes"'
-
-    def get_phone_checked(self):
-        if self.studentsettings.show_phone_number == True:
-            return 'checked="yes"'
-    
-    def get_email_checked(self):
-        if self.studentsettings.show_email == True:
-            return 'checked="yes"'
+#    def get_comment_checked(self):
+#        if self.studentsettings.notify_on_comment == True:
+#            return 'checked="yes"'
+#
+#    def get_phone_checked(self):
+#        if self.studentsettings.show_phone_number == True:
+#            return 'checked="yes"'
+#    
+#    def get_email_checked(self):
+#        if self.studentsettings.show_email == True:
+#            return 'checked="yes"'
                 
 
 class Entry(models.Model):
@@ -366,6 +367,16 @@ class PasswordResetPasswordForm(forms.Form):
             self._errors["password"] = self.error_class([msg])
         
         return cleaned_data
+    
+    
+    
+#settings form
+class SettingsForm(forms.Form):
+    major = forms.ChoiceField(
+                label='Major',
+                choices=category_options,
+                widget=forms.Select(attrs={'class' : 'form_choice'})
+                )
 
 
     
