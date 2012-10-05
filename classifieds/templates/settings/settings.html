@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Settings{% endblock %}
+
+{% block css %}
+	<link href="{{ STATIC_URL }}css/forms_desktop.css" media="screen and (min-width: 600px)" rel="stylesheet" type="text/css" />
+	<link href="{{ STATIC_URL }}css/forms_mobile.css" media="screen and (max-width: 599px)" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %} 
+	<div id="viewer">
+		{% if not user.is_authenticated %}
+			<p><a href="/newuser/">Create an account</a> or <a href="/login/">login</a> to get started!</p>
+		{% else %}
+			<p>Configure your settings</p>
+			<form>
+				Default email: <br />
+				<select class="form_p" name="default_email" >
+					{% if user.student.additional_email != None %}
+						<option>{{ user.student.additional_email }}</option>
+					{% endif %}
+					<option>{{ user.email }}</option>
+				</select><br />
+				
+				Additional email: <br />
+				<input class="form_p" type="text" name="additional_email" value="{{ user.student.additional_email }}" /><br />
+				
+				Phone: <br />
+				<input class="form_p" type="text" name="phone" value="{{ user.student.phone }}" /><br />
+				
+				<input type="checkbox" name="notify_comment" {{ user.student.get_comment_checked }} value="notify" /> Email comments <br />
+				<input type="checkbox" name="show_phone" {{ user.student.get_phone_checked }} value="phone" /> Show phone number <br />
+				<input type="checkbox" name="show_email" {{ user.student.get_email_checked }} value="email" /> Show email  
+			</form>
+    	{% endif %}
+	</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
