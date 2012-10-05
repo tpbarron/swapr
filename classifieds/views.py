@@ -210,7 +210,20 @@ def password_reset_password(request, key):
     
     
 def user_settings(request):
-    return TemplateResponse(request, 'settings/settings.html')
+    form = SettingsForm()
+    if (request.method == 'POST'):
+        form = SettingsForm(request.POST)
+        if (form.is_valid()):
+            data = form.clean()
+            m = data['major']
+            user = request.user
+            student = user.student
+            student.major = m
+            student.save()
+        
+            return TemplateResponse(request, 'settings/settings.html', {'form': form, 'valid': True})
+        
+    return TemplateResponse(request, 'settings/settings.html', {'form': form, 'valid':False})
 
 def edit_user_settings(request):
     pass
