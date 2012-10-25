@@ -9,7 +9,7 @@
 
 {% block content %} 
 	<div id="viewer">
-		<!-- <p>If you're waiting for a confirmation email please check you spam folder. If you still don't see it contact me at <a href="mailto:trevor.barron@coloradocollege.edu">trevor.barron@coloradocollege.edu</a>.</p>-->
+		<!-- <p>If you're waiting for a confirmation email please check your spam folder. If you still don't see it contact me at <a href="mailto:trevor.barron@coloradocollege.edu">trevor.barron@coloradocollege.edu</a>.</p>-->
 		<h2>CC Swapr is a place for Colorado College students to <i>swap</i> just about anything&#8212;that nerdy idea 
 		you've had recently, those expensive text books you need for class, a ride to the Denver airport for your trip
 		home, or even that futon you've been wanting to get rid of!</h2>
@@ -19,119 +19,15 @@
 			<!-- <p>Check out your postings!</p>  -->
 		{% endif %}
 		<p>Learn <a href="/about/">about</a> the site.</p>
-	
-		<br />
-		<!-- <img id="cclogo" src="http://www.coloradocollege.edu/dotAsset/b141b749-8c8c-4eab-9b41-a8ecbb64ce2b.png" alt="cclogo" />-->
 	</div>
+	<div id="raphael"></div>
+{% endblock %}
+
+{% block javascript %}
+	<script src="https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael-min.js"></script>
+    <script>window.Raphael || document.write('<script src="{{ STATIC_URL }}js/libs/raphael.min.js" type="text/javascript"><\/script>')</script>
+	<script src="{{ STATIC_URL }}js/tree.js" type="text/javascript"></script>
 {% endblock %}
 
 {% block footer %}
 {% endblock %}
-
-
-<!-- 
-		<div id="recent_activity">
-			{% if user.is_authenticated %}
-			<div id="books" class="items" >
-				<h2>Books</h2>
-				<ul>
-					{% for b in user.books.all %}
-					<li>
-						<a href="/books/{{ b.id }}/">{{ b.title }}</a>
-						{% if b.get_num_comments == 1 %}
-							{{ b.get_num_comments }} comment
-						{% else %}
-							{{ b.get_num_comments }} comments
-						{% endif %}
-					</li>
-					{% endfor %}
-				</ul>
-			</div>
-			
-			<div id="events" class="items">
-				<h2>Events</h2>
-				<ul>
-					{% for b in user.events.all %}
-					<li>
-						<a href="/events/{{b.id}}/">{{ b.title }}</a>
-						{% if b.get_num_comments == 1 %}
-							{{ b.get_num_comments }} comment
-						{% else %}
-							{{ b.get_num_comments }} comments
-						{% endif %}
-					</li>
-					{% endfor %}
-				</ul>
-			</div>
-			
-			<div id="products" class="items">
-				<h2>Sales</h2>
-				<ul>
-					{% for b in user.products.all %}
-					<li>
-						<a href="/products/{{b.id}}/">{{ b.title }}</a>
-						{% if b.get_num_comments == 1 %}
-							{{ b.get_num_comments }} comment
-						{% else %}
-							{{ b.get_num_comments }} comments
-						{% endif %}
-					</li>
-					{% endfor %}
-				</ul>
-			</div>
-			
-			<div id="breaks" class="items">
-				<h2>Breaks</h2>
-				<ul>
-					{% for b in user.breaks.all %}
-					<li>
-						<a href="/breaks/{{b.id}}/">{{ b.title }}</a>
-						{% if b.get_num_comments == 1 %}
-							{{ b.get_num_comments }} comment
-						{% else %}
-							{{ b.get_num_comments }} comments
-						{% endif %}
-					</li>
-					{% endfor %}
-				</ul>
-			</div>
-			
-			<div id="discussions" class="items">
-				<h2>Discussions</h2>
-				<ul>
-					{% for b in user.discussions.all %}
-					<li>
-						<a href="/discussions/{{b.id}}/">{{ b.title }}</a>
-						{% if b.get_num_comments == 1 %}
-							{{ b.get_num_comments }} comment
-						{% else %}
-							{{ b.get_num_comments }} comments
-						{% endif %}
-					</li>
-					{% endfor %}
-				</ul>
-			</div>
-
-			<div id="transportation" class="items">
-				<h2>Transportation</h2>
-				<ul>
-					{% for b in user.transportation.all %}
-					<li>
-						<a href="/transportation/{{b.id}}/">{{ b.title }}</a>
-						{% if b.get_num_comments == 1 %}
-							{{ b.get_num_comments }} comment
-						{% else %}
-							{{ b.get_num_comments }} comments
-						{% endif %}
-					</li>
-					{% endfor %}
-				</ul>
-			</div>
-			{% endif %}
-		</div>
-		
-		<div id="recent">
-			
-			<!-- what other have done on the users items -->
-		</div>
- -->
