@@ -7,9 +7,8 @@
 	<link href="{{ STATIC_URL }}css/home.css" rel="stylesheet" type="text/css" />	
 {% endblock %}
 
-{% block content %} 
+{% block content %}
 	<div id="viewer">
-		<!-- <p>If you're waiting for a confirmation email please check your spam folder. If you still don't see it contact me at <a href="mailto:trevor.barron@coloradocollege.edu">trevor.barron@coloradocollege.edu</a>.</p>-->
 		<h2>CC Swapr is a place for Colorado College students to <i>swap</i> just about anything&#8212;that nerdy idea 
 		you've had recently, those expensive text books you need for class, a ride to the Denver airport for your trip
 		home, or even that futon you've been wanting to get rid of!</h2>
@@ -20,13 +19,10 @@
 		{% endif %}
 		<p>Learn <a href="/about/">about</a> the site.</p>
 	</div>
-	<div id="raphael"></div>
 {% endblock %}
 
 {% block javascript %}
-	<script src="https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael-min.js"></script>
-    <script>window.Raphael || document.write('<script src="{{ STATIC_URL }}js/libs/raphael.min.js" type="text/javascript"><\/script>')</script>
-	<script src="{{ STATIC_URL }}js/tree.js" type="text/javascript"></script>
+	<script src="{{ STATIC_URL }}js/home_tree.js" type="text/javascript"></script>
 {% endblock %}
 
 {% block footer %}

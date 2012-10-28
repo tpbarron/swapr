@@ -999,7 +999,7 @@ def transportation_search(request):
         paginator = Paginator(trans_list, 10)        
         trans = paginate(request, paginator)
         return TemplateResponse(request, 'lists/transportation.html',
-                {'trans':trans, 'title': "Transportation", 'url':"transportation"})
+                {'trans':trans, 'title': "Rides", 'url':"rides"})
 
 
 
