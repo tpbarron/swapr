@@ -17,15 +17,18 @@ class Command(BaseCommand):
     help = 'sends an email to all students who have created an account to try to urge them to use the site'
     
     def handle(self, *args, **options):
-        users = User.objects.all()
-        for u in users:
-            student = u.student
+        count = 0
+	users = User.objects.all()
+        
+	for u in users:
+            count += 1
+	    student = u.student
             
             active = True
             if (u.is_active == False):
                 active = False
                 
-            self.stdout.write("Sending to: " + u.get_full_name() + ", active: " + str(active) + "\n")
+            self.stdout.write("Sending to (" + str(count) + "): " + u.get_full_name() + ", active: " + str(active) + "\n")
             email_subject = "CC Swapr - save green: save money, save trees!"
             feedback_url = settings.DOMAIN+"feedback/"
             
@@ -67,7 +70,7 @@ Thanks,
 The CC Swapr Team
 (Trevor Barron)""").safe_substitute(template_dict)
              
-            self.stdout.write(email_subject + "\n" + email_body+"\n\n")
+            #self.stdout.write(email_subject + "\n" + email_body+"\n\n")
             send_mail(email_subject,
                       email_body,
                       settings.DEFAULT_FROM_EMAIL,
