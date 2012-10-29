@@ -49,8 +49,13 @@
 	padding-left:10px;
 	margin-bottom:20px;
 	
-	border-top:2px solid silver;
-	border-left:2px solid silver;
+	/* then can't see tree behind */
+	background-color:white;
+	
+	border-top: 2px solid silver;
+	border-left: 2px solid silver;
+	border-right: 1px solid silver;
+	border-bottom: 1px solid silver;
 
 	-moz-box-shadow: 0px 0px 0px #888;
 	-webkit-box-shadow: 0px 0px 0px #888;
@@ -64,8 +69,8 @@
 }
 
 .item:hover {
-	border-top:2px solid gold;
-	border-left:2px solid gold;
+	border-top: 2px solid gold;
+	border-left: 2px solid gold;
 	-moz-box-shadow: 10px 10px 5px #888;
 	-webkit-box-shadow: 10px 10px 5px #888;
 	box-shadow: 10px 10px 5px #888;

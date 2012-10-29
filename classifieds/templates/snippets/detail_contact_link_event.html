@@ -2,7 +2,7 @@
 	{% if user == obj.posted_by %}
 		{% if obj.is_active %}
 			<p>Posted by: You! // <a href="qrcode/">Get your QR code!</a> // 
-				<a href="/completed/{{ obj.get_absolute_url }}">Mark as completed!</a></p>
+				<a href="/completed/{{ obj.get_absolute_url }}">Delete!</a></p>
 		{% else %}
 			<p>Posted by: You! // This listing is no longer active!</p>
 		{% endif %}
