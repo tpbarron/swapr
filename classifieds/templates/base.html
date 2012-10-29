@@ -5,6 +5,7 @@
 <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<!--[if !IE 7]>	  <style type="text/css">#wrap {display:table;height:100%}</style><![endif]-->
 
 <head>
     <meta charset="utf-8" />
@@ -31,39 +32,40 @@
     {% block subcss %}
     {% endblock %}
     
-    <script src="{{ STATIC_URL }}js/libs/modernizr-2.0.6.min.js"></script>
+    <!-- <script src="{{ STATIC_URL }}js/libs/modernizr-2.0.6.min.js"></script> -->
 </head>
 
 <body class="{% block body_class %}{% endblock %}">
 {% block body %}
-	<header>
-       	<div id="logo">
-       		<h1><a href="/">CC Swapr</a> <!--<span id="sub">save green</span>--></h1>
-		</div>
-        <nav>
-			<ul>
-				<!--<li><a class="nav_link" href="/breaks/">Breaks</a></li>-->
-				<li><a class="nav_link" href="/books/">Books</a></li>
-				<li><a class="nav_link" href="/sales/">For Sale &amp; Wanted</a></li>
-				<li><a class="nav_link" href="/events/">Events</a></li>
-				<li><a class="nav_link" href="/rides/">Rides</a></li>
-				<li><a class="nav_link" href="/suggestions/">Suggestions for CC</a></li>
-				{% if user.is_authenticated %}
-				<li id="status">{{ user.get_full_name }} - <a class="nav_link" href="/logout/">Logout</a></li>
-				{% else %}
-				<li id="status"><a class="nav_link" href="/login/">Login</a> or <a class="nav_link" href="/newuser/">create a new account</a></li>
-				{% endif %}
-			</ul>
-		</nav>
-	</header>
-       
-    <div id="main" role="main">
-    	{% block content %}
-    	{% endblock %}
-    </div>
+	<div id="wrap">
+		<header>
+	       	<div id="logo">
+	       		<h1><a href="/">CC Swapr</a> <span id="sub">save green {<img src="{{ STATIC_URL }}img/tree-2_crop_resize128.png" />}</span></h1>
+			</div>
+	        <nav>
+				<ul>
+					<!--<li><a class="nav_link" href="/breaks/">Breaks</a></li>-->
+					<li><a class="nav_link" href="/books/">Books</a></li>
+					<li><a class="nav_link" href="/sales/">For Sale &amp; Wanted</a></li>
+					<li><a class="nav_link" href="/events/">Events</a></li>
+					<li><a class="nav_link" href="/rides/">Rides</a></li>
+					<li><a class="nav_link" href="/suggestions/">Suggestions for CC</a></li>
+					{% if user.is_authenticated %}
+					<li id="status">{{ user.get_full_name }} - <a class="nav_link" href="/logout/">Logout</a></li>
+					{% else %}
+					<li id="status"><a class="nav_link" href="/login/">Login</a> or <a class="nav_link" href="/newuser/">create a new account</a></li>
+					{% endif %}
+				</ul>
+			</nav>
+		</header>
+	       
+	    <div id="main" role="main">
+	    	{% block content %}
+	    	{% endblock %}
+	    </div>
+    </div> <!-- end wrap -->
     
-    <canvas id="tree_canvas" width="100%" height="100%"></canvas>
-       
+    <canvas id="tree_canvas" width="100%" height="600px"></canvas>
     <footer>
     	<!-- search bar, social media, about -->
     	<div id="fcontainer">

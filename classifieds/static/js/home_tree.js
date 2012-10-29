@@ -2,7 +2,7 @@ var undefined, canvas, ctx;
 
 var cfg = {
 	initX: [window.innerWidth/2, 2*window.innerWidth/3, 3*window.innerWidth/4],
-	initY: window.innerHeight,
+	initY: window.innerHeight-125,
 	max_sub_branch: 5,
 	max_sub_angle: 3*Math.PI/4,
 	max_size: 5,
@@ -16,7 +16,7 @@ function init() {
 		console.log("initing");
 		canvas = document.getElementById('tree_canvas');
 		canvas.width = window.innerWidth;
-		canvas.height = window.innerHeight;
+		canvas.height = 600;
 		ctx = canvas.getContext("2d");
 		ctx.strokeStyle = cfg.color;
 		for (var i = 0; i < cfg.initX.length; i++) {

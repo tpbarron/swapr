@@ -2,7 +2,7 @@ var undefined, canvas, ctx;
 
 var cfg = {
 	initX: 9*window.innerWidth/10,
-	initY: window.innerHeight,
+	initY: window.innerHeight-125,
 	max_sub_branch: 5,
 	max_sub_angle: 3*Math.PI/4,
 	max_size: 8,
@@ -16,7 +16,7 @@ function init() {
 		console.log("initing");
 		canvas = document.getElementById('tree_canvas');
 		canvas.width = window.innerWidth;
-		canvas.height = window.innerHeight;
+		canvas.height = 600;
 		ctx = canvas.getContext("2d");
 		ctx.strokeStyle = cfg.color;
 		makeBranch(cfg.initX, cfg.initY, cfg.branch_length, -Math.PI/2, cfg.max_size);
