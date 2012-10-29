@@ -123,7 +123,7 @@ header {
 	color:silver;
 }
 #sub {
-	color:green;
+	color:#347C2C;
 }
 
 /*navigation*/
@@ -179,7 +179,7 @@ nav ul {
 }
 
 footer {
-	background-color:green;
+	background-color:#347C2C;
 	position:absolute;
 	left:0px;
 	width:100%;
